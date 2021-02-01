@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
-import me.sixteen_.insane.utils.Logger;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -12,7 +11,6 @@ import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.text.Text;
 
@@ -81,8 +79,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		while (it.hasNext()) {
 			final String text = it.next().getString();
 			if (text.contains("Attack Damage")) {
-				f = text.charAt(1) - 48;
-				Logger.getLogger().addChatMessage(f + "");
+				f = Float.parseFloat(text.split(" ")[1]);
 			}
 		}
 //		float f = (float) player.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
