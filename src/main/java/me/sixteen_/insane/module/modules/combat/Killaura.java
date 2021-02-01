@@ -61,10 +61,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 					if (player.distanceTo(le) < range) {
 						if (!le.isDead()) {
 							if (le.hurtTime == 0) {
-								if (le.getHealth() <= attackDamage(le)) {
-									mc.interactionManager.attackEntity(player, le);
-									pause = false;
-								} else if (player.getAttackCooldownProgress(0) == 1) {
+								if (player.getAttackCooldownProgress(0) == 1 || le.getHealth() <= attackDamage(le)) {
 									if (pause) {
 										mc.interactionManager.attackEntity(player, le);
 										pause = false;
