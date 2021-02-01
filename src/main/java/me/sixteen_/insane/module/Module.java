@@ -30,12 +30,12 @@ public abstract class Module {
 	}
 
 	public void toggle() {
-		enabled = !enabled;
 		if (enabled) {
-			onEnable();
-		} else {
 			onDisable();
+		} else {
+			onEnable();
 		}
+		enabled = !enabled;
 	}
 
 	public ModuleCategory getCategory() {
