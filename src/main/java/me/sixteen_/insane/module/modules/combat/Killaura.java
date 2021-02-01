@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
+import me.sixteen_.insane.utils.Logger;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -53,16 +54,18 @@ public class Killaura extends Module implements ClientPlayerTickable {
 				if (!le.equals(player)) {
 					if (player.distanceTo(le) < range) {
 						if (!le.isDead()) {
-							if (le.getHealth() < attackDamage(player, le)) {
-								mc.interactionManager.attackEntity(player, le);
-								pause = false;
-							} else if (player.getAttackCooldownProgress(0) == 1) {
-								if (pause) {
+							if (le.hurtTime == 0) {
+								if (le.getHealth() < attackDamage(player, le)) {
 									mc.interactionManager.attackEntity(player, le);
 									pause = false;
-								} else {
-									pause = true;
-									return;
+								} else if (player.getAttackCooldownProgress(0) == 1) {
+									if (pause) {
+										mc.interactionManager.attackEntity(player, le);
+										pause = false;
+									} else {
+										pause = true;
+										return;
+									}
 								}
 							}
 						}
@@ -80,6 +83,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 			final String text = it.next().getString();
 			if (text.contains("Attack Damage")) {
 				f = Float.parseFloat(text.split(" ")[1]);
+				Logger.getLogger().addChatMessage(f + "");
 			}
 		}
 //		float f = (float) player.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
