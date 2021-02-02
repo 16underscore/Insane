@@ -107,16 +107,19 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		final float damageWithHand = (float) player.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 		Multimap<EntityAttribute, EntityAttributeModifier> map = player.getMainHandStack().getAttributeModifiers(EquipmentSlot.MAINHAND);
 		if (!map.isEmpty()) {
+			float damageWithItem = 0F;
 			Iterator<Entry<EntityAttribute, EntityAttributeModifier>> it = map.entries().iterator();
 			while (it.hasNext()) {
 				Entry<EntityAttribute, EntityAttributeModifier> entry = it.next();
 				EntityAttribute a = (EntityAttribute) entry.getKey();
 				if (a.getTranslationKey().equals("attribute.name.generic.attack_damage")) {
 					EntityAttributeModifier m = (EntityAttributeModifier) entry.getValue();
-					final float damageWithItem = (float) m.getValue();
-					return damageWithHand + damageWithItem;
+					damageWithItem += (float) m.getValue();
+				} else if (a.getTranslationKey().equals("attribute.name.generic.knockback_resistance")) {
+					damageWithItem--;
 				}
 			}
+			return damageWithHand + damageWithItem;
 		}
 		return damageWithHand;
 	}
