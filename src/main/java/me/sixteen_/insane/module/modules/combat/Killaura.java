@@ -25,12 +25,14 @@ import net.minecraft.entity.effect.StatusEffects;
  */
 public class Killaura extends Module implements ClientPlayerTickable {
 
+	private Mode mode;
 	private MinecraftClient mc;
 	private ClientPlayerEntity player;
 	private float range;
 
 	public Killaura() {
 		super("Killaura", ModuleCategory.COMBAT);
+		mode = Mode.MULTI;
 	}
 
 	@Override
@@ -49,6 +51,17 @@ public class Killaura extends Module implements ClientPlayerTickable {
 
 	@Override
 	public void onUpdate() {
+		switch (mode) {
+		case FAST:
+			fastAura();
+			break;
+		case MULTI:
+			multiAura();
+			break;
+		}
+	}
+
+	private void fastAura() {
 		final Iterator<Entity> it = mc.world.getEntities().iterator();
 		label: while (it.hasNext()) {
 			final Entity entity = it.next();
@@ -73,6 +86,32 @@ public class Killaura extends Module implements ClientPlayerTickable {
 				Logger.getLogger().addChatMessage(attackDamage(le) + "", true);
 			}
 			if (player.getAttackCooldownProgress(0F) >= 1F) {
+				mc.interactionManager.attackEntity(player, le);
+			}
+		}
+	}
+
+	private void multiAura() {
+		final Iterator<Entity> it = mc.world.getEntities().iterator();
+		if (player.getAttackCooldownProgress(0F) >= 1F) {
+			label: while (it.hasNext()) {
+				final Entity entity = it.next();
+				if (!(entity instanceof LivingEntity)) {
+					continue label;
+				}
+				final LivingEntity le = (LivingEntity) entity;
+				if (le.equals(player)) {
+					continue label;
+				}
+				if (player.distanceTo(le) > range) {
+					continue label;
+				}
+				if (le.isDead()) {
+					continue label;
+				}
+				if (le.hurtTime > 0) {
+					continue label;
+				}
 				mc.interactionManager.attackEntity(player, le);
 			}
 		}
@@ -123,4 +162,32 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	 * TooltipContext.Default.NORMAL).iterator(); while (it.hasNext()) { final String text = it.next().getString(); if
 	 * (text.contains("Attack Damage")) { f = Float.parseFloat(text.split(" ")[1]); } } return f; }
 	 */
+
+	@Override
+	public void setMode(String s) {
+		for (Mode m : Mode.values()) {
+			if (m.toString().equalsIgnoreCase(s)) {
+				mode = m;
+				Logger.getLogger().addChatMessage(String.format("Mode %s activated", s), true);
+				return;
+			}
+		}
+		Logger.getLogger().addChatMessage(String.format("Mode %s not found!", s), true);
+	}
+
+	private enum Mode {
+
+		FAST("Fast"), MULTI("Multi");
+
+		private final String modeName;
+
+		private Mode(String modeName) {
+			this.modeName = modeName;
+		}
+
+		@Override
+		public String toString() {
+			return modeName;
+		}
+	}
 }
