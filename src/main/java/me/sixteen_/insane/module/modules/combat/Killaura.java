@@ -52,29 +52,35 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	@Override
 	public void onUpdate() {
 		final Iterator<Entity> it = mc.world.getEntities().iterator();
-		Entity entity;
-		while (it.hasNext()) {
-			entity = it.next();
-			if (entity instanceof LivingEntity) {
-				final LivingEntity le = (LivingEntity) entity;
-				if (!le.equals(player)) {
-					if (player.distanceTo(le) < range) {
-						if (!le.isDead()) {
-							if (le.hurtTime == 0) {
-								if (player.getAttackCooldownProgress(0) == 1 || le.getHealth() <= attackDamage(le)) {
-									if (pause) {
-										mc.interactionManager.attackEntity(player, le);
-										pause = false;
-									} else {
-										pause = true;
-										return;
-									}
-								}
-							}
-						}
-					}
+		label: while (it.hasNext()) {
+			final Entity entity = it.next();
+			if (!(entity instanceof LivingEntity)) {
+				continue label;
+			}
+			final LivingEntity le = (LivingEntity) entity;
+			if (le.equals(player)) {
+				continue label;
+			}
+			if (player.distanceTo(le) > range) {
+				continue label;
+			}
+			if (le.isDead()) {
+				continue label;
+			}
+			if (le.hurtTime > 0) {
+				continue label;
+			}
+			if (le.getHealth() < attackDamage(le)) {
+				mc.interactionManager.attackEntity(player, le);
+			}
+			if (player.getAttackCooldownProgress(0) == 1) {
+				if (pause) {
+					mc.interactionManager.attackEntity(player, le);
+					pause = false;
+					continue label;
 				}
 			}
+			pause = true;
 		}
 	}
 
@@ -101,10 +107,16 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		final float damageWithHand = (float) player.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 		Multimap<EntityAttribute, EntityAttributeModifier> map = player.getMainHandStack().getAttributeModifiers(EquipmentSlot.MAINHAND);
 		if (!map.isEmpty()) {
-			Entry<EntityAttribute, EntityAttributeModifier> entry = map.entries().iterator().next();
-			EntityAttributeModifier e = (EntityAttributeModifier) entry.getValue();
-			final float damageWithItem = (float) e.getValue();
-			return damageWithHand + damageWithItem;
+			Iterator<Entry<EntityAttribute, EntityAttributeModifier>> it = map.entries().iterator();
+			while (it.hasNext()) {
+				Entry<EntityAttribute, EntityAttributeModifier> entry = it.next();
+				EntityAttribute a = (EntityAttribute) entry.getKey();
+				if (a.getTranslationKey().equals("attribute.name.generic.attack_damage")) {
+					EntityAttributeModifier m = (EntityAttributeModifier) entry.getValue();
+					final float damageWithItem = (float) m.getValue();
+					return damageWithHand + damageWithItem;
+				}
+			}
 		}
 		return damageWithHand;
 	}
