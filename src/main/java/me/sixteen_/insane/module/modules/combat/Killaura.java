@@ -19,6 +19,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 
 /**
  * @author 16_
@@ -58,35 +59,27 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		case MULTI:
 			multiAura();
 			break;
+		case ONLYPACKET:
+			onlyPacketAura();
+			break;
 		}
 	}
 
 	private void fastAura() {
 		final Iterator<Entity> it = mc.world.getEntities().iterator();
-		label: while (it.hasNext()) {
+		while (it.hasNext()) {
 			final Entity entity = it.next();
-			if (!(entity instanceof LivingEntity)) {
-				continue label;
-			}
-			final LivingEntity le = (LivingEntity) entity;
-			if (le.equals(player)) {
-				continue label;
-			}
-			if (player.distanceTo(le) > range) {
-				continue label;
-			}
-			if (le.isDead()) {
-				continue label;
-			}
-			if (le.hurtTime > 0) {
-				continue label;
-			}
-			if (le.getHealth() < attackDamage(le)) {
-				mc.interactionManager.attackEntity(player, le);
-				Logger.getLogger().addChatMessage(attackDamage(le) + "", true);
-			}
-			if (player.getAttackCooldownProgress(0F) >= 1F) {
-				mc.interactionManager.attackEntity(player, le);
+			if (entity instanceof LivingEntity) {
+				final LivingEntity le = (LivingEntity) entity;
+				if (filter(le)) {
+					if (le.getHealth() < attackDamage(le)) {
+						mc.interactionManager.attackEntity(player, le);
+						Logger.getLogger().addChatMessage(attackDamage(le) + "", true);
+					}
+					if (player.getAttackCooldownProgress(0F) >= 1F) {
+						mc.interactionManager.attackEntity(player, le);
+					}
+				}
 			}
 		}
 	}
@@ -94,27 +87,45 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	private void multiAura() {
 		final Iterator<Entity> it = mc.world.getEntities().iterator();
 		if (player.getAttackCooldownProgress(0F) >= 1F) {
-			label: while (it.hasNext()) {
+			while (it.hasNext()) {
 				final Entity entity = it.next();
-				if (!(entity instanceof LivingEntity)) {
-					continue label;
+				if (entity instanceof LivingEntity) {
+					final LivingEntity le = (LivingEntity) entity;
+					if (filter(le)) {
+						mc.interactionManager.attackEntity(player, le);
+					}
 				}
-				final LivingEntity le = (LivingEntity) entity;
-				if (le.equals(player)) {
-					continue label;
-				}
-				if (player.distanceTo(le) > range) {
-					continue label;
-				}
-				if (le.isDead()) {
-					continue label;
-				}
-				if (le.hurtTime > 0) {
-					continue label;
-				}
-				mc.interactionManager.attackEntity(player, le);
 			}
 		}
+	}
+
+	private void onlyPacketAura() {
+		final Iterator<Entity> it = mc.world.getEntities().iterator();
+		while (it.hasNext()) {
+			final Entity entity = it.next();
+			if (entity instanceof LivingEntity) {
+				final LivingEntity le = (LivingEntity) entity;
+				if (filter(le)) {
+					mc.getNetworkHandler().sendPacket(new PlayerInteractEntityC2SPacket(le, player.isSneaking()));
+				}
+			}
+		}
+	}
+
+	private boolean filter(LivingEntity le) {
+		if (le.equals(player)) {
+			return false;
+		}
+		if (player.distanceTo(le) > range) {
+			return false;
+		}
+		if (le.hurtTime > 0) {
+			return false;
+		}
+		if (le.isDead()) {
+			return false;
+		}
+		return true;
 	}
 
 	private float attackDamage(final LivingEntity target) {
@@ -177,7 +188,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 
 	private enum Mode {
 
-		FAST("Fast"), MULTI("Multi");
+		FAST("Fast"), MULTI("Multi"), ONLYPACKET("OnlyPacket");
 
 		private final String modeName;
 
