@@ -2,6 +2,7 @@ package me.sixteen_.insane.module;
 
 import java.util.List;
 
+import me.sixteen_.insane.module.modules.combat.Criticals;
 import me.sixteen_.insane.module.modules.combat.Killaura;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
@@ -19,6 +20,7 @@ public class ModuleManager {
 		addModule(new SprintStatus());
 		addModule(new Fullbright());
 		addModule(new ArrayList());
+		addModule(new Criticals());
 		addModule(new Killaura());
 		addModule(new Inspect());
 	}
