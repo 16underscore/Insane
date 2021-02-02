@@ -27,7 +27,6 @@ public class Killaura extends Module implements ClientPlayerTickable {
 
 	private MinecraftClient mc;
 	private ClientPlayerEntity player;
-	private boolean pause;
 	private float range;
 
 	public Killaura() {
@@ -39,7 +38,6 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		mc = MinecraftClient.getInstance();
 		player = mc.player;
 		range = 6F;
-		pause = false;
 	}
 
 	@Override
@@ -72,15 +70,11 @@ public class Killaura extends Module implements ClientPlayerTickable {
 			}
 			if (le.getHealth() < attackDamage(le)) {
 				mc.interactionManager.attackEntity(player, le);
+				Logger.getLogger().addChatMessage(attackDamage(le) + "", true);
 			}
-			if (player.getAttackCooldownProgress(0) == 1) {
-				if (pause) {
-					mc.interactionManager.attackEntity(player, le);
-					pause = false;
-					continue label;
-				}
+			if (player.getAttackCooldownProgress(0F) >= 1F) {
+				mc.interactionManager.attackEntity(player, le);
 			}
-			pause = true;
 		}
 	}
 
@@ -89,7 +83,6 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		float ench;
 		float cool;
 		damage = attackDamage();
-		Logger.getLogger().addChatMessage(damage + "", true);
 		ench = EnchantmentHelper.getAttackDamage(player.getMainHandStack(), target.getGroup());
 		cool = player.getAttackCooldownProgress(0.5F);
 		damage *= 0.2F + cool * cool * 0.8F;
