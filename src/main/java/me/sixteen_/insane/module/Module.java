@@ -1,5 +1,6 @@
 package me.sixteen_.insane.module;
 
+import me.sixteen_.insane.utils.Logger;
 import net.minecraft.client.util.InputUtil;
 
 /**
@@ -49,11 +50,11 @@ public abstract class Module {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+
 	public void setKeybind(final InputUtil.Key key) {
 		keybind = key;
 	}
-	
+
 	public InputUtil.Key getKeybind() {
 		return keybind;
 	}
@@ -61,19 +62,30 @@ public abstract class Module {
 	public boolean isVisible() {
 		return visible;
 	}
-	
+
 	protected void enable() {
 		enabled = true;
 		onEnable();
 	}
-	
+
 	protected void disable() {
 		enabled = false;
 		onDisable();
 	}
 	
-	public void onUpdate() {}
-	protected void onEnable() {}
-	protected void onDisable() {}
-	protected void onShutdown() {}
+	public void setMode(final String s) {
+		Logger.getLogger().addChatMessage("No modes available", true);
+	}
+
+	public void onUpdate() {
+	}
+
+	protected void onEnable() {
+	}
+
+	protected void onDisable() {
+	}
+
+	protected void onShutdown() {
+	}
 }
