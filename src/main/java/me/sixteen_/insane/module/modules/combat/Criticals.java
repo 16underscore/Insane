@@ -33,7 +33,7 @@ public class Criticals extends Module {
 		sendPos(posX, posY, posZ, false);
 	}
 
-	private void sendPos(double x, double y, double z, boolean onGround) {
+	private void sendPos(final double x, final double y, final double z, final boolean onGround) {
 		player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionOnly(x, y, z, onGround));
 	}
 }
