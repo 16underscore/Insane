@@ -33,7 +33,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 
 	public Killaura() {
 		super("Killaura", ModuleCategory.COMBAT);
-		mode = Mode.MULTI;
+		mode = Mode.FAST;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 				if (filter(le)) {
 					if (le.getHealth() < attackDamage(le)) {
 						mc.interactionManager.attackEntity(player, le);
-						Logger.getLogger().addChatMessage(attackDamage(le) + "", true);
+						Logger.getLogger().addChatMessage(attackDamage(le) + "");
 					}
 					if (player.getAttackCooldownProgress(0F) >= 1F) {
 						mc.interactionManager.attackEntity(player, le);
@@ -179,11 +179,11 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		for (Mode m : Mode.values()) {
 			if (m.toString().equalsIgnoreCase(s)) {
 				mode = m;
-				Logger.getLogger().addChatMessage(String.format("Mode %s activated", s), true);
+				Logger.getLogger().addChatMessage(String.format("Mode %s activated", s));
 				return;
 			}
 		}
-		Logger.getLogger().addChatMessage(String.format("Mode %s not found!", s), true);
+		Logger.getLogger().addChatMessage(String.format("Mode %s not found!", s));
 	}
 
 	private enum Mode {

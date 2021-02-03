@@ -14,15 +14,8 @@ public class Logger {
 	private final MinecraftClient mc = MinecraftClient.getInstance();
 	private final Insane insane = Insane.getInsane();
 
-	public void addChatMessage(String message, final boolean prefix) {
-		if (prefix) {
-			message = String.format("%s : %s", insane.getClientName(), message);
-		}
-		addChatMessage(message);
-	}
-	
-	public void addChatMessage(final String message) {
-		mc.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(message), mc.player.getUuid());
+	public void addChatMessage(final Object message) {
+		mc.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(String.format("[%s] %s", insane.getClientName(), message)), mc.player.getUuid());
 	}
 
 	public static Logger getLogger() {
