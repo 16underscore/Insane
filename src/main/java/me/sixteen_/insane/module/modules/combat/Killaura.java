@@ -7,7 +7,6 @@ import com.google.common.collect.Multimap;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
-import me.sixteen_.insane.utils.Logger;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.ClientPlayerTickable;
@@ -74,7 +73,6 @@ public class Killaura extends Module implements ClientPlayerTickable {
 				if (filter(le)) {
 					if (le.getHealth() < attackDamage(le)) {
 						mc.interactionManager.attackEntity(player, le);
-						Logger.getLogger().addChatMessage(attackDamage(le) + "");
 					}
 					if (player.getAttackCooldownProgress(0F) >= 1F) {
 						mc.interactionManager.attackEntity(player, le);
@@ -172,11 +170,9 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		for (Mode m : Mode.values()) {
 			if (m.toString().equalsIgnoreCase(s)) {
 				mode = m;
-				Logger.getLogger().addChatMessage(String.format("Mode %s activated", s));
 				return;
 			}
 		}
-		Logger.getLogger().addChatMessage(String.format("Mode %s not found!", s));
 	}
 
 	private enum Mode {
