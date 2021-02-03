@@ -14,12 +14,14 @@ import me.sixteen_.insane.utils.Logger;
 public class CommandManager {
 
 	private final List<Command> commands = new java.util.ArrayList<Command>();
+	private Logger logger;
 
 	public CommandManager() {
 		addCommand(new ToggleCommand());
 		addCommand(new BindCommand());
 		addCommand(new HelpCommand());
 		addCommand(new ModeCommand());
+		logger = Logger.getLogger();
 	}
 
 	private void addCommand(final Command cmd) {
@@ -42,7 +44,7 @@ public class CommandManager {
 					try {
 						command.runCommand(cmd);
 					} catch (Exception e) {
-						Logger.getLogger().addChatMessage("Invalid parameters", true);
+						logger.addChatMessage(command.commandSyntax());
 					}
 					return;
 				}

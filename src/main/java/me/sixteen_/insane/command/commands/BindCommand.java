@@ -25,4 +25,9 @@ public class BindCommand extends Command {
 		}
 		m.setKeybind(key);
 	}
+
+	@Override
+	public String commandSyntax() {
+		return String.format(".%s <Module> <Key>", getDefaultName());
+	}
 }

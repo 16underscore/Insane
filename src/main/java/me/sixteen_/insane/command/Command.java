@@ -17,6 +17,7 @@ public abstract class Command {
 	}
 
 	public abstract void runCommand(final String... param);
+	public abstract String commandSyntax();
 
 	public String getDefaultName() {
 		return names.get(0);

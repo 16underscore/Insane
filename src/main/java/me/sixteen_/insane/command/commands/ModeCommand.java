@@ -18,4 +18,9 @@ public class ModeCommand extends Command {
 		final Module m = Insane.getInsane().getModuleManager().getModuleByName(param[1]);
 		m.setMode(param[2]);
 	}
+
+	@Override
+	public String commandSyntax() {
+		return String.format(".%s <Module> <Mode>", getDefaultName());
+	}
 }

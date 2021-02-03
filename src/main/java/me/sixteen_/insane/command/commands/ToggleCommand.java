@@ -18,4 +18,9 @@ public class ToggleCommand extends Command {
 		final Module m = Insane.getInsane().getModuleManager().getModuleByName(param[1]);
 		m.toggle();
 	}
+
+	@Override
+	public String commandSyntax() {
+		return String.format(".%s <Module>", getDefaultName());
+	}
 }
