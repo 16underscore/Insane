@@ -1,6 +1,8 @@
 package me.sixteen_.insane.module.modules.combat;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 import com.google.common.collect.Multimap;
@@ -61,69 +63,89 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		case ONLYPACKET:
 			onlyPacketAura();
 			break;
+		case LEGIT:
+			legitAura();
+			break;
 		}
 	}
 
 	private void fastAura() {
-		final Iterator<Entity> it = mc.world.getEntities().iterator();
-		while (it.hasNext()) {
-			final Entity entity = it.next();
-			if (entity instanceof LivingEntity) {
-				final LivingEntity le = (LivingEntity) entity;
-				if (filter(le)) {
-					if (le.getHealth() < attackDamage(le)) {
-						mc.interactionManager.attackEntity(player, le);
-					}
-					if (player.getAttackCooldownProgress(0F) >= 1F) {
-						mc.interactionManager.attackEntity(player, le);
-					}
-				}
+		for (LivingEntity target : getTargets()) {
+			if (target.getHealth() < attackDamage(target) || player.getAttackCooldownProgress(0F) >= 1F) {
+				mc.interactionManager.attackEntity(player, target);
 			}
 		}
 	}
 
 	private void multiAura() {
-		final Iterator<Entity> it = mc.world.getEntities().iterator();
-		if (player.getAttackCooldownProgress(0F) >= 1F) {
-			while (it.hasNext()) {
-				final Entity entity = it.next();
-				if (entity instanceof LivingEntity) {
-					final LivingEntity le = (LivingEntity) entity;
-					if (filter(le)) {
-						mc.interactionManager.attackEntity(player, le);
-					}
-				}
-			}
+		if (player.getAttackCooldownProgress(0F) < 1F) {
+			return;
+		}
+		for (LivingEntity target : getTargets()) {
+			mc.interactionManager.attackEntity(player, target);
 		}
 	}
 
 	private void onlyPacketAura() {
-		final Iterator<Entity> it = mc.world.getEntities().iterator();
-		while (it.hasNext()) {
-			final Entity entity = it.next();
-			if (entity instanceof LivingEntity) {
-				final LivingEntity le = (LivingEntity) entity;
-				if (filter(le)) {
-					mc.getNetworkHandler().sendPacket(new PlayerInteractEntityC2SPacket(le, player.isSneaking()));
-				}
-			}
+		for (LivingEntity target : getTargets()) {
+			mc.getNetworkHandler().sendPacket(new PlayerInteractEntityC2SPacket(target, player.isSneaking()));
 		}
 	}
 
-	private boolean filter(LivingEntity le) {
-		if (le.equals(player)) {
-			return false;
+	private void legitAura() {
+		if (player.isUsingItem()) {
+			return;
 		}
-		if (player.distanceTo(le) > range) {
-			return false;
+		if (player.isBlocking()) {
+			return;
 		}
-		if (le.hurtTime > 0) {
-			return false;
+		if (player.getAttackCooldownProgress(0F) < 1F) {
+			return;
 		}
-		if (le.isDead()) {
-			return false;
+		LivingEntity nearestTarget = null;
+		for (LivingEntity target : getTargets()) {
+			if (nearestTarget == null) {
+				nearestTarget = target;
+			} else if (player.distanceTo(target) < player.distanceTo(nearestTarget)) {
+				nearestTarget = target;
+			}
 		}
-		return true;
+		if (nearestTarget == null) {
+			return;
+		}
+		if (!mc.player.canSee(nearestTarget)) {
+			return;
+		}
+		mc.interactionManager.attackEntity(player, nearestTarget);
+	}
+
+	private List<LivingEntity> getTargets() {
+		final Iterator<Entity> it = mc.world.getEntities().iterator();
+		final List<LivingEntity> targets = new ArrayList<LivingEntity>();
+		label: while (it.hasNext()) {
+			final Entity e = it.next();
+			if (e == null) {
+				continue label;
+			}
+			if (!(e instanceof LivingEntity)) {
+				continue label;
+			}
+			final LivingEntity le = (LivingEntity) e;
+			if (le.equals(player)) {
+				continue label;
+			}
+			if (player.distanceTo(le) > range) {
+				continue label;
+			}
+			if (le.hurtTime > 0) {
+				continue label;
+			}
+			if (le.isDead()) {
+				continue label;
+			}
+			targets.add(le);
+		}
+		return targets;
 	}
 
 	private float attackDamage(final LivingEntity target) {
@@ -177,7 +199,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 
 	private enum Mode {
 
-		FAST("Fast"), MULTI("Multi"), ONLYPACKET("OnlyPacket");
+		FAST("Fast"), MULTI("Multi"), ONLYPACKET("OnlyPacket"), LEGIT("Legit");
 
 		private final String modeName;
 
