@@ -52,7 +52,7 @@ public class ModuleManager {
 	}
 	
 	public void shutdown() {
-		for (Module m : modules) {
+		for (final Module m : modules) {
 			m.onShutdown();
 		}
 	}
