@@ -1,6 +1,5 @@
 package me.sixteen_.insane.module;
 
-import me.sixteen_.insane.utils.Logger;
 import net.minecraft.client.util.InputUtil;
 
 /**
