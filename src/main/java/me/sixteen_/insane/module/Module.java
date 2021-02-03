@@ -74,7 +74,11 @@ public abstract class Module {
 	}
 	
 	public void setMode(final String s) {
-		Logger.getLogger().addChatMessage("No modes available", true);
+		Logger.getLogger().addChatMessage("No modes available");
+	}
+	
+	public String getMode() {
+		return null;
 	}
 
 	public void onUpdate() {
