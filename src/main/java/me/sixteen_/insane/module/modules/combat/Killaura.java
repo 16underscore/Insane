@@ -166,13 +166,6 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		}
 		return damageWithHand;
 	}
-	/*
-	 * Buggy version
-	 * 
-	 * private float genericAttackDamage() { float f = 1F; Iterator<Text> it = player.getMainHandStack().getTooltip(player,
-	 * TooltipContext.Default.NORMAL).iterator(); while (it.hasNext()) { final String text = it.next().getString(); if
-	 * (text.contains("Attack Damage")) { f = Float.parseFloat(text.split(" ")[1]); } } return f; }
-	 */
 
 	@Override
 	public void setMode(String s) {
