@@ -2,7 +2,6 @@ package me.sixteen_.insane.module.modules.render;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
-import me.sixteen_.insane.utils.Logger;
 import net.minecraft.client.MinecraftClient;
 
 /**
@@ -56,12 +55,10 @@ public class Fullbright extends Module {
 			if (m.toString().equalsIgnoreCase(s)) {
 				onDisable();
 				mode = m;
-				Logger.getLogger().addChatMessage(String.format("Mode %s activated", s));
 				onEnable();
 				return;
 			}
 		}
-		Logger.getLogger().addChatMessage(String.format("Mode %s not found!", s));
 	}
 
 	private enum Mode {
