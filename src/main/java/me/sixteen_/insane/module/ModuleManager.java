@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.sixteen_.insane.module.modules.combat.Criticals;
 import me.sixteen_.insane.module.modules.combat.Killaura;
+import me.sixteen_.insane.module.modules.movement.Fly;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
 import me.sixteen_.insane.module.modules.render.Inspect;
@@ -23,6 +24,7 @@ public class ModuleManager {
 		addModule(new Criticals());
 		addModule(new Killaura());
 		addModule(new Inspect());
+		addModule(new Fly());
 	}
 
 	private void addModule(final Module module) {
@@ -50,7 +52,7 @@ public class ModuleManager {
 		}
 		return null;
 	}
-	
+
 	public void shutdown() {
 		for (final Module m : modules) {
 			m.onShutdown();
