@@ -21,6 +21,8 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 /**
  * @author 16_
@@ -102,21 +104,52 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		if (player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}
-		LivingEntity nearestTarget = null;
+		final LivingEntity target = getTarget(Filter.NEAREST);
+		if (target == null) {
+			return;
+		}
+		if (!player.canSee(target)) {
+			return;
+		}
+		lookAtTarget(target);
+		mc.interactionManager.attackEntity(player, target);
+	}
+
+	private void lookAtTarget(LivingEntity le) {
+		final Vec3d playerPos = mc.player.getPos();
+		final Vec3d entityPos = le.getPos();
+		final double deltaX = entityPos.getX() - playerPos.getX();
+		final double deltaY = entityPos.getY() - playerPos.getY();
+		final double deltaZ = entityPos.getZ() - playerPos.getZ();
+		final double distanceXZ = (double) MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+		player.pitch = MathHelper.wrapDegrees((float) (-(MathHelper.atan2(deltaY, distanceXZ) * 57.2957763671875D)));
+		player.yaw = MathHelper.wrapDegrees((float) (MathHelper.atan2(deltaZ, deltaX) * 57.2957763671875D) - 90.0F);
+	}
+
+	private LivingEntity getTarget(Filter f) {
+		LivingEntity filteredTarget = null;
+		boolean sort = false;
 		for (LivingEntity target : getTargets()) {
-			if (nearestTarget == null) {
-				nearestTarget = target;
-			} else if (player.distanceTo(target) < player.distanceTo(nearestTarget)) {
-				nearestTarget = target;
+			if (filteredTarget == null) {
+				filteredTarget = target;
+			} else {
+				switch (f) {
+				case NEAREST:
+					sort = player.squaredDistanceTo(target) < player.squaredDistanceTo(filteredTarget);
+					break;
+				case LOWESTHP:
+					sort = target.getHealth() < filteredTarget.getHealth();
+					break;
+				case MOVE:
+					sort = target.forwardSpeed < filteredTarget.forwardSpeed;
+					break;
+				}
+				if (sort) {
+					filteredTarget = target;
+				}
 			}
 		}
-		if (nearestTarget == null) {
-			return;
-		}
-		if (!mc.player.canSee(nearestTarget)) {
-			return;
-		}
-		mc.interactionManager.attackEntity(player, nearestTarget);
+		return filteredTarget;
 	}
 
 	private List<LivingEntity> getTargets() {
@@ -134,7 +167,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 			if (le.equals(player)) {
 				continue label;
 			}
-			if (player.distanceTo(le) > range) {
+			if (!player.isInRange(le, range)) {
 				continue label;
 			}
 			if (le.hurtTime > 0) {
@@ -195,6 +228,10 @@ public class Killaura extends Module implements ClientPlayerTickable {
 				return;
 			}
 		}
+	}
+
+	private enum Filter {
+		NEAREST, LOWESTHP, MOVE;
 	}
 
 	private enum Mode {
