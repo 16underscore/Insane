@@ -21,6 +21,8 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -32,18 +34,20 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	private Mode mode;
 	private MinecraftClient mc;
 	private ClientPlayerEntity player;
+	private final float pi = 3.14159265F;
+	private final float radiansToDegrees = 180 / pi;
 	private float range;
 
 	public Killaura() {
 		super("Killaura", ModuleCategory.COMBAT);
-		mode = Mode.FAST;
+		mode = Mode.LEGIT;
 	}
 
 	@Override
 	protected void onEnable() {
 		mc = MinecraftClient.getInstance();
 		player = mc.player;
-		range = 6F;
+		range = 3.5F;
 	}
 
 	@Override
@@ -75,6 +79,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		for (LivingEntity target : getTargets()) {
 			if (target.getHealth() < attackDamage(target) || player.getAttackCooldownProgress(0F) >= 1F) {
 				mc.interactionManager.attackEntity(player, target);
+				player.swingHand(Hand.MAIN_HAND);
 			}
 		}
 	}
@@ -85,6 +90,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		}
 		for (LivingEntity target : getTargets()) {
 			mc.interactionManager.attackEntity(player, target);
+			player.swingHand(Hand.MAIN_HAND);
 		}
 	}
 
@@ -111,8 +117,12 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		if (!player.canSee(target)) {
 			return;
 		}
+		if (target.isInvisible()) {
+			return;
+		}
 		lookAtTarget(target);
 		mc.interactionManager.attackEntity(player, target);
+		player.swingHand(Hand.MAIN_HAND);
 	}
 
 	private void lookAtTarget(LivingEntity le) {
@@ -121,11 +131,14 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		final double deltaX = entityPos.getX() - playerPos.getX();
 		final double deltaY = entityPos.getY() - playerPos.getY();
 		final double deltaZ = entityPos.getZ() - playerPos.getZ();
-		final double distanceXZ = (double) MathHelper.sqrt(deltaX * deltaX + deltaZ * deltaZ);
-		player.pitch = MathHelper.wrapDegrees((float) (-(MathHelper.atan2(deltaY, distanceXZ) * 57.2957763671875D)));
-		player.yaw = MathHelper.wrapDegrees((float) (MathHelper.atan2(deltaZ, deltaX) * 57.2957763671875D) - 90.0F);
+		final double distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees);
+		final float yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
+		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, player.isOnGround()));
+		mc.cameraEntity.pitch = pitch;
+		mc.cameraEntity.yaw = yaw;
 	}
-
+	
 	private LivingEntity getTarget(Filter f) {
 		LivingEntity filteredTarget = null;
 		boolean sort = false;
@@ -139,9 +152,6 @@ public class Killaura extends Module implements ClientPlayerTickable {
 					break;
 				case LOWESTHP:
 					sort = target.getHealth() < filteredTarget.getHealth();
-					break;
-				case MOVE:
-					sort = target.forwardSpeed < filteredTarget.forwardSpeed;
 					break;
 				}
 				if (sort) {
@@ -231,7 +241,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private enum Filter {
-		NEAREST, LOWESTHP, MOVE;
+		NEAREST, LOWESTHP;
 	}
 
 	private enum Mode {
