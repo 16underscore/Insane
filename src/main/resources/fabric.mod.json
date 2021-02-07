@@ -18,7 +18,7 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "client": [
     	"me.sixteen_.insane.Insane"
     ]
   },

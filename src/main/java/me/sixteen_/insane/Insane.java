@@ -5,13 +5,13 @@ import java.awt.Color;
 import me.sixteen_.insane.command.CommandManager;
 import me.sixteen_.insane.module.ModuleManager;
 import me.sixteen_.insane.ntrfc.IMinecraftClient;
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 
 /**
  * @author 16_
  */
-public class Insane implements ModInitializer {
+public class Insane implements ClientModInitializer {
 
 	// Instance
 	private static Insane insane;
@@ -29,6 +29,11 @@ public class Insane implements ModInitializer {
 	private final CommandManager commandManager;
 	
 	private final IMinecraftClient imc = (IMinecraftClient) MinecraftClient.getInstance();
+	
+	@Override
+	public void onInitializeClient() {
+		insane = new Insane();		
+	}
 
 	public Insane() {
 		moduleManager = new ModuleManager();
@@ -37,11 +42,6 @@ public class Insane implements ModInitializer {
 		clientAccentColor = new Color(255, 85, 255, 191);
 		clientName = "Insane";
 		clientVersion = "b1";
-	}
-
-	@Override
-	public void onInitialize() {
-		insane = new Insane();
 	}
 
 	public String getClientName() {
