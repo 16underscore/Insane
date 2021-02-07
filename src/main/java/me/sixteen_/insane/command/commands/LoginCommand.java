@@ -54,7 +54,7 @@ public class LoginCommand extends Command {
 		if (mail == null || password == null) {
 			return true;
 		}
-		if (mail.isBlank() || password.isBlank()) {
+		if (mail.isEmpty() || password.isEmpty()) {
 			return true;
 		}
 		if (!mail.contains("@") || !mail.contains(".")) {
