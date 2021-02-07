@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import me.sixteen_.insane.command.CommandManager;
 import me.sixteen_.insane.module.ModuleManager;
+import me.sixteen_.insane.ntrfc.IMinecraftClient;
+import net.minecraft.client.MinecraftClient;
 
 /**
  * @author 16_
@@ -24,6 +26,8 @@ public class Insane {
 	// Managers
 	private final ModuleManager moduleManager;
 	private final CommandManager commandManager;
+	
+	private final IMinecraftClient imc = (IMinecraftClient) MinecraftClient.getInstance();
 
 	public Insane() {
 		insane = this;
@@ -65,5 +69,9 @@ public class Insane {
 	
 	public void shutdown() {
 		moduleManager.shutdown();
+	}
+
+	public IMinecraftClient getIMinecraftClient() {
+		return imc;
 	}
 }
