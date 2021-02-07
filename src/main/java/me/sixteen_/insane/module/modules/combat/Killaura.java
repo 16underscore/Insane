@@ -47,7 +47,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	protected void onEnable() {
 		mc = MinecraftClient.getInstance();
 		player = mc.player;
-		range = 3.5F;
+		range = 3.7F;
 	}
 
 	@Override
@@ -101,6 +101,9 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private void legitAura() {
+		if (player.isDead()) {
+			return;
+		}
 		if (player.isUsingItem()) {
 			return;
 		}
@@ -117,7 +120,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		if (!player.canSee(target)) {
 			return;
 		}
-		if (target.isInvisible()) {
+		if (target.isInvisible() && target.getArmorVisibility() == 0 && target.getMainHandStack().isEmpty()) {
 			return;
 		}
 		lookAtTarget(target);
@@ -129,14 +132,14 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		final Vec3d playerPos = mc.player.getPos();
 		final Vec3d entityPos = le.getPos();
 		final double deltaX = entityPos.getX() - playerPos.getX();
-		final double deltaY = entityPos.getY() - playerPos.getY();
+		final double deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + player.getEyeHeight(player.getPose()));
 		final double deltaZ = entityPos.getZ() - playerPos.getZ();
 		final double distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees);
 		final float yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
 		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, player.isOnGround()));
-		mc.cameraEntity.pitch = pitch;
-		mc.cameraEntity.yaw = yaw;
+		mc.player.pitch = pitch;
+		mc.player.yaw = yaw;
 	}
 	
 	private LivingEntity getTarget(Filter f) {
@@ -165,26 +168,29 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	private List<LivingEntity> getTargets() {
 		final Iterator<Entity> it = mc.world.getEntities().iterator();
 		final List<LivingEntity> targets = new ArrayList<LivingEntity>();
-		label: while (it.hasNext()) {
+		while (it.hasNext()) {
 			final Entity e = it.next();
 			if (e == null) {
-				continue label;
+				continue;
 			}
 			if (!(e instanceof LivingEntity)) {
-				continue label;
+				continue;
 			}
 			final LivingEntity le = (LivingEntity) e;
 			if (le.equals(player)) {
-				continue label;
+				continue;
 			}
 			if (!player.isInRange(le, range)) {
-				continue label;
+				continue;
 			}
 			if (le.hurtTime > 0) {
-				continue label;
+				continue;
 			}
 			if (le.isDead()) {
-				continue label;
+				continue;
+			}
+			if (le.isInvulnerable()) {
+				continue;
 			}
 			targets.add(le);
 		}
