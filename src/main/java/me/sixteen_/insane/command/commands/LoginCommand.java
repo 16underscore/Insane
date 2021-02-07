@@ -52,15 +52,15 @@ public class LoginCommand extends Command {
 
 	private boolean isInvalidInput(final String mail, final String password) {
 		if (mail == null || password == null) {
-			return false;
+			return true;
 		}
 		if (mail.isBlank() || password.isBlank()) {
-			return false;
+			return true;
 		}
 		if (!mail.contains("@") || !mail.contains(".")) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
