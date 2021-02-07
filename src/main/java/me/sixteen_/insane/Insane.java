@@ -1,7 +1,5 @@
 package me.sixteen_.insane;
 
-import java.awt.Color;
-
 import me.sixteen_.insane.command.CommandManager;
 import me.sixteen_.insane.module.ModuleManager;
 import me.sixteen_.insane.ntrfc.IMinecraftClient;
@@ -20,26 +18,20 @@ public class Insane implements ClientModInitializer {
 	private final String clientName;
 	private final String clientVersion;
 	
-	// Client colors
-	private final Color clientColor;
-	private final Color clientAccentColor;
-	
 	// Managers
 	private final ModuleManager moduleManager;
 	private final CommandManager commandManager;
 	
 	private final IMinecraftClient imc = (IMinecraftClient) MinecraftClient.getInstance();
-	
+
 	@Override
 	public void onInitializeClient() {
-		insane = new Insane();		
+		insane = new Insane();
 	}
 
 	public Insane() {
 		moduleManager = new ModuleManager();
 		commandManager = new CommandManager();
-		clientColor = new Color(20, 20, 20, 191);
-		clientAccentColor = new Color(255, 85, 255, 191);
 		clientName = "Insane";
 		clientVersion = "b1";
 	}
@@ -50,14 +42,6 @@ public class Insane implements ClientModInitializer {
 
 	public String getClientVersion() {
 		return clientVersion;
-	}
-
-	public Color getClientColor() {
-		return clientColor;
-	}
-
-	public Color getClientAccentColor() {
-		return clientAccentColor;
 	}
 
 	public ModuleManager getModuleManager() {
