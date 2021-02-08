@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.Multimap;
 
 import me.sixteen_.insane.module.Module;
@@ -142,6 +144,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		mc.player.yaw = yaw;
 	}
 
+	@Nullable
 	private LivingEntity getTarget(Filter f) {
 		LivingEntity filteredTarget = null;
 		boolean sort = false;
