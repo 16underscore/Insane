@@ -141,7 +141,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		mc.player.pitch = pitch;
 		mc.player.yaw = yaw;
 	}
-	
+
 	private LivingEntity getTarget(Filter f) {
 		LivingEntity filteredTarget = null;
 		boolean sort = false;
@@ -153,9 +153,11 @@ public class Killaura extends Module implements ClientPlayerTickable {
 				case NEAREST:
 					sort = player.squaredDistanceTo(target) < player.squaredDistanceTo(filteredTarget);
 					break;
-				case LOWESTHP:
+				case SHORTESTJOBFIRST:
 					sort = target.getHealth() < filteredTarget.getHealth();
 					break;
+				case FIRSTCOMEFIRSTSERVE:
+					return filteredTarget;
 				}
 				if (sort) {
 					filteredTarget = target;
@@ -247,7 +249,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private enum Filter {
-		NEAREST, LOWESTHP;
+		NEAREST, SHORTESTJOBFIRST, FIRSTCOMEFIRSTSERVE;
 	}
 
 	private enum Mode {
