@@ -7,6 +7,8 @@ import java.util.List;
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -14,6 +16,7 @@ import net.minecraft.client.util.math.MatrixStack;
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class ArrayList extends Module {
 
 	private List<Module> modules;

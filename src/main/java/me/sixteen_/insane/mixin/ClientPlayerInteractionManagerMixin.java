@@ -8,8 +8,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.modules.combat.Criticals;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 
+/**
+ * @author 16_
+ */
+@Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerInteractionManager.class)
 public abstract class ClientPlayerInteractionManagerMixin {
 

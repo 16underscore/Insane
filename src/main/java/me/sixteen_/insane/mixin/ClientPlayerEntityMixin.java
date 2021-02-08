@@ -10,12 +10,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.module.modules.combat.Killaura;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.ClientPlayerTickable;
 
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin {
 	

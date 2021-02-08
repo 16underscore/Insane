@@ -9,10 +9,13 @@ import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
 import me.sixteen_.insane.module.modules.render.Inspect;
 import me.sixteen_.insane.module.modules.render.SprintStatus;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class ModuleManager {
 
 	private final List<Module> modules = new java.util.ArrayList<Module>();

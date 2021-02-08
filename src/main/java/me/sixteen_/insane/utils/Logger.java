@@ -1,6 +1,8 @@
 package me.sixteen_.insane.utils;
 
 import me.sixteen_.insane.Insane;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.LiteralText;
@@ -8,6 +10,7 @@ import net.minecraft.text.LiteralText;
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class Logger {
 
 	private static final Logger LOGGER = new Logger();

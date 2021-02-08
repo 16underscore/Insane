@@ -9,11 +9,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleManager;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Keyboard;
 
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 @Mixin(Keyboard.class)
 public abstract class KeyboardMixin {
 

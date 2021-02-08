@@ -9,6 +9,8 @@ import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.Command;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.SaveLevelScreen;
 import net.minecraft.client.gui.screen.TitleScreen;
@@ -18,6 +20,7 @@ import net.minecraft.text.TranslatableText;
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class LoginCommand extends Command {
 
 	private MinecraftClient mc;

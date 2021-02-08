@@ -11,6 +11,8 @@ import com.google.common.collect.Multimap;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.ClientPlayerTickable;
@@ -31,6 +33,7 @@ import net.minecraft.util.math.Vec3d;
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class Killaura extends Module implements ClientPlayerTickable {
 
 	private Mode mode;

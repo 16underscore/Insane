@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.module.modules.render.Inspect;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.HeldItemRenderer;
@@ -17,6 +19,7 @@ import net.minecraft.util.Hand;
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 @Mixin(HeldItemRenderer.class)
 public abstract class HeldItemRendererMixin {
 

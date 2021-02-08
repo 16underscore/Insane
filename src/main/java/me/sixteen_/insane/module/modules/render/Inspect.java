@@ -2,6 +2,8 @@ package me.sixteen_.insane.module.modules.render;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.MathHelper;
@@ -10,6 +12,7 @@ import net.minecraft.util.math.Quaternion;
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class Inspect extends Module {
 
 	private float distance;

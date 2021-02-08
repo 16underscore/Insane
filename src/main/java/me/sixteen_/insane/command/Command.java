@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public abstract class Command {
 
 	private final List<String> names = new ArrayList<String>();

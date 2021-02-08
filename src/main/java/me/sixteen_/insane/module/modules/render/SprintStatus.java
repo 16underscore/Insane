@@ -2,6 +2,8 @@ package me.sixteen_.insane.module.modules.render;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -9,6 +11,7 @@ import net.minecraft.client.util.math.MatrixStack;
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class SprintStatus extends Module {
 
 	private MinecraftClient mc;

@@ -2,6 +2,8 @@ package me.sixteen_.insane.module.modules.combat;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -9,6 +11,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class Criticals extends Module {
 
 	private MinecraftClient mc;

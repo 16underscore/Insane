@@ -4,11 +4,14 @@ import me.sixteen_.insane.command.CommandManager;
 import me.sixteen_.insane.module.ModuleManager;
 import me.sixteen_.insane.ntrfc.IMinecraftClient;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class Insane implements ClientModInitializer {
 
 	// Instance

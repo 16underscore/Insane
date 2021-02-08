@@ -7,10 +7,13 @@ import me.sixteen_.insane.command.commands.LoginCommand;
 import me.sixteen_.insane.command.commands.ModeCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
 import me.sixteen_.insane.utils.Logger;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /**
  * @author 16_
  */
+@Environment(EnvType.CLIENT)
 public class CommandManager {
 
 	private final List<Command> commands = new java.util.ArrayList<Command>();
