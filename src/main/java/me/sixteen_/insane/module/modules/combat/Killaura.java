@@ -232,10 +232,10 @@ public class Killaura extends Module implements ClientPlayerTickable {
 			while (it.hasNext()) {
 				Entry<EntityAttribute, EntityAttributeModifier> entry = it.next();
 				EntityAttribute a = (EntityAttribute) entry.getKey();
-				if (a.getTranslationKey().equals("attribute.name.generic.attack_damage")) {
+				if (a.equals(EntityAttributes.GENERIC_ATTACK_DAMAGE)) {
 					EntityAttributeModifier m = (EntityAttributeModifier) entry.getValue();
 					damageWithItem += (float) m.getValue();
-				} else if (a.getTranslationKey().equals("attribute.name.generic.knockback_resistance")) {
+				} else if (a.equals(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)) {
 					damageWithItem--;
 				}
 			}
