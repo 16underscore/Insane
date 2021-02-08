@@ -1,4 +1,4 @@
-package me.sixteen_.insane.utils;
+package me.sixteen_.insane.util;
 
 import me.sixteen_.insane.Insane;
 import net.fabricmc.api.EnvType;

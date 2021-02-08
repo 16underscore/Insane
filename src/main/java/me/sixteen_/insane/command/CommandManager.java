@@ -6,7 +6,7 @@ import me.sixteen_.insane.command.commands.BindCommand;
 import me.sixteen_.insane.command.commands.LoginCommand;
 import me.sixteen_.insane.command.commands.ModeCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
-import me.sixteen_.insane.utils.Logger;
+import me.sixteen_.insane.util.Logger;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
