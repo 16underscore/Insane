@@ -9,6 +9,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult.Type;
 
@@ -55,5 +56,6 @@ public final class Trigger extends Module implements ClientPlayerTickable {
 			return;
 		}
 		mc.interactionManager.attackEntity(player, le);
+		player.swingHand(Hand.MAIN_HAND);
 	}
 }
