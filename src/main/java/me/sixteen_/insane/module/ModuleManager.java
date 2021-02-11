@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.sixteen_.insane.module.modules.combat.Criticals;
 import me.sixteen_.insane.module.modules.combat.Killaura;
+import me.sixteen_.insane.module.modules.combat.Trigger;
 import me.sixteen_.insane.module.modules.movement.Fly;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
@@ -16,7 +17,7 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class ModuleManager {
+public final class ModuleManager {
 
 	private final List<Module> modules = new java.util.ArrayList<Module>();
 
@@ -27,6 +28,7 @@ public class ModuleManager {
 		addModule(new Criticals());
 		addModule(new Killaura());
 		addModule(new Inspect());
+		addModule(new Trigger());
 		addModule(new Fly());
 	}
 

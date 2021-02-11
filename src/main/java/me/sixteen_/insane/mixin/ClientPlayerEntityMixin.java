@@ -9,7 +9,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import me.sixteen_.insane.Insane;
+import me.sixteen_.insane.module.ModuleManager;
 import me.sixteen_.insane.module.modules.combat.Killaura;
+import me.sixteen_.insane.module.modules.combat.Trigger;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -21,13 +23,18 @@ import net.minecraft.client.util.ClientPlayerTickable;
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin {
-	
+
 	@Shadow
 	private List<ClientPlayerTickable> tickables;
 	
+	private ModuleManager mm;
+
 	@Inject(method = "<init>", at = @At("RETURN"))
 	private void init(final CallbackInfo info) {
-		final ClientPlayerTickable killaura = (ClientPlayerTickable) Insane.getInsane().getModuleManager().getModule(Killaura.class);
+		mm = Insane.getInsane().getModuleManager();
+		final ClientPlayerTickable killaura = (ClientPlayerTickable) mm.getModule(Killaura.class);
+		final ClientPlayerTickable trigger = (ClientPlayerTickable) mm.getModule(Trigger.class);
 		this.tickables.add(killaura);
+		this.tickables.add(trigger);
 	}
 }
