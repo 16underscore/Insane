@@ -44,6 +44,9 @@ public final class Trigger extends Module implements ClientPlayerTickable {
 		if (player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}
+		if (player.isDead()) {
+			return;
+		}
 		if (!(mc.crosshairTarget.getType() == Type.ENTITY)) {
 			return;
 		}
@@ -53,6 +56,9 @@ public final class Trigger extends Module implements ClientPlayerTickable {
 		}
 		final LivingEntity le = (LivingEntity) e;
 		if (le.hurtTime > 0) {
+			return;
+		}
+		if (le.isDead()) {
 			return;
 		}
 		mc.interactionManager.attackEntity(player, le);
