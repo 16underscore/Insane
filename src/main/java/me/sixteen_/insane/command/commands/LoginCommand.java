@@ -21,18 +21,18 @@ import net.minecraft.text.TranslatableText;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class LoginCommand extends Command {
+public final class LoginCommand extends Command {
 
 	private MinecraftClient mc;
 
 	public LoginCommand() {
-		super("login", "l");
+		super("login");
 	}
 
 	@Override
 	public void runCommand(final String... param) {
-		String mail = param[1];
-		String password = param[2];
+		final String mail = param[1];
+		final String password = param[2];
 		if (isInvalidInput(mail, password)) {
 			return;
 		}
@@ -43,7 +43,7 @@ public class LoginCommand extends Command {
 		mc.world.disconnect();
 		mc.disconnect(new SaveLevelScreen(new TranslatableText("menu.savingLevel")));
 		mc.openScreen(new TitleScreen());
-		YggdrasilUserAuthentication auth = (YggdrasilUserAuthentication) new YggdrasilAuthenticationService(Proxy.NO_PROXY, "").createUserAuthentication(Agent.MINECRAFT);
+		final YggdrasilUserAuthentication auth = (YggdrasilUserAuthentication) new YggdrasilAuthenticationService(Proxy.NO_PROXY, "").createUserAuthentication(Agent.MINECRAFT);
 		auth.setUsername(mail);
 		auth.setPassword(password);
 		try {
@@ -68,6 +68,6 @@ public class LoginCommand extends Command {
 
 	@Override
 	public String commandSyntax() {
-		return String.format(".%s <mail> <password>", getDefaultName());
+		return String.format(".%s <mail> <password>", getName());
 	}
 }

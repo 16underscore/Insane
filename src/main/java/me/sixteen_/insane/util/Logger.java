@@ -11,7 +11,7 @@ import net.minecraft.text.LiteralText;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Logger {
+public final class Logger {
 
 	private static final Logger LOGGER = new Logger();
 	private final MinecraftClient mc = MinecraftClient.getInstance();

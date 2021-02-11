@@ -34,7 +34,7 @@ import net.minecraft.util.math.Vec3d;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Killaura extends Module implements ClientPlayerTickable {
+public final class Killaura extends Module implements ClientPlayerTickable {
 
 	private Mode mode;
 	private MinecraftClient mc;
@@ -81,7 +81,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private void fastAura() {
-		for (LivingEntity target : getTargets()) {
+		for (final LivingEntity target : getTargets()) {
 			if (target.getHealth() < attackDamage(target) || player.getAttackCooldownProgress(0F) >= 1F) {
 				mc.interactionManager.attackEntity(player, target);
 				player.swingHand(Hand.MAIN_HAND);
@@ -93,14 +93,14 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		if (player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}
-		for (LivingEntity target : getTargets()) {
+		for (final LivingEntity target : getTargets()) {
 			mc.interactionManager.attackEntity(player, target);
 			player.swingHand(Hand.MAIN_HAND);
 		}
 	}
 
 	private void onlyPacketAura() {
-		for (LivingEntity target : getTargets()) {
+		for (final LivingEntity target : getTargets()) {
 			mc.getNetworkHandler().sendPacket(new PlayerInteractEntityC2SPacket(target, player.isSneaking()));
 		}
 	}
@@ -133,7 +133,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 		player.swingHand(Hand.MAIN_HAND);
 	}
 
-	private void lookAtTarget(LivingEntity le) {
+	private void lookAtTarget(final LivingEntity le) {
 		final Vec3d playerPos = mc.player.getPos();
 		final Vec3d entityPos = le.getPos();
 		final double deltaX = entityPos.getX() - playerPos.getX();
@@ -148,10 +148,10 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	@Nullable
-	private LivingEntity getTarget(Filter f) {
+	private LivingEntity getTarget(final Filter f) {
 		LivingEntity filteredTarget = null;
 		boolean sort = false;
-		for (LivingEntity target : getTargets()) {
+		for (final LivingEntity target : getTargets()) {
 			if (filteredTarget == null) {
 				filteredTarget = target;
 			} else {
@@ -225,13 +225,13 @@ public class Killaura extends Module implements ClientPlayerTickable {
 
 	private float attackDamage() {
 		final float damageWithHand = (float) player.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-		Multimap<EntityAttribute, EntityAttributeModifier> map = player.getMainHandStack().getAttributeModifiers(EquipmentSlot.MAINHAND);
+		final Multimap<EntityAttribute, EntityAttributeModifier> map = player.getMainHandStack().getAttributeModifiers(EquipmentSlot.MAINHAND);
 		if (!map.isEmpty()) {
 			float damageWithItem = 0F;
-			Iterator<Entry<EntityAttribute, EntityAttributeModifier>> it = map.entries().iterator();
+			final Iterator<Entry<EntityAttribute, EntityAttributeModifier>> it = map.entries().iterator();
 			while (it.hasNext()) {
-				Entry<EntityAttribute, EntityAttributeModifier> entry = it.next();
-				EntityAttribute a = (EntityAttribute) entry.getKey();
+				final Entry<EntityAttribute, EntityAttributeModifier> entry = it.next();
+				final EntityAttribute a = (EntityAttribute) entry.getKey();
 				if (a.equals(EntityAttributes.GENERIC_ATTACK_DAMAGE)) {
 					EntityAttributeModifier m = (EntityAttributeModifier) entry.getValue();
 					damageWithItem += (float) m.getValue();
@@ -245,8 +245,8 @@ public class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	@Override
-	public void setMode(String s) {
-		for (Mode m : Mode.values()) {
+	public void setMode(final String s) {
+		for (final Mode m : Mode.values()) {
 			if (m.toString().equalsIgnoreCase(s)) {
 				mode = m;
 				return;
@@ -264,7 +264,7 @@ public class Killaura extends Module implements ClientPlayerTickable {
 
 		private final String modeName;
 
-		private Mode(String modeName) {
+		private Mode(final String modeName) {
 			this.modeName = modeName;
 		}
 

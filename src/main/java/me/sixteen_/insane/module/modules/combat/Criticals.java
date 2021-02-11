@@ -12,7 +12,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Criticals extends Module {
+public final class Criticals extends Module {
 
 	private MinecraftClient mc;
 	private ClientPlayerEntity player;

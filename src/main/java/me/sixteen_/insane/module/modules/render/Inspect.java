@@ -13,7 +13,7 @@ import net.minecraft.util.math.Quaternion;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Inspect extends Module {
+public final class Inspect extends Module {
 
 	private float distance;
 	private float move;

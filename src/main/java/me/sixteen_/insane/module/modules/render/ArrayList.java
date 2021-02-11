@@ -17,7 +17,7 @@ import net.minecraft.client.util.math.MatrixStack;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class ArrayList extends Module {
+public final class ArrayList extends Module {
 
 	private List<Module> modules;
 	private MinecraftClient mc;

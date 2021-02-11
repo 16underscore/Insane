@@ -12,7 +12,7 @@ import net.minecraft.client.MinecraftClient;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Insane implements ClientModInitializer {
+public final class Insane implements ClientModInitializer {
 
 	// Instance
 	private static Insane insane;

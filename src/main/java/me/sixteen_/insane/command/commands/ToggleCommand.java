@@ -10,10 +10,10 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class ToggleCommand extends Command {
+public final class ToggleCommand extends Command {
 
 	public ToggleCommand() {
-		super("toggle", "t");
+		super("toggle");
 	}
 
 	@Override
@@ -24,6 +24,6 @@ public class ToggleCommand extends Command {
 
 	@Override
 	public String commandSyntax() {
-		return String.format(".%s <Module>", getDefaultName());
+		return String.format(".%s <Module>", getName());
 	}
 }

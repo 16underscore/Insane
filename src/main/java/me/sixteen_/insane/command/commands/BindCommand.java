@@ -11,10 +11,10 @@ import net.minecraft.client.util.InputUtil;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class BindCommand extends Command {
+public final class BindCommand extends Command {
 
 	public BindCommand() {
-		super("bind", "b");
+		super("bind");
 	}
 
 	@Override
@@ -31,6 +31,6 @@ public class BindCommand extends Command {
 
 	@Override
 	public String commandSyntax() {
-		return String.format(".%s <Module> <Key>", getDefaultName());
+		return String.format(".%s <Module> <Key>", getName());
 	}
 }

@@ -12,7 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class SprintStatus extends Module {
+public final class SprintStatus extends Module {
 
 	private MinecraftClient mc;
 	private TextRenderer tr;

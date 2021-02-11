@@ -10,7 +10,7 @@ import net.minecraft.client.MinecraftClient;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Fullbright extends Module {
+public final class Fullbright extends Module {
 
 	private MinecraftClient mc;
 	private double previousGamma;

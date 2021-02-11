@@ -10,10 +10,10 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class ModeCommand extends Command {
+public final class ModeCommand extends Command {
 
 	public ModeCommand() {
-		super("mode", "m");
+		super("mode");
 	}
 
 	@Override
@@ -24,6 +24,6 @@ public class ModeCommand extends Command {
 
 	@Override
 	public String commandSyntax() {
-		return String.format(".%s <Module> <Mode>", getDefaultName());
+		return String.format(".%s <Module> <Mode>", getName());
 	}
 }

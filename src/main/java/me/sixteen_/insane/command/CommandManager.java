@@ -14,7 +14,7 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class CommandManager {
+public final class CommandManager {
 
 	private final List<Command> commands = new java.util.ArrayList<Command>();
 
@@ -30,26 +30,20 @@ public class CommandManager {
 	}
 
 	public void commandInput(final String input) {
-		String[] cmd = input.substring(1).split(" ");
-		runCommand(cmd);
+		final String[] cmd = input.substring(1).split(" ");
+		for (final Command command : commands) {
+			if (command.getName().equalsIgnoreCase(cmd[0])) {
+				try {
+					command.runCommand(cmd);
+				} catch (Exception e) {
+					Logger.getLogger().addChatMessage(command.commandSyntax());
+				}
+				return;
+			}
+		}
 	}
 
 	public List<Command> getCommands() {
 		return commands;
-	}
-
-	private void runCommand(final String... cmd) {
-		for (Command command : commands) {
-			for (String name : command.getNames()) {
-				if (name.equalsIgnoreCase(cmd[0])) {
-					try {
-						command.runCommand(cmd);
-					} catch (Exception e) {
-						Logger.getLogger().addChatMessage(command.commandSyntax());
-					}
-					return;
-				}
-			}
-		}
 	}
 }

@@ -10,7 +10,7 @@ import net.minecraft.client.MinecraftClient;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Fly extends Module {
+public final class Fly extends Module {
 
 	public Fly() {
 		super("Fly", ModuleCategory.MOVEMENT);
