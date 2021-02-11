@@ -37,6 +37,7 @@ import net.minecraft.util.math.Vec3d;
 public final class Killaura extends Module implements ClientPlayerTickable {
 
 	private Mode mode;
+	private List<ClientPlayerTickable> tickables;
 	private MinecraftClient mc;
 	private ClientPlayerEntity player;
 	private final float pi = 3.14159265F;
@@ -48,18 +49,26 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		mode = Mode.LEGIT;
 	}
 
+	public void setTickables(List<ClientPlayerTickable> tickables) {
+		this.tickables = tickables;
+	}
+
 	@Override
 	protected void onEnable() {
 		mc = MinecraftClient.getInstance();
 		player = mc.player;
 		range = 3.7F;
+		tickables.add(this);
+	}
+
+	@Override
+	protected void onDisable() {
+		tickables.remove(this);
 	}
 
 	@Override
 	public void tick() {
-		if (isEnabled()) {
-			onUpdate();
-		}
+		onUpdate();
 	}
 
 	@Override

@@ -26,15 +26,14 @@ public abstract class ClientPlayerEntityMixin {
 
 	@Shadow
 	private List<ClientPlayerTickable> tickables;
-	
 	private ModuleManager mm;
 
 	@Inject(method = "<init>", at = @At("RETURN"))
 	private void init(final CallbackInfo info) {
 		mm = Insane.getInsane().getModuleManager();
-		final ClientPlayerTickable killaura = (ClientPlayerTickable) mm.getModule(Killaura.class);
-		final ClientPlayerTickable trigger = (ClientPlayerTickable) mm.getModule(Trigger.class);
-		this.tickables.add(killaura);
-		this.tickables.add(trigger);
+		final Killaura killaura = (Killaura) mm.getModule(Killaura.class);
+		final Trigger trigger = (Trigger) mm.getModule(Trigger.class);
+		killaura.setTickables(tickables);
+		trigger.setTickables(tickables);
 	}
 }
