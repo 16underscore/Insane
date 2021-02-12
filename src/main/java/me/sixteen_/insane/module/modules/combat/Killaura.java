@@ -151,9 +151,11 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		final double distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees);
 		final float yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
-		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, player.isOnGround()));
 		mc.player.pitch = pitch;
 		mc.player.yaw = yaw;
+		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, player.isOnGround()));
+		mc.cameraEntity.pitch = player.prevPitch;
+		mc.cameraEntity.yaw = player.prevYaw;
 	}
 
 	@Nullable
