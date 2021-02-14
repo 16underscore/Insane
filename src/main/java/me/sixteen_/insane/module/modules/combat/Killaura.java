@@ -13,8 +13,6 @@ import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -37,16 +35,15 @@ import net.minecraft.util.math.Vec3d;
 public final class Killaura extends Module implements ClientPlayerTickable {
 
 	private Mode mode;
+	private float range;
 	private List<ClientPlayerTickable> tickables;
-	private MinecraftClient mc;
-	private ClientPlayerEntity player;
 	private final float pi = 3.14159265F;
 	private final float radiansToDegrees = 180 / pi;
-	private float range;
 
 	public Killaura() {
 		super("Killaura", ModuleCategory.COMBAT);
 		mode = Mode.LEGIT;
+		range = 3.7F;
 	}
 
 	public void setTickables(List<ClientPlayerTickable> tickables) {
@@ -55,9 +52,6 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	@Override
 	protected void onEnable() {
-		mc = MinecraftClient.getInstance();
-		player = mc.player;
-		range = 3.7F;
 		tickables.add(this);
 	}
 
@@ -91,71 +85,71 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	private void fastAura() {
 		for (final LivingEntity target : getTargets()) {
-			if (target.getHealth() < attackDamage(target) || player.getAttackCooldownProgress(0F) >= 1F) {
-				mc.interactionManager.attackEntity(player, target);
-				player.swingHand(Hand.MAIN_HAND);
+			if (target.getHealth() < attackDamage(target) || mc.player.getAttackCooldownProgress(0F) >= 1F) {
+				mc.interactionManager.attackEntity(mc.player, target);
+				mc.player.swingHand(Hand.MAIN_HAND);
 			}
 		}
 	}
 
 	private void multiAura() {
-		if (player.getAttackCooldownProgress(0F) < 1F) {
+		if (mc.player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}
 		for (final LivingEntity target : getTargets()) {
-			mc.interactionManager.attackEntity(player, target);
-			player.swingHand(Hand.MAIN_HAND);
+			mc.interactionManager.attackEntity(mc.player, target);
+			mc.player.swingHand(Hand.MAIN_HAND);
 		}
 	}
 
 	private void onlyPacketAura() {
 		for (final LivingEntity target : getTargets()) {
-			mc.getNetworkHandler().sendPacket(new PlayerInteractEntityC2SPacket(target, player.isSneaking()));
+			mc.getNetworkHandler().sendPacket(new PlayerInteractEntityC2SPacket(target, mc.player.isSneaking()));
 		}
 	}
 
 	private void legitAura() {
-		if (player.isDead()) {
+		if (mc.player.isDead()) {
 			return;
 		}
-		if (player.isUsingItem()) {
+		if (mc.player.isUsingItem()) {
 			return;
 		}
-		if (player.isBlocking()) {
+		if (mc.player.isBlocking()) {
 			return;
 		}
-		if (player.getAttackCooldownProgress(0F) < 1F) {
+		if (mc.player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}
 		final LivingEntity target = getTarget(Filter.NEAREST);
 		if (target == null) {
 			return;
 		}
-		if (!player.canSee(target)) {
+		if (!mc.player.canSee(target)) {
 			return;
 		}
 		if (target.isInvisible() && target.getArmorVisibility() == 0 && target.getMainHandStack().isEmpty()) {
 			return;
 		}
 		lookAtTarget(target);
-		mc.interactionManager.attackEntity(player, target);
-		player.swingHand(Hand.MAIN_HAND);
+		mc.interactionManager.attackEntity(mc.player, target);
+		mc.player.swingHand(Hand.MAIN_HAND);
 	}
 
 	private void lookAtTarget(final LivingEntity le) {
 		final Vec3d playerPos = mc.player.getPos();
 		final Vec3d entityPos = le.getPos();
 		final double deltaX = entityPos.getX() - playerPos.getX();
-		final double deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + player.getEyeHeight(player.getPose()));
+		final double deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + mc.player.getEyeHeight(mc.player.getPose()));
 		final double deltaZ = entityPos.getZ() - playerPos.getZ();
 		final double distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees);
 		final float yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
 		mc.player.pitch = pitch;
 		mc.player.yaw = yaw;
-		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, player.isOnGround()));
-		mc.cameraEntity.pitch = player.prevPitch;
-		mc.cameraEntity.yaw = player.prevYaw;
+		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, mc.player.isOnGround()));
+		mc.cameraEntity.pitch = mc.player.prevPitch;
+		mc.cameraEntity.yaw = mc.player.prevYaw;
 	}
 
 	@Nullable
@@ -168,7 +162,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 			} else {
 				switch (f) {
 				case NEAREST:
-					sort = player.squaredDistanceTo(target) < player.squaredDistanceTo(filteredTarget);
+					sort = mc.player.squaredDistanceTo(target) < mc.player.squaredDistanceTo(filteredTarget);
 					break;
 				case SHORTESTJOBFIRST:
 					sort = target.getHealth() < filteredTarget.getHealth();
@@ -196,10 +190,10 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 				continue;
 			}
 			final LivingEntity le = (LivingEntity) e;
-			if (le.equals(player)) {
+			if (le.equals(mc.player)) {
 				continue;
 			}
-			if (!player.isInRange(le, range)) {
+			if (!mc.player.isInRange(le, range)) {
 				continue;
 			}
 			if (le.hurtTime > 0) {
@@ -221,12 +215,12 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		float ench;
 		float cool;
 		damage = attackDamage();
-		ench = EnchantmentHelper.getAttackDamage(player.getMainHandStack(), target.getGroup());
-		cool = player.getAttackCooldownProgress(0.5F);
+		ench = EnchantmentHelper.getAttackDamage(mc.player.getMainHandStack(), target.getGroup());
+		cool = mc.player.getAttackCooldownProgress(0.5F);
 		damage *= 0.2F + cool * cool * 0.8F;
 		ench *= cool;
-		final boolean crit = (cool > 0.9F && player.fallDistance > 0.0F && !player.isOnGround() && !player.isClimbing() && !player.isTouchingWater()
-				&& !player.hasStatusEffect(StatusEffects.BLINDNESS) && !player.hasVehicle() && target instanceof LivingEntity) && !player.isSprinting();
+		final boolean crit = (cool > 0.9F && mc.player.fallDistance > 0.0F && !mc.player.isOnGround() && !mc.player.isClimbing() && !mc.player.isTouchingWater()
+				&& !mc.player.hasStatusEffect(StatusEffects.BLINDNESS) && !mc.player.hasVehicle() && target instanceof LivingEntity) && !mc.player.isSprinting();
 		if (crit) {
 			damage *= 1.5F;
 		}
@@ -235,8 +229,8 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private float attackDamage() {
-		final float damageWithHand = (float) player.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-		final Multimap<EntityAttribute, EntityAttributeModifier> map = player.getMainHandStack().getAttributeModifiers(EquipmentSlot.MAINHAND);
+		final float damageWithHand = (float) mc.player.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+		final Multimap<EntityAttribute, EntityAttributeModifier> map = mc.player.getMainHandStack().getAttributeModifiers(EquipmentSlot.MAINHAND);
 		if (!map.isEmpty()) {
 			float damageWithItem = 0F;
 			final Iterator<Entry<EntityAttribute, EntityAttributeModifier>> it = map.entries().iterator();

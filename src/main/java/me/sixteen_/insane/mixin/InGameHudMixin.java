@@ -23,7 +23,7 @@ public abstract class InGameHudMixin {
 
 	@Inject(method = "render", at = @At("HEAD"))
 	private void render(MatrixStack matrices, float tickDelta, final CallbackInfo info) {
-		final ModuleManager mm = Insane.getInsane().getModuleManager();
+		final ModuleManager mm = Insane.getInstance().getModuleManager();
 		final ArrayList arrayList = (ArrayList) mm.getModule(ArrayList.class);
 		final SprintStatus sprintStatus = (SprintStatus) mm.getModule(SprintStatus.class);
 		if (arrayList.isEnabled()) {

@@ -1,7 +1,9 @@
 package me.sixteen_.insane.command;
 
+import me.sixteen_.insane.Insane;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 
 /**
  * @author 16_
@@ -10,13 +12,17 @@ import net.fabricmc.api.Environment;
 public abstract class Command {
 
 	private final String name;
+	protected final MinecraftClient mc;
+	protected final Insane insane;
 
 	public Command(final String name) {
 		this.name = name;
+		mc = MinecraftClient.getInstance();
+		insane = Insane.getInstance();
 	}
 
 	public abstract void runCommand(final String... param);
-	public abstract String commandSyntax();
+	public abstract String syntax();
 
 	public String getName() {
 		return name;

@@ -26,7 +26,7 @@ public abstract class ItemRendererMixin {
 
 	@Inject(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V", at = @At(target = "Lnet/minecraft/client/render/item/ItemRenderer;renderBakedItemModel(Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/item/ItemStack;IILnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;)V", value = "INVOKE", shift = Shift.BEFORE))
 	private void renderItem(ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model, final CallbackInfo info) {
-		final Inspect inspect = (Inspect) Insane.getInsane().getModuleManager().getModule(Inspect.class);
+		final Inspect inspect = (Inspect) Insane.getInstance().getModuleManager().getModule(Inspect.class);
 		if (inspect.isEnabled() && renderMode.isFirstPerson()) {
 			inspect.onUpdate(matrices);
 		}

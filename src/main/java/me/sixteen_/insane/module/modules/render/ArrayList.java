@@ -9,8 +9,6 @@ import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -20,11 +18,15 @@ import net.minecraft.client.util.math.MatrixStack;
 public final class ArrayList extends Module {
 
 	private List<Module> modules;
-	private MinecraftClient mc;
-	private TextRenderer tr;
 
 	public ArrayList() {
 		super("ArrayList", ModuleCategory.RENDER, false);
+	}
+
+	@Override
+	protected void onEnable() {
+		modules = Insane.getInstance().getModuleManager().getModules();
+		sortModules();
 	}
 
 	private void sortModules() {
@@ -32,10 +34,10 @@ public final class ArrayList extends Module {
 
 			@Override
 			public int compare(final Module m1, final Module m2) {
-				if (tr.getWidth(m1.getName()) > tr.getWidth(m2.getName())) {
+				if (mc.textRenderer.getWidth(m1.getName()) > mc.textRenderer.getWidth(m2.getName())) {
 					return -1;
 				}
-				if (tr.getWidth(m1.getName()) < tr.getWidth(m2.getName())) {
+				if (mc.textRenderer.getWidth(m1.getName()) < mc.textRenderer.getWidth(m2.getName())) {
 					return 1;
 				}
 				return 0;
@@ -43,19 +45,11 @@ public final class ArrayList extends Module {
 		});
 	}
 
-	@Override
-	protected void onEnable() {
-		mc = MinecraftClient.getInstance();
-		modules = Insane.getInsane().getModuleManager().getModules();
-		tr = mc.textRenderer;
-		sortModules();
-	}
-
 	public void onUpdate(final MatrixStack matrices) {
 		int h = 0;
-		for (Module m : modules) {
+		for (final Module m : modules) {
 			if (m.isEnabled() && m.isVisible()) {
-				tr.draw(matrices, m.getName(), mc.getWindow().getScaledWidth() - tr.getWidth(m.getName()) - 2, h * tr.fontHeight + 2, -1);
+				mc.textRenderer.draw(matrices, m.getName(), mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(m.getName()) - 2, h * mc.textRenderer.fontHeight + 2, -1);
 				h++;
 			}
 		}

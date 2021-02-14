@@ -1,8 +1,6 @@
 package me.sixteen_.insane.command.commands;
 
-import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.Command;
-import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -18,12 +16,11 @@ public final class ToggleCommand extends Command {
 
 	@Override
 	public void runCommand(final String... param) {
-		final Module m = Insane.getInsane().getModuleManager().getModuleByName(param[1]);
-		m.toggle();
+		insane.getModuleManager().getModuleByName(param[1]).toggle();
 	}
 
 	@Override
-	public String commandSyntax() {
+	public String syntax() {
 		return String.format(".%s <Module>", getName());
 	}
 }

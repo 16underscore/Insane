@@ -3,6 +3,7 @@ package me.sixteen_.insane;
 import me.sixteen_.insane.command.CommandManager;
 import me.sixteen_.insane.module.ModuleManager;
 import me.sixteen_.insane.ntrfc.IMinecraftClient;
+import me.sixteen_.insane.util.Logger;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,27 +17,33 @@ public final class Insane implements ClientModInitializer {
 
 	// Instance
 	private static Insane insane;
-	
 	// Client information
 	private final String clientName;
 	private final String clientVersion;
-	
 	// Managers
 	private final ModuleManager moduleManager;
 	private final CommandManager commandManager;
-	
-	private final IMinecraftClient imc = (IMinecraftClient) MinecraftClient.getInstance();
+	// Logger
+	private final Logger logger;
+	// Minecraft
+	private final IMinecraftClient imc;
 
 	@Override
 	public void onInitializeClient() {
-		insane = new Insane();
 	}
 
 	public Insane() {
+		insane = this;
+		clientName = "Insane";
+		clientVersion = "b2";
+		imc = (IMinecraftClient) MinecraftClient.getInstance();
+		logger = new Logger();
 		moduleManager = new ModuleManager();
 		commandManager = new CommandManager();
-		clientName = "Insane";
-		clientVersion = "b1";
+	}
+
+	public static Insane getInstance() {
+		return insane;
 	}
 
 	public String getClientName() {
@@ -47,6 +54,14 @@ public final class Insane implements ClientModInitializer {
 		return clientVersion;
 	}
 
+	public IMinecraftClient getIMinecraftClient() {
+		return imc;
+	}
+
+	public Logger getLogger() {
+		return logger;
+	}
+
 	public ModuleManager getModuleManager() {
 		return moduleManager;
 	}
@@ -55,15 +70,7 @@ public final class Insane implements ClientModInitializer {
 		return commandManager;
 	}
 
-	public static Insane getInsane() {
-		return insane;
-	}
-
 	public void shutdown() {
 		moduleManager.shutdown();
-	}
-
-	public IMinecraftClient getIMinecraftClient() {
-		return imc;
 	}
 }

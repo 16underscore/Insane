@@ -2,11 +2,12 @@ package me.sixteen_.insane.command;
 
 import java.util.List;
 
+import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.commands.BindCommand;
+import me.sixteen_.insane.command.commands.HelpCommand;
 import me.sixteen_.insane.command.commands.LoginCommand;
 import me.sixteen_.insane.command.commands.ModeCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
-import me.sixteen_.insane.util.Logger;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -17,12 +18,16 @@ import net.fabricmc.api.Environment;
 public final class CommandManager {
 
 	private final List<Command> commands = new java.util.ArrayList<Command>();
+	private final String prefix = ".";
+	private final Insane insane;
 
 	public CommandManager() {
+		this.insane = Insane.getInstance();
 		addCommand(new ToggleCommand());
 		addCommand(new LoginCommand());
 		addCommand(new BindCommand());
 		addCommand(new ModeCommand());
+		addCommand(new HelpCommand());
 	}
 
 	private void addCommand(final Command cmd) {
@@ -30,13 +35,13 @@ public final class CommandManager {
 	}
 
 	public void commandInput(final String input) {
-		final String[] cmd = input.substring(1).split(" ");
+		final String[] cmd = input.substring(prefix.length()).split(" ");
 		for (final Command command : commands) {
 			if (command.getName().equalsIgnoreCase(cmd[0])) {
 				try {
 					command.runCommand(cmd);
 				} catch (Exception e) {
-					Logger.getLogger().addChatMessage(command.commandSyntax());
+					insane.getLogger().log(command.syntax());
 				}
 				return;
 			}

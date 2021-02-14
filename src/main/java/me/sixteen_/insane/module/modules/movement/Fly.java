@@ -4,7 +4,6 @@ import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 
 /**
  * @author 16_
@@ -16,11 +15,8 @@ public final class Fly extends Module {
 		super("Fly", ModuleCategory.MOVEMENT);
 	}
 
-	private MinecraftClient mc;
-
 	@Override
 	protected void onEnable() {
-		mc = MinecraftClient.getInstance();
 		mc.player.addVelocity(0D, 0.1D, 0D);
 		mc.player.abilities.flying = true;
 	}

@@ -25,7 +25,7 @@ public abstract class HeldItemRendererMixin {
 
 	@Inject(method = "renderFirstPersonItem", at = @At("HEAD"))
 	private void renderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, final CallbackInfo info) {
-		final Inspect inspect = (Inspect) Insane.getInsane().getModuleManager().getModule(Inspect.class);
+		final Inspect inspect = (Inspect) Insane.getInstance().getModuleManager().getModule(Inspect.class);
 		if (inspect.isEnabled()) {
 			inspect.disable(swingProgress, equipProgress);
 		}

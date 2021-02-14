@@ -7,13 +7,10 @@ import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 
-import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.Command;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.SaveLevelScreen;
-import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.util.Session;
 import net.minecraft.text.TranslatableText;
 
@@ -22,8 +19,6 @@ import net.minecraft.text.TranslatableText;
  */
 @Environment(EnvType.CLIENT)
 public final class LoginCommand extends Command {
-
-	private MinecraftClient mc;
 
 	public LoginCommand() {
 		super("login");
@@ -36,19 +31,17 @@ public final class LoginCommand extends Command {
 		if (isInvalidInput(mail, password)) {
 			return;
 		}
-		mc = MinecraftClient.getInstance();
 		if (!mc.isInSingleplayer()) {
 			return;
 		}
 		mc.world.disconnect();
 		mc.disconnect(new SaveLevelScreen(new TranslatableText("menu.savingLevel")));
-		mc.openScreen(new TitleScreen());
 		final YggdrasilUserAuthentication auth = (YggdrasilUserAuthentication) new YggdrasilAuthenticationService(Proxy.NO_PROXY, "").createUserAuthentication(Agent.MINECRAFT);
 		auth.setUsername(mail);
 		auth.setPassword(password);
 		try {
 			auth.logIn();
-			Insane.getInsane().getIMinecraftClient().setSession(new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang"));
+			insane.getIMinecraftClient().setSession(new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang"));
 		} catch (AuthenticationException e) {
 		}
 	}
@@ -67,7 +60,7 @@ public final class LoginCommand extends Command {
 	}
 
 	@Override
-	public String commandSyntax() {
+	public String syntax() {
 		return String.format(".%s <mail> <password>", getName());
 	}
 }

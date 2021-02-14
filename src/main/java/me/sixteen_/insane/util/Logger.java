@@ -13,15 +13,15 @@ import net.minecraft.text.LiteralText;
 @Environment(EnvType.CLIENT)
 public final class Logger {
 
-	private static final Logger LOGGER = new Logger();
-	private final MinecraftClient mc = MinecraftClient.getInstance();
-	private final Insane insane = Insane.getInsane();
+	private final MinecraftClient mc;
+	private final Insane insane;
 
-	public void addChatMessage(final Object message) {
-		mc.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(String.format("[%s] %s", insane.getClientName(), message)), mc.player.getUuid());
+	public Logger() {
+		mc = MinecraftClient.getInstance();
+		insane = Insane.getInstance();
 	}
 
-	public static Logger getLogger() {
-		return LOGGER;
+	public void log(final String message) {
+		mc.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(String.format("[%s] %s", insane.getClientName(), message)), null);
 	}
 }

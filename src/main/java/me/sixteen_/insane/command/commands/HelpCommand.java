@@ -8,19 +8,18 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public final class ModeCommand extends Command {
+public final class HelpCommand extends Command {
 
-	public ModeCommand() {
-		super("mode");
+	public HelpCommand() {
+		super("help");
 	}
 
 	@Override
-	public void runCommand(final String... param) {
-		insane.getModuleManager().getModuleByName(param[1]).setMode(param[2]);
+	public void runCommand(String... param) {
 	}
 
 	@Override
 	public String syntax() {
-		return String.format(".%s <Module> <Mode>", getName());
+		return String.format("%s", getName());
 	}
 }

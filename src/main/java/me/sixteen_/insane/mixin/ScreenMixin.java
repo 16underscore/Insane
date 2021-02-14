@@ -20,7 +20,7 @@ public abstract class ScreenMixin {
 	@Inject(method = "sendMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)
 	private void sendMessage(String message, boolean toHud, final CallbackInfo info) {
 		if (message.startsWith(".")) {
-			Insane.getInsane().getCommandManager().commandInput(message);
+			Insane.getInstance().getCommandManager().commandInput(message);
 			info.cancel();
 		}
 	}

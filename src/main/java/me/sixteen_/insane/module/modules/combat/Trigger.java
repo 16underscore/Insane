@@ -6,8 +6,6 @@ import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -22,8 +20,6 @@ import net.minecraft.util.hit.HitResult.Type;
 public final class Trigger extends Module implements ClientPlayerTickable {
 
 	private List<ClientPlayerTickable> tickables;
-	private MinecraftClient mc;
-	private ClientPlayerEntity player;
 
 	public Trigger() {
 		super("Trigger", ModuleCategory.COMBAT);
@@ -35,8 +31,6 @@ public final class Trigger extends Module implements ClientPlayerTickable {
 
 	@Override
 	protected void onEnable() {
-		mc = MinecraftClient.getInstance();
-		player = mc.player;
 		tickables.add(this);
 	}
 
@@ -52,10 +46,10 @@ public final class Trigger extends Module implements ClientPlayerTickable {
 
 	@Override
 	public void onUpdate() {
-		if (player.getAttackCooldownProgress(0F) < 1F) {
+		if (mc.player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}
-		if (player.isDead()) {
+		if (mc.player.isDead()) {
 			return;
 		}
 		if (!(mc.crosshairTarget.getType() == Type.ENTITY)) {
@@ -72,7 +66,7 @@ public final class Trigger extends Module implements ClientPlayerTickable {
 		if (le.isDead()) {
 			return;
 		}
-		mc.interactionManager.attackEntity(player, le);
-		player.swingHand(Hand.MAIN_HAND);
+		mc.interactionManager.attackEntity(mc.player, le);
+		mc.player.swingHand(Hand.MAIN_HAND);
 	}
 }

@@ -2,6 +2,7 @@ package me.sixteen_.insane.module;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 
 /**
@@ -10,43 +11,45 @@ import net.minecraft.client.util.InputUtil;
 @Environment(EnvType.CLIENT)
 public abstract class Module {
 
-	private final ModuleCategory category;
 	private final String name;
+	private final ModuleCategory category;
 	private final boolean visible;
-	private InputUtil.Key keybind;
 	private boolean enabled;
-
-	public Module(final String moduleName, final ModuleCategory moduleCategory) {
-		visible = true;
-		enabled = false;
-		category = moduleCategory;
-		name = moduleName;
-		keybind = InputUtil.UNKNOWN_KEY;
-	}
+	private InputUtil.Key keybind;
+	protected final MinecraftClient mc;
 
 	public Module(final String moduleName, final ModuleCategory moduleCategory, final boolean moduleVisible) {
+		name = moduleName;
+		category = moduleCategory;
 		visible = moduleVisible;
 		enabled = false;
-		category = moduleCategory;
-		name = moduleName;
 		keybind = InputUtil.UNKNOWN_KEY;
+		mc = MinecraftClient.getInstance();
+	}
+
+	public Module(final String moduleName, final ModuleCategory moduleCategory) {
+		this(moduleName, moduleCategory, true);
 	}
 
 	public void toggle() {
-		if (enabled) {
-			onDisable();
-		} else {
-			onEnable();
-		}
 		enabled = !enabled;
+		if (enabled) {
+			onEnable();
+		} else {
+			onDisable();
+		}
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public ModuleCategory getCategory() {
 		return category;
 	}
 
-	public String getName() {
-		return name;
+	public boolean isVisible() {
+		return visible;
 	}
 
 	public boolean isEnabled() {
@@ -61,10 +64,6 @@ public abstract class Module {
 		return keybind;
 	}
 
-	public boolean isVisible() {
-		return visible;
-	}
-
 	protected void enable() {
 		enabled = true;
 		onEnable();
@@ -74,12 +73,8 @@ public abstract class Module {
 		enabled = false;
 		onDisable();
 	}
-	
+
 	public void setMode(final String s) {
-	}
-	
-	public String getMode() {
-		return null;
 	}
 
 	public void onUpdate() {
