@@ -15,7 +15,7 @@ public final class HelpCommand extends Command {
 	}
 
 	@Override
-	public void runCommand(String... param) {
+	public void run(String... param) {
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public abstract class Command {
 		insane = Insane.getInstance();
 	}
 
-	public abstract void runCommand(final String... param);
+	public abstract void run(final String... param);
 	public abstract String syntax();
 
 	public String getName() {

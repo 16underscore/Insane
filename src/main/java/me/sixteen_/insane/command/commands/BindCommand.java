@@ -16,7 +16,7 @@ public final class BindCommand extends Command {
 	}
 
 	@Override
-	public void runCommand(final String... param) {
+	public void run(final String... param) {
 		InputUtil.Key key;
 		if (param[2].equalsIgnoreCase("none")) {
 			key = InputUtil.UNKNOWN_KEY;

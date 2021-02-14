@@ -15,7 +15,7 @@ public final class ModeCommand extends Command {
 	}
 
 	@Override
-	public void runCommand(final String... param) {
+	public void run(final String... param) {
 		insane.getModuleManager().getModuleByName(param[1]).setMode(param[2]);
 	}
 

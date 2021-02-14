@@ -34,12 +34,12 @@ public final class CommandManager {
 		commands.add(cmd);
 	}
 
-	public void commandInput(final String input) {
+	public void input(final String input) {
 		final String[] cmd = input.substring(prefix.length()).split(" ");
 		for (final Command command : commands) {
 			if (command.getName().equalsIgnoreCase(cmd[0])) {
 				try {
-					command.runCommand(cmd);
+					command.run(cmd);
 				} catch (Exception e) {
 					insane.getLogger().log(command.syntax());
 				}

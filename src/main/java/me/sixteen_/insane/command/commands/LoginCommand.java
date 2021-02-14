@@ -25,7 +25,7 @@ public final class LoginCommand extends Command {
 	}
 
 	@Override
-	public void runCommand(final String... param) {
+	public void run(final String... param) {
 		final String mail = param[1];
 		final String password = param[2];
 		if (isInvalidInput(mail, password)) {
