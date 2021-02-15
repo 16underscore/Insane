@@ -1,5 +1,12 @@
 package me.sixteen_.insane.module;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import me.sixteen_.insane.value.Value;
+import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -14,6 +21,7 @@ public abstract class Module {
 	private final String name;
 	private final ModuleCategory category;
 	private final boolean visible;
+	private List<Value> values = new ArrayList<Value>();
 	private boolean enabled;
 	private InputUtil.Key keybind;
 	protected final MinecraftClient mc;
@@ -31,6 +39,19 @@ public abstract class Module {
 		this(moduleName, moduleCategory, true);
 	}
 
+	public void addValues(final Value... values) {
+		this.values.addAll(Arrays.asList(values));
+	}
+
+	public final Value getValueByName(final String valueName) {
+		for (final Value v : values) {
+			if (v.getName().equalsIgnoreCase(valueName)) {
+				return v;
+			}
+		}
+		return null;
+	}
+
 	public void toggle() {
 		enabled = !enabled;
 		if (enabled) {
@@ -40,41 +61,57 @@ public abstract class Module {
 		}
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public ModuleCategory getCategory() {
+	public String getNameWithValue() {
+		final StringBuilder build = new StringBuilder();
+		final Iterator<Value> it = values.iterator();
+		while (it.hasNext()) {
+			final Value v = it.next();
+			if (v instanceof ListValue) {
+				if (it.hasNext()) {
+					build.append(String.format("%s, ", ((ListValue) v).getValue()));
+				} else {
+					build.append(((ListValue) v).getValue());
+				}
+			}
+		}
+		if (build.isEmpty()) {
+			return getName();
+		}
+		return String.format("%s \u00A77[%s]\u00A7r", getName(), build.toString());
+	}
+
+	public final ModuleCategory getCategory() {
 		return category;
 	}
 
-	public boolean isVisible() {
+	public final boolean isVisible() {
 		return visible;
 	}
 
-	public boolean isEnabled() {
+	public final boolean isEnabled() {
 		return enabled;
 	}
 
-	public void setKeybind(final InputUtil.Key key) {
+	public final void setKeybind(final InputUtil.Key key) {
 		keybind = key;
 	}
 
-	public InputUtil.Key getKeybind() {
+	public final InputUtil.Key getKeybind() {
 		return keybind;
 	}
 
-	protected void enable() {
+	protected final void enable() {
 		enabled = true;
 		onEnable();
 	}
 
-	protected void disable() {
+	protected final void disable() {
 		enabled = false;
 		onDisable();
-	}
-
-	public void setMode(final String s) {
 	}
 
 	public void onUpdate() {

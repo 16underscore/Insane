@@ -10,6 +10,8 @@ import com.google.common.collect.Multimap;
 
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
+import me.sixteen_.insane.value.values.FloatValue;
+import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.ClientPlayerTickable;
@@ -32,55 +34,51 @@ import net.minecraft.util.math.Vec3d;
 @Environment(EnvType.CLIENT)
 public final class Killaura extends Module implements ClientPlayerTickable {
 
-	private Mode mode;
-	private float range;
 	private List<ClientPlayerTickable> tickables;
+	private final FloatValue range = new FloatValue("range", 3.7F, 3F, 6F, 0.1F);
+	private final ListValue mode = new ListValue("mode", "legit", "fast", "multi", "packet"), sort = new ListValue("sort", "distance", "health");
 	private final float pi = 3.14159265F, radiansToDegrees = 180 / pi;
 
 	public Killaura() {
 		super("Killaura", ModuleCategory.COMBAT);
-		mode = Mode.LEGIT;
-		range = 3.7F;
+		this.addValues(range);
+		this.addValues(mode);
+		this.addValues(sort);
 	}
 
-	public void setTickables(List<ClientPlayerTickable> tickables) {
+	public final void setTickables(List<ClientPlayerTickable> tickables) {
 		this.tickables = tickables;
 	}
 
 	@Override
-	protected void onEnable() {
+	protected final void onEnable() {
 		tickables.add(this);
 	}
 
 	@Override
-	protected void onDisable() {
+	protected final void onDisable() {
 		tickables.remove(this);
 	}
 
 	@Override
-	public void tick() {
+	public final void tick() {
 		onUpdate();
 	}
 
 	@Override
-	public void onUpdate() {
-		switch (mode) {
-		case FAST:
-			fastAura();
-			break;
-		case MULTI:
-			multiAura();
-			break;
-		case ONLYPACKET:
-			onlyPacketAura();
-			break;
-		case LEGIT:
+	public final void onUpdate() {
+		if (mode.is("legit")) {
 			legitAura();
-			break;
+		} else if (mode.is("fast")) {
+			fastAura();
+		} else if (mode.is("multi")) {
+			multiAura();
+		} else if (mode.is("packet")) {
+			onlyPacketAura();
 		}
 	}
 
-	private void fastAura() {
+	private final void fastAura() {
 		for (final LivingEntity target : getTargets()) {
 			if (target.getHealth() < attackDamage(target) || mc.player.getAttackCooldownProgress(0F) >= 1F) {
 				mc.interactionManager.attackEntity(mc.player, target);
@@ -89,7 +87,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		}
 	}
 
-	private void multiAura() {
+	private final void multiAura() {
 		if (mc.player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}
@@ -99,13 +97,13 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		}
 	}
 
-	private void onlyPacketAura() {
+	private final void onlyPacketAura() {
 		for (final LivingEntity target : getTargets()) {
 			mc.getNetworkHandler().sendPacket(new PlayerInteractEntityC2SPacket(target, mc.player.isSneaking()));
 		}
 	}
 
-	private void legitAura() {
+	private final void legitAura() {
 		if (mc.player.isDead()) {
 			return;
 		}
@@ -118,7 +116,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		if (mc.player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}
-		final LivingEntity target = getTarget(Filter.NEAREST);
+		final LivingEntity target = getTarget();
 		if (target == null) {
 			return;
 		}
@@ -133,7 +131,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		mc.player.swingHand(Hand.MAIN_HAND);
 	}
 
-	private void lookAtTarget(final LivingEntity le) {
+	private final void lookAtTarget(final LivingEntity le) {
 		final Vec3d playerPos = mc.player.getPos(), entityPos = le.getPos();
 		final double deltaX = entityPos.getX() - playerPos.getX(),
 				deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + mc.player.getEyeHeight(mc.player.getPose())), deltaZ = entityPos.getZ() - playerPos.getZ(),
@@ -147,24 +145,19 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		mc.cameraEntity.yaw = mc.player.prevYaw;
 	}
 
-	private LivingEntity getTarget(final Filter f) {
+	private final LivingEntity getTarget() {
 		LivingEntity filteredTarget = null;
-		boolean sort = false;
+		boolean swap = false;
 		for (final LivingEntity target : getTargets()) {
 			if (filteredTarget == null) {
 				filteredTarget = target;
 			} else {
-				switch (f) {
-				case NEAREST:
-					sort = mc.player.squaredDistanceTo(target) < mc.player.squaredDistanceTo(filteredTarget);
-					break;
-				case SHORTESTJOBFIRST:
-					sort = target.getHealth() < filteredTarget.getHealth();
-					break;
-				case FIRSTCOMEFIRSTSERVE:
-					return filteredTarget;
+				if (sort.is("distance")) {
+					swap = mc.player.squaredDistanceTo(target) < mc.player.squaredDistanceTo(filteredTarget);
+				} else if (sort.is("health")) {
+					swap = target.getHealth() < filteredTarget.getHealth();
 				}
-				if (sort) {
+				if (swap) {
 					filteredTarget = target;
 				}
 			}
@@ -172,13 +165,13 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		return filteredTarget;
 	}
 
-	private List<LivingEntity> getTargets() {
+	private final List<LivingEntity> getTargets() {
 		final List<LivingEntity> targets = StreamSupport.stream(mc.world.getEntities().spliterator(), false).filter(LivingEntity.class::isInstance).map(entity -> (LivingEntity) entity)
 				.collect(Collectors.toList());
-		return targets.stream().filter(e -> e != mc.player && e.isInRange(mc.player, range) && e.hurtTime <= 0 && !e.isDead()).collect(Collectors.toList());
+		return targets.stream().filter(e -> e != mc.player && e.isInRange(mc.player, range.getValue()) && e.hurtTime <= 0 && !e.isDead()).collect(Collectors.toList());
 	}
 
-	private float attackDamage(final LivingEntity target) {
+	private final float attackDamage(final LivingEntity target) {
 		float damage, ench, cool;
 		damage = attackDamage();
 		ench = EnchantmentHelper.getAttackDamage(mc.player.getMainHandStack(), target.getGroup());
@@ -194,7 +187,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		return damage;
 	}
 
-	private float attackDamage() {
+	private final float attackDamage() {
 		final float damageWithHand = (float) mc.player.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 		final Multimap<EntityAttribute, EntityAttributeModifier> map = mc.player.getMainHandStack().getAttributeModifiers(EquipmentSlot.MAINHAND);
 		if (!map.isEmpty()) {
@@ -213,35 +206,5 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 			return damageWithHand + damageWithItem;
 		}
 		return damageWithHand;
-	}
-
-	@Override
-	public void setMode(final String s) {
-		for (final Mode m : Mode.values()) {
-			if (m.toString().equalsIgnoreCase(s)) {
-				mode = m;
-				return;
-			}
-		}
-	}
-
-	private enum Filter {
-		NEAREST, SHORTESTJOBFIRST, FIRSTCOMEFIRSTSERVE;
-	}
-
-	private enum Mode {
-
-		FAST("Fast"), MULTI("Multi"), ONLYPACKET("OnlyPacket"), LEGIT("Legit");
-
-		private final String modeName;
-
-		private Mode(final String modeName) {
-			this.modeName = modeName;
-		}
-
-		@Override
-		public String toString() {
-			return modeName;
-		}
 	}
 }

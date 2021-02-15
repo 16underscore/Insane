@@ -24,20 +24,21 @@ public final class ArrayList extends Module {
 	}
 
 	@Override
-	protected void onEnable() {
+	protected final void onEnable() {
 		modules = Insane.getInstance().getModuleManager().getModules();
 		sortModules();
 	}
 
-	private void sortModules() {
+	private final void sortModules() {
 		Collections.sort(modules, new Comparator<Module>() {
 
 			@Override
 			public int compare(final Module m1, final Module m2) {
-				if (mc.textRenderer.getWidth(m1.getName()) > mc.textRenderer.getWidth(m2.getName())) {
+				final String s1 = m1.getNameWithValue(), s2 = m2.getNameWithValue();
+				if (mc.textRenderer.getWidth(s1) > mc.textRenderer.getWidth(s2)) {
 					return -1;
 				}
-				if (mc.textRenderer.getWidth(m1.getName()) < mc.textRenderer.getWidth(m2.getName())) {
+				if (mc.textRenderer.getWidth(s1) < mc.textRenderer.getWidth(s2)) {
 					return 1;
 				}
 				return 0;
@@ -45,11 +46,12 @@ public final class ArrayList extends Module {
 		});
 	}
 
-	public void onUpdate(final MatrixStack matrices) {
+	public final void onUpdate(final MatrixStack matrices) {
 		int h = 0;
 		for (final Module m : modules) {
 			if (m.isEnabled() && m.isVisible()) {
-				mc.textRenderer.draw(matrices, m.getName(), mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(m.getName()) - 2, h * mc.textRenderer.fontHeight + 2, -1);
+				final String s = m.getNameWithValue();
+				mc.textRenderer.draw(matrices, s, mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(s) - 2, h * mc.textRenderer.fontHeight + 2, -1);
 				h++;
 			}
 		}
