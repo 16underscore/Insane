@@ -9,6 +9,7 @@ import me.sixteen_.insane.module.modules.movement.Fly;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
 import me.sixteen_.insane.module.modules.render.Inspect;
+import me.sixteen_.insane.module.modules.render.NoHurtCam;
 import me.sixteen_.insane.module.modules.render.SprintStatus;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,6 +27,7 @@ public final class ModuleManager {
 		addModule(new Fullbright());
 		addModule(new ArrayList());
 		addModule(new Criticals());
+		addModule(new NoHurtCam());
 		addModule(new Killaura());
 		addModule(new Inspect());
 		addModule(new Trigger());
