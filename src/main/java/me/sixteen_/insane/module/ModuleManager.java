@@ -34,15 +34,15 @@ public final class ModuleManager {
 		addModule(new Fly());
 	}
 
-	private void addModule(final Module module) {
+	private final void addModule(final Module module) {
 		modules.add(module);
 	}
 
-	public List<Module> getModules() {
+	public final List<Module> getModules() {
 		return modules;
 	}
 
-	public Module getModuleByName(final String moduleName) {
+	public final Module getModuleByName(final String moduleName) {
 		for (final Module m : modules) {
 			if (m.getName().equalsIgnoreCase(moduleName)) {
 				return m;
@@ -51,7 +51,7 @@ public final class ModuleManager {
 		return null;
 	}
 
-	public Module getModule(final Class<? extends Module> moduleClass) {
+	public final Module getModule(final Class<? extends Module> moduleClass) {
 		for (final Module m : modules) {
 			if (m.getClass() == moduleClass) {
 				return m;
@@ -60,7 +60,7 @@ public final class ModuleManager {
 		return null;
 	}
 
-	public void shutdown() {
+	public final void shutdown() {
 		for (final Module m : modules) {
 			m.onShutdown();
 		}

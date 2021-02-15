@@ -24,7 +24,7 @@ public abstract class Command {
 	public abstract void run(final String... param);
 	public abstract String syntax();
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 }

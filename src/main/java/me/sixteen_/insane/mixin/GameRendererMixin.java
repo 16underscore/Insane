@@ -20,7 +20,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public abstract class GameRendererMixin {
 
 	@Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
-	private void bobViewWhenHurt(MatrixStack matrixStack, float f, final CallbackInfo info) {
+	private final void bobViewWhenHurt(MatrixStack matrixStack, float f, final CallbackInfo info) {
 		if (Insane.getInstance().getModuleManager().getModule(NoHurtCam.class).isEnabled()) {
 			info.cancel();
 		}

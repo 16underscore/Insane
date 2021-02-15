@@ -16,13 +16,13 @@ public final class Fly extends Module {
 	}
 
 	@Override
-	protected void onEnable() {
+	protected final void onEnable() {
 		mc.player.addVelocity(0D, 0.1D, 0D);
 		mc.player.abilities.flying = true;
 	}
 
 	@Override
-	protected void onDisable() {
+	protected final void onDisable() {
 		mc.player.abilities.flying = false;
 	}
 }

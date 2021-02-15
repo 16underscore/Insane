@@ -20,7 +20,7 @@ import net.minecraft.client.network.ClientPlayerInteractionManager;
 public abstract class ClientPlayerInteractionManagerMixin {
 
 	@Inject(method = "attackEntity", at = @At("HEAD"))
-	private void attackEntity(final CallbackInfo info) {
+	private final void attackEntity(final CallbackInfo info) {
 		final Module criticals = Insane.getInstance().getModuleManager().getModule(Criticals.class);
 		if (criticals.isEnabled()) {
 			criticals.onUpdate();

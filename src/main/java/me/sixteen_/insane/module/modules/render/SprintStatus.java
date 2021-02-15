@@ -16,7 +16,7 @@ public final class SprintStatus extends Module {
 		super("SprintStatus", ModuleCategory.RENDER, false);
 	}
 
-	public void onUpdate(final MatrixStack matrices) {
+	public final void onUpdate(final MatrixStack matrices) {
 		String status;
 		if (mc.options.sprintToggled && mc.options.keySprint.isPressed()) {
 			status = "Toggled";

@@ -28,7 +28,7 @@ public abstract class ClientPlayerEntityMixin {
 	private List<ClientPlayerTickable> tickables;
 
 	@Inject(method = "<init>", at = @At("RETURN"))
-	private void init(final CallbackInfo info) {
+	private final void init(final CallbackInfo info) {
 		final ModuleManager mm = Insane.getInstance().getModuleManager();
 		final Killaura killaura = (Killaura) mm.getModule(Killaura.class);
 		final Trigger trigger = (Trigger) mm.getModule(Trigger.class);

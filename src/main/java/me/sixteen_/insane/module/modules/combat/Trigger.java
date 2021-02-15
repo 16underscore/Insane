@@ -25,27 +25,27 @@ public final class Trigger extends Module implements ClientPlayerTickable {
 		super("Trigger", ModuleCategory.COMBAT);
 	}
 
-	public void setTickables(List<ClientPlayerTickable> tickables) {
+	public final void setTickables(List<ClientPlayerTickable> tickables) {
 		this.tickables = tickables;
 	}
 
 	@Override
-	protected void onEnable() {
+	protected final void onEnable() {
 		tickables.add(this);
 	}
 
 	@Override
-	protected void onDisable() {
+	protected final void onDisable() {
 		tickables.remove(this);
 	}
 
 	@Override
-	public void tick() {
+	public final void tick() {
 		onUpdate();
 	}
 
 	@Override
-	public void onUpdate() {
+	public final void onUpdate() {
 		if (mc.player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}

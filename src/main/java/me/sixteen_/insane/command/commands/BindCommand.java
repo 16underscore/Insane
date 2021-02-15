@@ -16,7 +16,7 @@ public final class BindCommand extends Command {
 	}
 
 	@Override
-	public void run(final String... param) {
+	public final void run(final String... param) {
 		InputUtil.Key key;
 		if (param[2].equalsIgnoreCase("none")) {
 			key = InputUtil.UNKNOWN_KEY;
@@ -27,7 +27,7 @@ public final class BindCommand extends Command {
 	}
 
 	@Override
-	public String syntax() {
+	public final String syntax() {
 		return String.format(".%s <Module> <Key>", getName());
 	}
 }

@@ -6,7 +6,7 @@ import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.commands.BindCommand;
 import me.sixteen_.insane.command.commands.HelpCommand;
 import me.sixteen_.insane.command.commands.LoginCommand;
-import me.sixteen_.insane.command.commands.ModeCommand;
+import me.sixteen_.insane.command.commands.ValueCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,15 +26,15 @@ public final class CommandManager {
 		addCommand(new ToggleCommand());
 		addCommand(new LoginCommand());
 		addCommand(new BindCommand());
-		addCommand(new ModeCommand());
+		addCommand(new ValueCommand());
 		addCommand(new HelpCommand());
 	}
 
-	private void addCommand(final Command cmd) {
+	private final void addCommand(final Command cmd) {
 		commands.add(cmd);
 	}
 
-	public void input(final String input) {
+	public final void input(final String input) {
 		final String[] cmd = input.substring(prefix.length()).split(" ");
 		for (final Command command : commands) {
 			if (command.getName().equalsIgnoreCase(cmd[0])) {
@@ -48,7 +48,7 @@ public final class CommandManager {
 		}
 	}
 
-	public List<Command> getCommands() {
+	public final List<Command> getCommands() {
 		return commands;
 	}
 }

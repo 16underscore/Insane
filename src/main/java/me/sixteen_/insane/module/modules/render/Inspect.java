@@ -22,17 +22,17 @@ public final class Inspect extends Module {
 	}
 
 	@Override
-	protected void onEnable() {
+	protected final void onEnable() {
 		distance = 0.0F;
 		move = 0.0F;
 	}
 
 	@Override
-	public void toggle() {
+	public final void toggle() {
 		enable();
 	}
 
-	public void onUpdate(final MatrixStack matrices) {
+	public final void onUpdate(final MatrixStack matrices) {
 		if (distance < 30.0F) {
 			distance += 0.005F;
 			final float f = MathHelper.sin((3.1415F / 2) * distance);
@@ -54,7 +54,7 @@ public final class Inspect extends Module {
 		}
 	}
 
-	public void disable(final float swingProgress, final float equipProgress) {
+	public final void disable(final float swingProgress, final float equipProgress) {
 		if (swingProgress != 0F || equipProgress != 0F) {
 			disable();
 		}

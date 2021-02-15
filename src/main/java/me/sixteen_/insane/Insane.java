@@ -28,7 +28,7 @@ public final class Insane implements ClientModInitializer {
 	private final IMinecraftClient imc;
 
 	@Override
-	public void onInitializeClient() {
+	public final void onInitializeClient() {
 	}
 
 	public Insane() {
@@ -41,35 +41,35 @@ public final class Insane implements ClientModInitializer {
 		commandManager = new CommandManager();
 	}
 
-	public static Insane getInstance() {
+	public static final Insane getInstance() {
 		return insane;
 	}
 
-	public String getClientName() {
+	public final String getClientName() {
 		return clientName;
 	}
 
-	public String getClientVersion() {
+	public final String getClientVersion() {
 		return clientVersion;
 	}
 
-	public IMinecraftClient getIMinecraftClient() {
+	public final IMinecraftClient getIMinecraftClient() {
 		return imc;
 	}
 
-	public Logger getLogger() {
+	public final Logger getLogger() {
 		return logger;
 	}
 
-	public ModuleManager getModuleManager() {
+	public final ModuleManager getModuleManager() {
 		return moduleManager;
 	}
 
-	public CommandManager getCommandManager() {
+	public final CommandManager getCommandManager() {
 		return commandManager;
 	}
 
-	public void shutdown() {
+	public final void shutdown() {
 		moduleManager.shutdown();
 	}
 }

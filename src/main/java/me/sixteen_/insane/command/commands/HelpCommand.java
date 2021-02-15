@@ -15,11 +15,11 @@ public final class HelpCommand extends Command {
 	}
 
 	@Override
-	public void run(String... param) {
+	public final void run(String... param) {
 	}
 
 	@Override
-	public String syntax() {
+	public final String syntax() {
 		return String.format("%s", getName());
 	}
 }

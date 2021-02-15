@@ -17,13 +17,13 @@ public final class Criticals extends Module {
 	}
 
 	@Override
-	public void onUpdate() {
+	public final void onUpdate() {
 		final double posX = mc.player.getX(), posY = mc.player.getY(), posZ = mc.player.getZ();
 		sendPos(posX, posY + 0.05D, posZ, true);
 		sendPos(posX, posY, posZ, false);
 	}
 
-	private void sendPos(final double x, final double y, final double z, final boolean onGround) {
+	private final void sendPos(final double x, final double y, final double z, final boolean onGround) {
 		mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionOnly(x, y, z, onGround));
 	}
 }

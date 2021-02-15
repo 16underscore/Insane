@@ -18,18 +18,18 @@ public final class Fullbright extends Module {
 	}
 
 	@Override
-	protected void onEnable() {
+	protected final void onEnable() {
 		previousGamma = mc.options.gamma;
 		mc.options.gamma = 69.0D;
 	}
 
 	@Override
-	protected void onDisable() {
+	protected final void onDisable() {
 		mc.options.gamma = previousGamma;
 	}
 
 	@Override
-	protected void onShutdown() {
+	protected final void onShutdown() {
 		mc.options.gamma = previousGamma;
 	}
 }
