@@ -18,8 +18,7 @@ public final class Insane implements ClientModInitializer {
 	// Instance
 	private static Insane insane;
 	// Client information
-	private final String clientName;
-	private final String clientVersion;
+	private final String clientName, clientVersion;
 	// Managers
 	private final ModuleManager moduleManager;
 	private final CommandManager commandManager;

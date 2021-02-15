@@ -35,8 +35,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	private Mode mode;
 	private float range;
 	private List<ClientPlayerTickable> tickables;
-	private final float pi = 3.14159265F;
-	private final float radiansToDegrees = 180 / pi;
+	private final float pi = 3.14159265F, radiansToDegrees = 180 / pi;
 
 	public Killaura() {
 		super("Killaura", ModuleCategory.COMBAT);

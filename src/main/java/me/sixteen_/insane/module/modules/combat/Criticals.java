@@ -18,9 +18,7 @@ public final class Criticals extends Module {
 
 	@Override
 	public void onUpdate() {
-		final double posX = mc.player.getX();
-		final double posY = mc.player.getY();
-		final double posZ = mc.player.getZ();
+		final double posX = mc.player.getX(), posY = mc.player.getY(), posZ = mc.player.getZ();
 		sendPos(posX, posY + 0.05D, posZ, true);
 		sendPos(posX, posY, posZ, false);
 	}

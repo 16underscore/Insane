@@ -15,8 +15,7 @@ import net.minecraft.util.math.Quaternion;
 @Environment(EnvType.CLIENT)
 public final class Inspect extends Module {
 
-	private float distance;
-	private float move;
+	private float distance, move;
 
 	public Inspect() {
 		super("Inspect", ModuleCategory.RENDER, false);
@@ -40,9 +39,7 @@ public final class Inspect extends Module {
 			if (move < 22.5F) {
 				move = f * 22.5F;
 			}
-			final float pivotX = 1.0F;
-			final float pivotY = 1.0F;
-			final float pivotZ = 0.5F;
+			final float pivotX = 1.0F, pivotY = 1.0F, pivotZ = 0.5F;
 			// Destination
 			matrices.translate(0F, 0F, 0F);
 			matrices.multiply(new Quaternion(0F, 0F, move, true));
