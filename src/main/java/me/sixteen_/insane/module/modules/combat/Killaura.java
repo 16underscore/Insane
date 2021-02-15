@@ -1,11 +1,10 @@
 package me.sixteen_.insane.module.modules.combat;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-
-import org.jetbrains.annotations.Nullable;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import com.google.common.collect.Multimap;
 
@@ -15,7 +14,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -137,14 +135,12 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private void lookAtTarget(final LivingEntity le) {
-		final Vec3d playerPos = mc.player.getPos();
-		final Vec3d entityPos = le.getPos();
-		final double deltaX = entityPos.getX() - playerPos.getX();
-		final double deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + mc.player.getEyeHeight(mc.player.getPose()));
-		final double deltaZ = entityPos.getZ() - playerPos.getZ();
-		final double distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
-		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees);
-		final float yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
+		final Vec3d playerPos = mc.player.getPos(), entityPos = le.getPos();
+		final double deltaX = entityPos.getX() - playerPos.getX(),
+				deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + mc.player.getEyeHeight(mc.player.getPose())), deltaZ = entityPos.getZ() - playerPos.getZ(),
+				distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees),
+				yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
 		mc.player.pitch = pitch;
 		mc.player.yaw = yaw;
 		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, mc.player.isOnGround()));
@@ -152,7 +148,6 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		mc.cameraEntity.yaw = mc.player.prevYaw;
 	}
 
-	@Nullable
 	private LivingEntity getTarget(final Filter f) {
 		LivingEntity filteredTarget = null;
 		boolean sort = false;
@@ -179,41 +174,13 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private List<LivingEntity> getTargets() {
-		final Iterator<Entity> it = mc.world.getEntities().iterator();
-		final List<LivingEntity> targets = new ArrayList<LivingEntity>();
-		while (it.hasNext()) {
-			final Entity e = it.next();
-			if (e == null) {
-				continue;
-			}
-			if (!(e instanceof LivingEntity)) {
-				continue;
-			}
-			final LivingEntity le = (LivingEntity) e;
-			if (le.equals(mc.player)) {
-				continue;
-			}
-			if (!mc.player.isInRange(le, range)) {
-				continue;
-			}
-			if (le.hurtTime > 0) {
-				continue;
-			}
-			if (le.isDead()) {
-				continue;
-			}
-			if (le.isInvulnerable()) {
-				continue;
-			}
-			targets.add(le);
-		}
-		return targets;
+		final List<LivingEntity> targets = StreamSupport.stream(mc.world.getEntities().spliterator(), false).filter(LivingEntity.class::isInstance).map(entity -> (LivingEntity) entity)
+				.collect(Collectors.toList());
+		return targets.stream().filter(e -> e != mc.player && e.isInRange(mc.player, range) && e.hurtTime <= 0 && !e.isDead()).collect(Collectors.toList());
 	}
 
 	private float attackDamage(final LivingEntity target) {
-		float damage;
-		float ench;
-		float cool;
+		float damage, ench, cool;
 		damage = attackDamage();
 		ench = EnchantmentHelper.getAttackDamage(mc.player.getMainHandStack(), target.getGroup());
 		cool = mc.player.getAttackCooldownProgress(0.5F);
