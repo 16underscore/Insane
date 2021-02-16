@@ -10,5 +10,9 @@ import net.fabricmc.api.Environment;
 @Environment(EnvType.CLIENT)
 public abstract class NumberValue extends Value {
 
+	public NumberValue(final String name, final boolean visibleInArrayList) {
+		super(name, visibleInArrayList);
+	}
+
 	protected abstract void increment(final boolean positive);
 }

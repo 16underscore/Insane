@@ -12,8 +12,8 @@ public final class BooleanValue extends Value {
 
 	private boolean enabled;
 
-	public BooleanValue(final String name, final boolean enabled) {
-		this.name = name;
+	public BooleanValue(final String name, final boolean visibleInArrayList, final boolean enabled) {
+		super(name, visibleInArrayList);
 		this.enabled = enabled;
 	}
 
@@ -27,5 +27,10 @@ public final class BooleanValue extends Value {
 
 	public final void setEnabled(final boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(isEnabled());
 	}
 }

@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import me.sixteen_.insane.value.Value;
-import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -67,13 +66,13 @@ public abstract class Module {
 
 	public String getNameWithValue() {
 		final StringBuilder build = new StringBuilder();
-		final Iterator<Value> it = values.iterator();
+		final Iterator<Value> it = values.stream().filter(value -> value.isVisibleInArrayList()).iterator();
 		while (it.hasNext()) {
 			final Value v = it.next();
 			if (it.hasNext()) {
-				build.append(String.format("%s, ", ((ListValue) v).getValue()));
+				build.append(String.format("%s, ", v.toString()));
 			} else {
-				build.append(((ListValue) v).getValue());
+				build.append(v.toString());
 			}
 		}
 		if (build.isEmpty()) {

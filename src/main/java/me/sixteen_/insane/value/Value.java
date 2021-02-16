@@ -9,9 +9,22 @@ import net.fabricmc.api.Environment;
 @Environment(EnvType.CLIENT)
 public abstract class Value {
 
-	protected String name;
+	private final String name;
+	private final boolean visibleInArrayList;
+
+	public Value(final String name, final boolean visibleInArrayList) {
+		this.name = name;
+		this.visibleInArrayList = visibleInArrayList;
+	}
 
 	public final String getName() {
 		return name;
 	}
+
+	public final boolean isVisibleInArrayList() {
+		return visibleInArrayList;
+	}
+
+	@Override
+	public abstract String toString();
 }

@@ -12,8 +12,8 @@ public final class DoubleValue extends NumberValue {
 
 	private double value, minimum, maximum, increment;
 
-	public DoubleValue(final String name, final double value, final double minimum, final double maximum, final double increment) {
-		this.name = name;
+	public DoubleValue(final String name, final boolean visibleInArrayList, final double value, final double minimum, final double maximum, final double increment) {
+		super(name, visibleInArrayList);
 		this.value = value;
 		this.minimum = minimum;
 		this.maximum = maximum;
@@ -54,5 +54,10 @@ public final class DoubleValue extends NumberValue {
 
 	public final void setIncrement(final double increment) {
 		this.increment = increment;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(getValue());
 	}
 }

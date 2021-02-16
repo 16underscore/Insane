@@ -16,8 +16,8 @@ public final class ListValue extends Value {
 	private final List<String> values;
 	private int index;
 
-	public ListValue(final String name, final String... values) {
-		this.name = name;
+	public ListValue(final String name, final boolean visibleInArrayList, final String... values) {
+		super(name, visibleInArrayList);
 		this.values = Arrays.asList(values);
 		index = 0;
 	}
@@ -32,5 +32,10 @@ public final class ListValue extends Value {
 
 	public final boolean is(final String value) {
 		return index == values.indexOf(value);
+	}
+
+	@Override
+	public String toString() {
+		return getValue();
 	}
 }

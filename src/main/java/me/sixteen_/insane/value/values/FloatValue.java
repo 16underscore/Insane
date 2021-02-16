@@ -12,8 +12,8 @@ public final class FloatValue extends NumberValue {
 
 	private float value, minimum, maximum, increment;
 
-	public FloatValue(final String name, final float value, final float minimum, final float maximum, final float increment) {
-		this.name = name;
+	public FloatValue(final String name, final boolean visibleInArrayList, final float value, final float minimum, final float maximum, final float increment) {
+		super(name, visibleInArrayList);
 		this.value = value;
 		this.minimum = minimum;
 		this.maximum = maximum;
@@ -55,5 +55,10 @@ public final class FloatValue extends NumberValue {
 
 	public final void setIncrement(final float increment) {
 		this.increment = increment;
+	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(getValue());
 	}
 }

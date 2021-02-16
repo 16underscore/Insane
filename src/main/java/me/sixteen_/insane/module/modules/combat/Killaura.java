@@ -35,15 +35,15 @@ import net.minecraft.util.math.Vec3d;
 public final class Killaura extends Module implements ClientPlayerTickable {
 
 	private List<ClientPlayerTickable> tickables;
-	private final FloatValue range = new FloatValue("range", 3.7F, 3F, 6F, 0.1F);
-	private final ListValue mode = new ListValue("mode", "legit", "fast", "multi", "packet"), sort = new ListValue("sort", "distance", "health");
+	private final ListValue mode = new ListValue("mode", true, "legit", "fast", "multi", "packet"), sort = new ListValue("sort", false, "distance", "health");
+	private final FloatValue range = new FloatValue("range", true, 3.7F, 3F, 6F, 0.1F);
 	private final float pi = 3.14159265F, radiansToDegrees = 180 / pi;
 
 	public Killaura() {
 		super("Killaura", ModuleCategory.COMBAT);
-		this.addValues(range);
 		this.addValues(mode);
 		this.addValues(sort);
+		this.addValues(range);
 	}
 
 	public final void setTickables(List<ClientPlayerTickable> tickables) {
