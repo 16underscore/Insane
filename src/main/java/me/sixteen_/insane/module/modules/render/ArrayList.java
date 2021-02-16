@@ -34,11 +34,11 @@ public final class ArrayList extends Module {
 
 			@Override
 			public int compare(final Module m1, final Module m2) {
-				final String s1 = m1.getNameWithValue(), s2 = m2.getNameWithValue();
-				if (mc.textRenderer.getWidth(s1) > mc.textRenderer.getWidth(s2)) {
+				final int s1Width = mc.textRenderer.getWidth(m1.getName()), s2Width = mc.textRenderer.getWidth(m2.getName());
+				if (s1Width > s2Width) {
 					return -1;
 				}
-				if (mc.textRenderer.getWidth(s1) < mc.textRenderer.getWidth(s2)) {
+				if (s1Width < s2Width) {
 					return 1;
 				}
 				return 0;

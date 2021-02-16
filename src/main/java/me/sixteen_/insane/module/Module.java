@@ -70,12 +70,10 @@ public abstract class Module {
 		final Iterator<Value> it = values.iterator();
 		while (it.hasNext()) {
 			final Value v = it.next();
-			if (v instanceof ListValue) {
-				if (it.hasNext()) {
-					build.append(String.format("%s, ", ((ListValue) v).getValue()));
-				} else {
-					build.append(((ListValue) v).getValue());
-				}
+			if (it.hasNext()) {
+				build.append(String.format("%s, ", ((ListValue) v).getValue()));
+			} else {
+				build.append(((ListValue) v).getValue());
 			}
 		}
 		if (build.isEmpty()) {
