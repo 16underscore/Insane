@@ -133,11 +133,9 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	private final void lookAtTarget(final LivingEntity le) {
 		final Vec3d playerPos = mc.player.getPos(), entityPos = le.getPos();
-		final double deltaX = entityPos.getX() - playerPos.getX(),
-				deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + mc.player.getEyeHeight(mc.player.getPose())), deltaZ = entityPos.getZ() - playerPos.getZ(),
+		final double deltaX = entityPos.getX() - playerPos.getX(), deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + mc.player.getEyeHeight(mc.player.getPose())), deltaZ = entityPos.getZ() - playerPos.getZ(),
 				distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
-		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees),
-				yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
+		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees), yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
 		mc.player.pitch = pitch;
 		mc.player.yaw = yaw;
 		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, mc.player.isOnGround()));
@@ -166,8 +164,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private final List<LivingEntity> getTargets() {
-		final List<LivingEntity> targets = StreamSupport.stream(mc.world.getEntities().spliterator(), false).filter(LivingEntity.class::isInstance).map(entity -> (LivingEntity) entity)
-				.collect(Collectors.toList());
+		final List<LivingEntity> targets = StreamSupport.stream(mc.world.getEntities().spliterator(), false).filter(LivingEntity.class::isInstance).map(entity -> (LivingEntity) entity).collect(Collectors.toList());
 		return targets.stream().filter(e -> e != mc.player && e.isInRange(mc.player, range.getValue()) && e.hurtTime <= 0 && !e.isDead()).collect(Collectors.toList());
 	}
 
@@ -178,8 +175,8 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		cool = mc.player.getAttackCooldownProgress(0.5F);
 		damage *= 0.2F + cool * cool * 0.8F;
 		ench *= cool;
-		final boolean crit = (cool > 0.9F && mc.player.fallDistance > 0.0F && !mc.player.isOnGround() && !mc.player.isClimbing() && !mc.player.isTouchingWater()
-				&& !mc.player.hasStatusEffect(StatusEffects.BLINDNESS) && !mc.player.hasVehicle() && target instanceof LivingEntity) && !mc.player.isSprinting();
+		final boolean crit = (cool > 0.9F && mc.player.fallDistance > 0.0F && !mc.player.isOnGround() && !mc.player.isClimbing() && !mc.player.isTouchingWater() && !mc.player.hasStatusEffect(StatusEffects.BLINDNESS) && !mc.player.hasVehicle()
+				&& target instanceof LivingEntity) && !mc.player.isSprinting();
 		if (crit) {
 			damage *= 1.5F;
 		}
