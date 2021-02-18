@@ -1,5 +1,6 @@
 package me.sixteen_.insane.value.values;
 
+import me.sixteen_.insane.value.Value;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.math.MathHelper;
@@ -8,7 +9,7 @@ import net.minecraft.util.math.MathHelper;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public final class FloatValue extends NumberValue {
+public final class FloatValue extends Value {
 
 	private float value, minimum, maximum, increment;
 
@@ -20,7 +21,6 @@ public final class FloatValue extends NumberValue {
 		this.increment = increment;
 	}
 
-	@Override
 	public final void increment(final boolean positive) {
 		setValue(getValue() + (positive ? 1 : -1) * increment);
 	}
@@ -56,7 +56,7 @@ public final class FloatValue extends NumberValue {
 	public final void setIncrement(final float increment) {
 		this.increment = increment;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.valueOf(getValue());

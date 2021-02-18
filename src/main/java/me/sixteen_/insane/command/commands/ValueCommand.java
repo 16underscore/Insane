@@ -29,7 +29,7 @@ public final class ValueCommand extends Command {
 		} else if (v instanceof DoubleValue) {
 			((DoubleValue) v).setValue(Double.parseDouble(param[3]));
 		} else if (v instanceof BooleanValue) {
-			((BooleanValue) v).setEnabled(Boolean.parseBoolean(param[3]));
+			((BooleanValue) v).setValue(Boolean.parseBoolean(param[3]));
 		} else if (v instanceof ListValue) {
 			((ListValue) v).setValue(param[3]);
 		}

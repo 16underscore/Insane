@@ -10,27 +10,27 @@ import net.fabricmc.api.Environment;
 @Environment(EnvType.CLIENT)
 public final class BooleanValue extends Value {
 
-	private boolean enabled;
+	private boolean value;
 
-	public BooleanValue(final String name, final boolean visibleInArrayList, final boolean enabled) {
+	public BooleanValue(final String name, final boolean visibleInArrayList, final boolean value) {
 		super(name, visibleInArrayList);
-		this.enabled = enabled;
+		this.value = value;
 	}
 
 	public final void toggle() {
-		enabled = !enabled;
+		value = !value;
 	}
 
-	public final boolean isEnabled() {
-		return enabled;
+	public final boolean getValue() {
+		return value;
 	}
 
-	public final void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
+	public final void setValue(final boolean value) {
+		this.value = value;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(isEnabled());
+		return String.valueOf(getValue());
 	}
 }

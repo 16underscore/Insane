@@ -1,5 +1,6 @@
 package me.sixteen_.insane.value.values;
 
+import me.sixteen_.insane.value.Value;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.math.MathHelper;
@@ -8,7 +9,7 @@ import net.minecraft.util.math.MathHelper;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public final class DoubleValue extends NumberValue {
+public final class DoubleValue extends Value {
 
 	private double value, minimum, maximum, increment;
 

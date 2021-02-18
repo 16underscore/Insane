@@ -9,7 +9,7 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class NoHurtCam extends Module {
+public final class NoHurtCam extends Module {
 
 	public NoHurtCam() {
 		super("NoHurtCam", ModuleCategory.RENDER);

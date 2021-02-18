@@ -18,7 +18,7 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
 
 	@Shadow
 	private Session session;
-	
+
 	@Override
 	public final void setSession(Session session) {
 		this.session = session;
