@@ -52,7 +52,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		this.addValues(cps);
 	}
 
-	public final void setTickables(List<ClientPlayerTickable> tickables) {
+	public final void setTickables(final List<ClientPlayerTickable> tickables) {
 		this.tickables = tickables;
 	}
 
