@@ -83,11 +83,10 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	private final void fastAura() {
-		for (final LivingEntity target : getTargets()) {
-			if (target.getHealth() < attackDamage(target) || mc.player.getAttackCooldownProgress(0F) >= 1F) {
-				mc.interactionManager.attackEntity(mc.player, target);
-				mc.player.swingHand(Hand.MAIN_HAND);
-			}
+		final LivingEntity target = getTarget();
+		if (target.getHealth() < attackDamage(target) || mc.player.getAttackCooldownProgress(0F) >= 1F) {
+			mc.interactionManager.attackEntity(mc.player, target);
+			mc.player.swingHand(Hand.MAIN_HAND);
 		}
 	}
 
