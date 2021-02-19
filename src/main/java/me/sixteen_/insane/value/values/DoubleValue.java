@@ -11,18 +11,15 @@ import net.minecraft.util.math.MathHelper;
 @Environment(EnvType.CLIENT)
 public final class DoubleValue extends Value {
 
-	private double value, minimum, maximum, increment;
+	private final double min, max, increment;
+	private double value;
 
-	public DoubleValue(final String name, final boolean visibleInArrayList, final double value, final double minimum, final double maximum, final double increment) {
+	public DoubleValue(final String name, final boolean visibleInArrayList, final double value, final double min, final double max, final double increment) {
 		super(name, visibleInArrayList);
 		this.value = value;
-		this.minimum = minimum;
-		this.maximum = maximum;
+		this.min = min;
+		this.max = max;
 		this.increment = increment;
-	}
-
-	public void increment(final boolean positive) {
-		setValue(getValue() + (positive ? 1 : -1) * increment);
 	}
 
 	public final double getValue() {
@@ -30,31 +27,19 @@ public final class DoubleValue extends Value {
 	}
 
 	public final void setValue(final double value) {
-		this.value = Math.round(MathHelper.clamp(value, minimum, maximum) / increment) * increment;
+		this.value = Math.round(MathHelper.clamp(value, min, max) / increment) * increment;
 	}
 
-	public final double getMinimum() {
-		return minimum;
+	public final double getMin() {
+		return min;
 	}
 
-	public final void setMinimum(final double minimum) {
-		this.minimum = minimum;
-	}
-
-	public final double getMaximum() {
-		return maximum;
-	}
-
-	public final void setMaximum(final double maximum) {
-		this.maximum = maximum;
+	public final double getMax() {
+		return max;
 	}
 
 	public final double getIncrement() {
 		return increment;
-	}
-
-	public final void setIncrement(final double increment) {
-		this.increment = increment;
 	}
 
 	@Override

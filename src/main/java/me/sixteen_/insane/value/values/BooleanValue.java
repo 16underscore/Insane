@@ -17,10 +17,6 @@ public final class BooleanValue extends Value {
 		this.value = value;
 	}
 
-	public final void toggle() {
-		value = !value;
-	}
-
 	public final boolean getValue() {
 		return value;
 	}

@@ -10,13 +10,14 @@ import net.fabricmc.api.Environment;
 @Environment(EnvType.CLIENT)
 public final class IntegerValue extends Value {
 
-	private int value, minimum, maximum;
+	private final int min, max;
+	private int value;
 
-	public IntegerValue(final String name, final boolean visibleInArrayList, final int value, final int minimum, final int maximum) {
+	public IntegerValue(final String name, final boolean visibleInArrayList, final int value, final int min, final int max) {
 		super(name, visibleInArrayList);
 		this.value = value;
-		this.minimum = minimum;
-		this.maximum = maximum;
+		this.min = min;
+		this.max = max;
 	}
 
 	public final int getValue() {
@@ -27,24 +28,16 @@ public final class IntegerValue extends Value {
 		this.value = value;
 	}
 
-	public final int getMinimum() {
-		return minimum;
+	public final int getMin() {
+		return min;
 	}
 
-	public final void setMinimum(final int minimum) {
-		this.minimum = minimum;
-	}
-
-	public final int getMaximum() {
-		return maximum;
-	}
-
-	public final void setMaximum(final int maximum) {
-		this.maximum = maximum;
+	public final int getMax() {
+		return max;
 	}
 
 	@Override
 	public String toString() {
-		return null;
+		return String.valueOf(getValue());
 	}
 }

@@ -11,18 +11,15 @@ import net.minecraft.util.math.MathHelper;
 @Environment(EnvType.CLIENT)
 public final class FloatValue extends Value {
 
-	private float value, minimum, maximum, increment;
+	private final float min, max, increment;
+	private float value;
 
-	public FloatValue(final String name, final boolean visibleInArrayList, final float value, final float minimum, final float maximum, final float increment) {
+	public FloatValue(final String name, final boolean visibleInArrayList, final float value, final float min, final float max, final float increment) {
 		super(name, visibleInArrayList);
 		this.value = value;
-		this.minimum = minimum;
-		this.maximum = maximum;
+		this.min = min;
+		this.max = max;
 		this.increment = increment;
-	}
-
-	public final void increment(final boolean positive) {
-		setValue(getValue() + (positive ? 1 : -1) * increment);
 	}
 
 	public final float getValue() {
@@ -30,31 +27,19 @@ public final class FloatValue extends Value {
 	}
 
 	public final void setValue(final float value) {
-		this.value = Math.round(MathHelper.clamp(value, minimum, maximum) / increment) * increment;
+		this.value = Math.round(MathHelper.clamp(value, min, max) / increment) * increment;
 	}
 
-	public final float getMinimum() {
-		return minimum;
+	public final float getMin() {
+		return min;
 	}
 
-	public final void setMinimum(final float minimum) {
-		this.minimum = minimum;
-	}
-
-	public final float getMaximum() {
-		return maximum;
-	}
-
-	public final void setMaximum(final float maximum) {
-		this.maximum = maximum;
+	public final float getMax() {
+		return max;
 	}
 
 	public final float getIncrement() {
 		return increment;
-	}
-
-	public final void setIncrement(final float increment) {
-		this.increment = increment;
 	}
 
 	@Override
