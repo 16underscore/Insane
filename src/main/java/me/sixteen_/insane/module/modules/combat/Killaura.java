@@ -43,13 +43,14 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	public Killaura() {
 		super("Killaura", ModuleCategory.COMBAT);
-		mode = new ListValue("mode", true, "legit", "fast", "multi", "packet");
+		mode = new ListValue("mode", true, "legit", "fast", "multi");
 		sort = new ListValue("sort", false, "distance", "health");
 		range = new FloatValue("range", true, 3.7F, 3F, 6F, 0.1F);
 		cps = new IntegerRange("cps", false, 8, 12, 0, 20);
 		this.addValues(mode);
 		this.addValues(sort);
 		this.addValues(range);
+		this.addValues(cps);
 	}
 
 	public final void setTickables(List<ClientPlayerTickable> tickables) {
@@ -79,8 +80,6 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 			fastAura();
 		} else if (mode.is("multi")) {
 			multiAura();
-		} else if (mode.is("packet")) {
-			onlyPacketAura();
 		}
 	}
 
@@ -100,12 +99,6 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		for (final LivingEntity target : getTargets()) {
 			mc.interactionManager.attackEntity(mc.player, target);
 			mc.player.swingHand(Hand.MAIN_HAND);
-		}
-	}
-
-	private final void onlyPacketAura() {
-		for (final LivingEntity target : getTargets()) {
-			mc.getNetworkHandler().sendPacket(new PlayerInteractEntityC2SPacket(target, mc.player.isSneaking()));
 		}
 	}
 
