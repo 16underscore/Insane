@@ -45,7 +45,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		mode = new ListValue("mode", true, "legit", "fast", "multi");
 		sort = new ListValue("sort", false, "distance", "health");
 		range = new FloatValue("range", true, 3.7F, 3F, 6F, 0.1F);
-		cps = new IntegerRange("cps", false, 8, 12, 0, 20);
+		cps = new IntegerRange("cps", false, 8, 12, 1, 20);
 		this.addValues(mode);
 		this.addValues(sort);
 		this.addValues(range);
@@ -85,18 +85,15 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	private final void fastAura() {
 		final LivingEntity target = getTarget();
 		if (target.getHealth() < attackDamage(target) || mc.player.getAttackCooldownProgress(0F) >= 1F) {
-			mc.interactionManager.attackEntity(mc.player, target);
-			mc.player.swingHand(Hand.MAIN_HAND);
+			attack(target);
 		}
 	}
 
 	private final void multiAura() {
-		if (mc.player.getAttackCooldownProgress(0F) < 1F) {
-			return;
-		}
-		for (final LivingEntity target : getTargets()) {
-			mc.interactionManager.attackEntity(mc.player, target);
-			mc.player.swingHand(Hand.MAIN_HAND);
+		if (mc.player.getAttackCooldownProgress(0F) >= 1F) {
+			for (final LivingEntity target : getTargets()) {
+				attack(target);
+			}
 		}
 	}
 
@@ -124,20 +121,27 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 			return;
 		}
 		lookAtTarget(target);
-		mc.interactionManager.attackEntity(mc.player, target);
-		mc.player.swingHand(Hand.MAIN_HAND);
+		attack(target);
 	}
 
 	private final void lookAtTarget(final LivingEntity le) {
 		final Vec3d playerPos = mc.player.getPos(), entityPos = le.getPos();
-		final double deltaX = entityPos.getX() - playerPos.getX(), deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + mc.player.getEyeHeight(mc.player.getPose())), deltaZ = entityPos.getZ() - playerPos.getZ(),
-				distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+		double deltaX, deltaY, deltaZ, distanceXZ;
+		deltaX = entityPos.getX() - playerPos.getX();
+		deltaY = (entityPos.getY() + le.getEyeHeight(le.getPose())) - (playerPos.getY() + mc.player.getEyeHeight(mc.player.getPose()));
+		deltaZ = entityPos.getZ() - playerPos.getZ();
+		distanceXZ = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 		final float pitch = MathHelper.wrapDegrees(((float) (-MathHelper.atan2(deltaY, distanceXZ))) * radiansToDegrees), yaw = MathHelper.wrapDegrees(((float) MathHelper.atan2(deltaZ, deltaX)) * radiansToDegrees - 90F);
 		mc.player.pitch = pitch;
 		mc.player.yaw = yaw;
 		mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, mc.player.isOnGround()));
 		mc.cameraEntity.pitch = mc.player.prevPitch;
 		mc.cameraEntity.yaw = mc.player.prevYaw;
+	}
+
+	private final void attack(final LivingEntity target) {
+		mc.interactionManager.attackEntity(mc.player, target);
+		mc.player.swingHand(Hand.MAIN_HAND);
 	}
 
 	private final LivingEntity getTarget() {
