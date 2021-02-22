@@ -1,6 +1,7 @@
 package me.sixteen_.insane.command.commands;
 
 import me.sixteen_.insane.command.Command;
+import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -15,7 +16,10 @@ public final class HelpCommand extends Command {
 	}
 
 	@Override
-	public final void run(String... param) {
+	public final void run(final String... param) {
+		for (final Module m : insane.getModuleManager().getModules()) {
+			insane.getLogger().log(m.getName());
+		}
 	}
 
 	@Override

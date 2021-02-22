@@ -22,7 +22,8 @@ public abstract class Command {
 	}
 
 	/**
-	 * Called when player execute a command.
+	 * Called when player execute the command.
+	 * 
 	 * @param command input
 	 */
 	public abstract void run(final String... param);
@@ -31,6 +32,9 @@ public abstract class Command {
 	 */
 	public abstract String syntax();
 
+	/**
+	 * @return the command name
+	 */
 	public final String getName() {
 		return name;
 	}

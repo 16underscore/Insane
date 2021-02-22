@@ -2,10 +2,12 @@ package me.sixteen_.insane.module;
 
 import java.util.List;
 
+import me.sixteen_.insane.module.modules.ModuleTickable;
 import me.sixteen_.insane.module.modules.combat.Criticals;
 import me.sixteen_.insane.module.modules.combat.Killaura;
 import me.sixteen_.insane.module.modules.combat.Trigger;
 import me.sixteen_.insane.module.modules.movement.Fly;
+import me.sixteen_.insane.module.modules.movement.Strafe;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
 import me.sixteen_.insane.module.modules.render.Inspect;
@@ -21,6 +23,7 @@ import net.fabricmc.api.Environment;
 public final class ModuleManager {
 
 	private final List<Module> modules = new java.util.ArrayList<Module>();
+	private final List<ModuleTickable> tickableModules = new java.util.ArrayList<ModuleTickable>();
 
 	public ModuleManager() {
 		addModule(new SprintStatus());
@@ -31,17 +34,42 @@ public final class ModuleManager {
 		addModule(new Killaura());
 		addModule(new Inspect());
 		addModule(new Trigger());
+		addModule(new Strafe());
 		addModule(new Fly());
+		for (final Module m : modules) {
+			if (m instanceof ModuleTickable) {
+				tickableModules.add((ModuleTickable) m);
+			}
+		}
 	}
 
+	/**
+	 * adds a module.
+	 * 
+	 * @param needs a module
+	 */
 	private final void addModule(final Module module) {
 		modules.add(module);
 	}
 
+	/**
+	 * @return a List of modules
+	 */
 	public final List<Module> getModules() {
 		return modules;
 	}
 
+	/**
+	 * @return a List of modules that extends {@link ModuleTickable}
+	 */
+	public final List<ModuleTickable> getTickableModules() {
+		return tickableModules;
+	}
+
+	/**
+	 * @param needs the name of the module
+	 * @return the module that has the name
+	 */
 	public final Module getModuleByName(final String moduleName) {
 		for (final Module m : modules) {
 			if (m.getName().equalsIgnoreCase(moduleName)) {
@@ -51,6 +79,10 @@ public final class ModuleManager {
 		return null;
 	}
 
+	/**
+	 * @param needs the class of the module
+	 * @return the module
+	 */
 	public final Module getModule(final Class<? extends Module> moduleClass) {
 		for (final Module m : modules) {
 			if (m.getClass() == moduleClass) {
@@ -60,6 +92,9 @@ public final class ModuleManager {
 		return null;
 	}
 
+	/**
+	 * Called when minecraft gets closed.
+	 */
 	public final void shutdown() {
 		for (final Module m : modules) {
 			m.onShutdown();
