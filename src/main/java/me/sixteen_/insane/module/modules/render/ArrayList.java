@@ -34,7 +34,7 @@ public final class ArrayList extends Module {
 
 			@Override
 			public int compare(final Module m1, final Module m2) {
-				final int s1Width = mc.textRenderer.getWidth(m1.getName()), s2Width = mc.textRenderer.getWidth(m2.getName());
+				final int s1Width = mc.textRenderer.getWidth(m1.getNameWithValue()), s2Width = mc.textRenderer.getWidth(m2.getNameWithValue());
 				if (s1Width > s2Width) {
 					return -1;
 				}

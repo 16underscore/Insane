@@ -21,7 +21,14 @@ public abstract class Command {
 		insane = Insane.getInstance();
 	}
 
+	/**
+	 * Called when player execute a command.
+	 * @param command input
+	 */
 	public abstract void run(final String... param);
+	/**
+	 * @return the command syntax
+	 */
 	public abstract String syntax();
 
 	public final String getName() {

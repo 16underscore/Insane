@@ -38,10 +38,18 @@ public abstract class Module {
 		this(moduleName, moduleCategory, true);
 	}
 
+	/**
+	 * adds a value.
+	 * @param needs a value
+	 */
 	public void addValues(final Value... values) {
 		this.values.addAll(Arrays.asList(values));
 	}
 
+	/**
+	 * @param needs the name of the value
+	 * @return the value
+	 */
 	public final Value getValueByName(final String valueName) {
 		for (final Value v : values) {
 			if (v.getName().equalsIgnoreCase(valueName)) {
@@ -51,6 +59,9 @@ public abstract class Module {
 		return null;
 	}
 
+	/**
+	 * Toggles the module
+	 */
 	public void toggle() {
 		enabled = !enabled;
 		if (enabled) {
@@ -60,10 +71,16 @@ public abstract class Module {
 		}
 	}
 
+	/**
+	 * @return the module name
+	 */
 	public final String getName() {
 		return name;
 	}
 
+	/**
+	 * @return module name with some values
+	 */
 	public String getNameWithValue() {
 		final StringBuilder build = new StringBuilder();
 		final Iterator<Value> it = values.stream().filter(value -> value.isVisibleInArrayList()).iterator();
@@ -81,45 +98,82 @@ public abstract class Module {
 		return String.format("%s \u00A77[%s]\u00A7r", getName(), build.toString());
 	}
 
+	/**
+	 * @return the module category
+	 */
 	public final ModuleCategory getCategory() {
 		return category;
 	}
 
+	/**
+	 * @return a boolean if it should be displayed in the array list
+	 */
 	public final boolean isVisible() {
 		return visible;
 	}
 
+	/**
+	 * Checks if module is enabled.
+	 * 
+	 * @return a boolean if it is enabled.
+	 */
 	public final boolean isEnabled() {
 		return enabled;
 	}
 
+	/**
+	 * Sets the keybind for the module.
+	 * 
+	 * @param key
+	 */
 	public final void setKeybind(final InputUtil.Key key) {
 		keybind = key;
 	}
 
+	/**
+	 * @return the bind for the module
+	 */
 	public final InputUtil.Key getKeybind() {
 		return keybind;
 	}
 
+	/**
+	 * Enables the module.
+	 */
 	protected final void enable() {
 		enabled = true;
 		onEnable();
 	}
 
+	/**
+	 * Disables the module.
+	 */
 	protected final void disable() {
 		enabled = false;
 		onDisable();
 	}
 
+	/**
+	 * Called on update.
+	 */
 	public void onUpdate() {
 	}
 
+	/**
+	 * Called when the module is turned on.
+	 */
 	protected void onEnable() {
 	}
 
+	/**
+	 * Called when the module is turned off.
+	 */
 	protected void onDisable() {
 	}
 
+	/**
+	 * Called when minecraft gets closed.
+	 */
 	protected void onShutdown() {
 	}
 }
