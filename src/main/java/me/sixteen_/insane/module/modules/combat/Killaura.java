@@ -8,12 +8,11 @@ import java.util.stream.StreamSupport;
 
 import com.google.common.collect.Multimap;
 
-import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.modules.ModuleTickable;
 import me.sixteen_.insane.value.values.FloatValue;
 import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -30,9 +29,8 @@ import net.minecraft.util.math.Vec3d;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public final class Killaura extends Module implements ClientPlayerTickable {
+public final class Killaura extends ModuleTickable {
 
-	private List<ClientPlayerTickable> tickables;
 	private final ListValue mode, sort;
 	private final FloatValue range;
 	private final float pi = 3.14159265F, radiansToDegrees = 180 / pi;
@@ -45,25 +43,6 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 		this.addValues(mode);
 		this.addValues(sort);
 		this.addValues(range);
-	}
-
-	public final void setTickables(final List<ClientPlayerTickable> tickables) {
-		this.tickables = tickables;
-	}
-
-	@Override
-	protected final void onEnable() {
-		tickables.add(this);
-	}
-
-	@Override
-	protected final void onDisable() {
-		tickables.remove(this);
-	}
-
-	@Override
-	public final void tick() {
-		onUpdate();
 	}
 
 	@Override
@@ -79,6 +58,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	/**
 	 * Just a method for attacking that also swings the hand.
+	 * 
 	 * @param needs the living entity target
 	 */
 	private final void attack(final LivingEntity target) {
@@ -87,11 +67,13 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	}
 
 	/**
-	 * Fastaura that uses prediction for attack damage. Allows the player to attack a target as soon
-	 * as it could die.
+	 * Fastaura that uses prediction for attack damage. Allows the player to attack a target as soon as it could die.
 	 */
 	private final void fastAura() {
 		final LivingEntity target = getTarget();
+		if (target == null) {
+			return;
+		}
 		if (target.getHealth() < attackDamage(target) || mc.player.getAttackCooldownProgress(0F) >= 1F) {
 			attack(target);
 		}
@@ -140,6 +122,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	/**
 	 * Get living targets near the player.
+	 * 
 	 * @return a List with valid targets
 	 */
 	private final List<LivingEntity> getTargets() {
@@ -149,6 +132,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	/**
 	 * Get a specific target.
+	 * 
 	 * @return a living entity
 	 */
 	private final LivingEntity getTarget() {
@@ -173,6 +157,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	/**
 	 * Makes the player look at a living entity.
+	 * 
 	 * @param needs a living entity. For example the target
 	 */
 	private final void lookAtTarget(final LivingEntity le) {
@@ -192,6 +177,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	/**
 	 * Calculates the attack damage.
+	 * 
 	 * @param needs a target for calculation
 	 * @return the attack damage that the player deal
 	 */
@@ -220,6 +206,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 
 	/**
 	 * Gets the attributes from sword / tool to predict the attack damage.
+	 * 
 	 * @return the generic attack damage
 	 */
 	private final float genericAttackDamage() {

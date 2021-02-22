@@ -30,6 +30,10 @@ public final class Criticals extends Module {
 		sendPos(posX, posY, posZ, false);
 	}
 
+	/**
+	 * Sends a player position packet
+	 * @param coordinates and onGround
+	 */
 	private final void sendPos(final double x, final double y, final double z, final boolean onGround) {
 		mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionOnly(x, y, z, onGround));
 	}

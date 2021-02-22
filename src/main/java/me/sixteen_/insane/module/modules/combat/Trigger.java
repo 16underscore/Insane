@@ -1,11 +1,8 @@
 package me.sixteen_.insane.module.modules.combat;
 
-import java.util.List;
-
-import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.modules.ModuleTickable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Hand;
@@ -16,31 +13,10 @@ import net.minecraft.util.hit.HitResult.Type;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public final class Trigger extends Module implements ClientPlayerTickable {
-
-	private List<ClientPlayerTickable> tickables;
+public final class Trigger extends ModuleTickable {
 
 	public Trigger() {
 		super("Trigger");
-	}
-
-	public final void setTickables(List<ClientPlayerTickable> tickables) {
-		this.tickables = tickables;
-	}
-
-	@Override
-	protected final void onEnable() {
-		tickables.add(this);
-	}
-
-	@Override
-	protected final void onDisable() {
-		tickables.remove(this);
-	}
-
-	@Override
-	public final void tick() {
-		onUpdate();
 	}
 
 	@Override
