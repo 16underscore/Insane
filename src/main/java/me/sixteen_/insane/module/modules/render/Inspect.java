@@ -1,7 +1,6 @@
 package me.sixteen_.insane.module.modules.render;
 
 import me.sixteen_.insane.module.Module;
-import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,7 +17,7 @@ public final class Inspect extends Module {
 	private float distance, move;
 
 	public Inspect() {
-		super("Inspect", ModuleCategory.RENDER, false);
+		super("Inspect", false);
 	}
 
 	@Override

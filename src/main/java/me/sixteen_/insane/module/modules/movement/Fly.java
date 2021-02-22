@@ -1,7 +1,6 @@
 package me.sixteen_.insane.module.modules.movement;
 
 import me.sixteen_.insane.module.Module;
-import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -12,7 +11,7 @@ import net.fabricmc.api.Environment;
 public final class Fly extends Module {
 
 	public Fly() {
-		super("Fly", ModuleCategory.MOVEMENT);
+		super("Fly");
 	}
 
 	@Override

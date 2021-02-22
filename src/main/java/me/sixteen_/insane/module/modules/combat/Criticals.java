@@ -1,7 +1,6 @@
 package me.sixteen_.insane.module.modules.combat;
 
 import me.sixteen_.insane.module.Module;
-import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -15,7 +14,7 @@ import net.minecraft.util.ActionResult;
 public final class Criticals extends Module {
 
 	public Criticals() {
-		super("Criticals", ModuleCategory.COMBAT);
+		super("Criticals");
 		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if (isEnabled()) {
 				onUpdate();

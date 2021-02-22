@@ -6,7 +6,6 @@ import java.util.List;
 
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.module.Module;
-import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
@@ -20,7 +19,7 @@ public final class ArrayList extends Module {
 	private List<Module> modules;
 
 	public ArrayList() {
-		super("ArrayList", ModuleCategory.RENDER, false);
+		super("ArrayList", false);
 	}
 
 	@Override

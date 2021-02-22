@@ -1,7 +1,6 @@
 package me.sixteen_.insane.module.modules.render;
 
 import me.sixteen_.insane.module.Module;
-import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -14,7 +13,7 @@ public final class Fullbright extends Module {
 	private double previousGamma;
 
 	public Fullbright() {
-		super("Fullbright", ModuleCategory.RENDER);
+		super("Fullbright");
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package me.sixteen_.insane.module.modules.combat;
 import java.util.List;
 
 import me.sixteen_.insane.module.Module;
-import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.ClientPlayerTickable;
@@ -22,7 +21,7 @@ public final class Trigger extends Module implements ClientPlayerTickable {
 	private List<ClientPlayerTickable> tickables;
 
 	public Trigger() {
-		super("Trigger", ModuleCategory.COMBAT);
+		super("Trigger");
 	}
 
 	public final void setTickables(List<ClientPlayerTickable> tickables) {

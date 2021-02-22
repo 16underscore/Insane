@@ -18,28 +18,27 @@ import net.minecraft.client.util.InputUtil;
 public abstract class Module {
 
 	private final String name;
-	private final ModuleCategory category;
 	private final boolean visible;
 	private List<Value> values = new ArrayList<Value>();
 	private boolean enabled;
 	private InputUtil.Key keybind;
 	protected final MinecraftClient mc;
 
-	public Module(final String moduleName, final ModuleCategory moduleCategory, final boolean moduleVisible) {
+	public Module(final String moduleName, final boolean moduleVisible) {
 		name = moduleName;
-		category = moduleCategory;
 		visible = moduleVisible;
 		enabled = false;
 		keybind = InputUtil.UNKNOWN_KEY;
 		mc = MinecraftClient.getInstance();
 	}
 
-	public Module(final String moduleName, final ModuleCategory moduleCategory) {
-		this(moduleName, moduleCategory, true);
+	public Module(final String moduleName) {
+		this(moduleName, true);
 	}
 
 	/**
 	 * adds a value.
+	 * 
 	 * @param needs a value
 	 */
 	public void addValues(final Value... values) {
@@ -96,13 +95,6 @@ public abstract class Module {
 			return getName();
 		}
 		return String.format("%s \u00A77[%s]\u00A7r", getName(), build.toString());
-	}
-
-	/**
-	 * @return the module category
-	 */
-	public final ModuleCategory getCategory() {
-		return category;
 	}
 
 	/**

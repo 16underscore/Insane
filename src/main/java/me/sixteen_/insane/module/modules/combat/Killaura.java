@@ -9,7 +9,6 @@ import java.util.stream.StreamSupport;
 import com.google.common.collect.Multimap;
 
 import me.sixteen_.insane.module.Module;
-import me.sixteen_.insane.module.ModuleCategory;
 import me.sixteen_.insane.value.values.FloatValue;
 import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
@@ -39,7 +38,7 @@ public final class Killaura extends Module implements ClientPlayerTickable {
 	private final float pi = 3.14159265F, radiansToDegrees = 180 / pi;
 
 	public Killaura() {
-		super("Killaura", ModuleCategory.COMBAT);
+		super("Killaura");
 		mode = new ListValue("mode", true, "legit", "fast", "multi");
 		sort = new ListValue("sort", false, "distance", "health");
 		range = new FloatValue("range", true, 3.7F, 3F, 6F, 0.1F);
