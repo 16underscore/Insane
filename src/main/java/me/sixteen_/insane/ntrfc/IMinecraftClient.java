@@ -9,6 +9,11 @@ import net.minecraft.client.util.Session;
  */
 @Environment(EnvType.CLIENT)
 public interface IMinecraftClient {
-	
-	public void setSession(Session session);
+
+	/**
+	 * Sets a new session.
+	 * 
+	 * @param session
+	 */
+	public void setSession(final Session session);
 }

@@ -53,6 +53,12 @@ public final class Inspect extends Module {
 		}
 	}
 
+	/**
+	 * Disables module when player swings hand or player equips another item.
+	 * 
+	 * @param swingProgress
+	 * @param equipProgress
+	 */
 	public final void disable(final float swingProgress, final float equipProgress) {
 		if (swingProgress != 0F || equipProgress != 0F) {
 			disable();
