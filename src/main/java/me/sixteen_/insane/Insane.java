@@ -1,6 +1,7 @@
 package me.sixteen_.insane;
 
 import me.sixteen_.insane.command.CommandManager;
+import me.sixteen_.insane.config.Config;
 import me.sixteen_.insane.module.ModuleManager;
 import me.sixteen_.insane.ntrfc.IMinecraftClient;
 import me.sixteen_.insane.util.Logger;
@@ -19,11 +20,13 @@ public final class Insane implements ClientModInitializer {
 	private static Insane insane;
 	// Client information
 	private final String clientName, clientVersion;
+	// Logger
+	private final Logger logger;
 	// Managers
 	private final ModuleManager moduleManager;
 	private final CommandManager commandManager;
-	// Logger
-	private final Logger logger;
+	// Config
+	private final Config config;
 	// Minecraft
 	private final IMinecraftClient imc;
 
@@ -32,13 +35,16 @@ public final class Insane implements ClientModInitializer {
 	}
 
 	public Insane() {
-		insane = this;
+		if (insane == null) {
+			insane = this;
+		}
 		clientName = "Insane";
 		clientVersion = "b2";
 		imc = (IMinecraftClient) MinecraftClient.getInstance();
 		logger = new Logger();
 		moduleManager = new ModuleManager();
 		commandManager = new CommandManager();
+		config = new Config();
 	}
 
 	public static final Insane getInstance() {
@@ -57,6 +63,10 @@ public final class Insane implements ClientModInitializer {
 		return imc;
 	}
 
+	public final Config getConfig() {
+		return config;
+	}
+
 	public final Logger getLogger() {
 		return logger;
 	}
@@ -71,5 +81,6 @@ public final class Insane implements ClientModInitializer {
 
 	public final void shutdown() {
 		moduleManager.shutdown();
+		config.save();
 	}
 }

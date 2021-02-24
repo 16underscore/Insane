@@ -46,6 +46,20 @@ public abstract class Module {
 	}
 
 	/**
+	 * @return a list with all values the module has.
+	 */
+	public List<Value> getValues() {
+		return values;
+	}
+
+	public boolean hasValues() {
+		if (values.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * @param needs the name of the value
 	 * @return the value
 	 */
