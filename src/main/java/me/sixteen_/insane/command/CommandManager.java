@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.commands.BindCommand;
+import me.sixteen_.insane.command.commands.ConfigCommand;
 import me.sixteen_.insane.command.commands.HelpCommand;
 import me.sixteen_.insane.command.commands.LoginCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
@@ -23,6 +24,7 @@ public final class CommandManager {
 
 	public CommandManager() {
 		this.insane = Insane.getInstance();
+		addCommand(new ConfigCommand());
 		addCommand(new ToggleCommand());
 		addCommand(new LoginCommand());
 		addCommand(new BindCommand());

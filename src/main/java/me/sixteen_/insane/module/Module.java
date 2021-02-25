@@ -146,7 +146,7 @@ public abstract class Module {
 	/**
 	 * Enables the module.
 	 */
-	protected final void enable() {
+	public final void enable() {
 		enabled = true;
 		onEnable();
 	}
@@ -154,7 +154,7 @@ public abstract class Module {
 	/**
 	 * Disables the module.
 	 */
-	protected final void disable() {
+	public final void disable() {
 		enabled = false;
 		onDisable();
 	}
