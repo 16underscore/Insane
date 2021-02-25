@@ -24,6 +24,7 @@ import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.util.InputUtil;
 
 /**
  * @author 16_
@@ -34,6 +35,12 @@ public final class Config {
 	private final Insane insane;
 	private final File file;
 	private final Gson gson;
+	
+	private final String 
+	sEnabled = "enabled",
+	sValues = "values",
+	sKeybind = "keybind",
+	sModules = "modules";
 
 	public Config() {
 		insane = Insane.getInstance();
@@ -41,37 +48,43 @@ public final class Config {
 		file = new File(FabricLoader.getInstance().getConfigDir().toFile(), String.format("%s.json", insane.getClientName()));
 	}
 
+	/**
+	 * Saves the config.
+	 */
 	public final void save() {
 		final JsonObject config = new JsonObject();
 		final JsonObject modules = new JsonObject();
 		insane.getModuleManager().getModules().forEach(m -> {
 			final JsonObject module = new JsonObject();
-			module.addProperty("enabled", m.isEnabled());
+			module.addProperty(sEnabled, m.isEnabled());
 			if (m.hasValues()) {
-				final JsonObject value = new JsonObject();
+				final JsonObject values = new JsonObject();
 				m.getValues().forEach(v -> {
 					if (v instanceof IntegerValue) {
-						value.addProperty(v.getName(), ((IntegerValue) v).getValue());
+						values.addProperty(v.getName(), ((IntegerValue) v).getValue());
 					} else if (v instanceof FloatValue) {
-						value.addProperty(v.getName(), ((FloatValue) v).getValue());
+						values.addProperty(v.getName(), ((FloatValue) v).getValue());
 					} else if (v instanceof DoubleValue) {
-						value.addProperty(v.getName(), ((DoubleValue) v).getValue());
+						values.addProperty(v.getName(), ((DoubleValue) v).getValue());
 					} else if (v instanceof BooleanValue) {
-						value.addProperty(v.getName(), ((BooleanValue) v).getValue());
+						values.addProperty(v.getName(), ((BooleanValue) v).getValue());
 					} else if (v instanceof ListValue) {
-						value.addProperty(v.getName(), ((ListValue) v).getValue());
+						values.addProperty(v.getName(), ((ListValue) v).getValue());
 					} else if (v instanceof IntegerRange) {
 						final JsonArray range = new JsonArray();
 						range.add(((IntegerRange) v).getMinValue());
 						range.add(((IntegerRange) v).getMaxValue());
-						value.add(v.getName(), range);
+						values.add(v.getName(), range);
 					}
 				});
-				module.add("value", value);
+				module.add(sValues, values);
+			}
+			if (m.hasKeybind()) {
+				module.addProperty(sKeybind, m.getKeybind().getCode());
 			}
 			modules.add(m.getName(), module);
 		});
-		config.add("modules", modules);
+		config.add(sModules, modules);
 		final String json = gson.toJson(config);
 		try (final FileWriter fw = new FileWriter(file)) {
 			fw.write(json);
@@ -79,23 +92,26 @@ public final class Config {
 		}
 	}
 
+	/**
+	 * Loads the config.
+	 */
 	public final void load() {
 		if (file.exists()) {
 			try {
 				final BufferedReader br = new BufferedReader(new FileReader(file));
 				final JsonObject config = new JsonParser().parse(br).getAsJsonObject();
-				final JsonObject modules = (JsonObject) config.get("modules");
+				final JsonObject modules = (JsonObject) config.get(sModules);
 				insane.getModuleManager().getModules().forEach(m -> {
 					if (modules.has(m.getName())) {
 						final JsonObject module = (JsonObject) modules.get(m.getName());
-						if (module.has("enabled")) {
-							final JsonPrimitive enabled = (JsonPrimitive) module.get("enabled");
+						if (module.has(sEnabled)) {
+							final JsonPrimitive enabled = (JsonPrimitive) module.get(sEnabled);
 							if (enabled.getAsBoolean()) {
 								m.enable();
 							}
 						}
-						if (module.has("value")) {
-							final JsonObject values = (JsonObject) module.get("value");
+						if (module.has(sValues)) {
+							final JsonObject values = (JsonObject) module.get(sValues);
 							m.getValues().forEach(v -> {
 								if (values.has(v.getName())) {
 									final JsonPrimitive value = (JsonPrimitive) values.get(v.getName());
@@ -116,6 +132,10 @@ public final class Config {
 									}
 								}
 							});
+						}
+						if (module.has(sKeybind)) {
+							final JsonPrimitive keybind = (JsonPrimitive) module.get(sKeybind);
+							m.setKeybind(InputUtil.fromKeyCode(keybind.getAsInt(), keybind.getAsInt()));
 						}
 					}
 				});

@@ -52,11 +52,11 @@ public abstract class Module {
 		return values;
 	}
 
+	/**
+	 * @return a boolean if it has values
+	 */
 	public boolean hasValues() {
-		if (values.isEmpty()) {
-			return false;
-		}
-		return true;
+		return !values.isEmpty();
 	}
 
 	/**
@@ -125,6 +125,13 @@ public abstract class Module {
 	 */
 	public final boolean isEnabled() {
 		return enabled;
+	}
+
+	/**
+	 * @return a boolean if it has a keybind
+	 */
+	public final boolean hasKeybind() {
+		return keybind != InputUtil.UNKNOWN_KEY && keybind != null;
 	}
 
 	/**
