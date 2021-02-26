@@ -7,6 +7,7 @@ import me.sixteen_.insane.command.commands.BindCommand;
 import me.sixteen_.insane.command.commands.ConfigCommand;
 import me.sixteen_.insane.command.commands.HelpCommand;
 import me.sixteen_.insane.command.commands.LoginCommand;
+import me.sixteen_.insane.command.commands.PanicCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
 import me.sixteen_.insane.command.commands.ValueCommand;
 import net.fabricmc.api.EnvType;
@@ -27,8 +28,9 @@ public final class CommandManager {
 		addCommand(new ConfigCommand());
 		addCommand(new ToggleCommand());
 		addCommand(new LoginCommand());
-		addCommand(new BindCommand());
+		addCommand(new PanicCommand());
 		addCommand(new ValueCommand());
+		addCommand(new BindCommand());
 		addCommand(new HelpCommand());
 	}
 
