@@ -35,12 +35,7 @@ public final class Config {
 	private final Insane insane;
 	private final File file;
 	private final Gson gson;
-	
-	private final String 
-	sEnabled = "enabled",
-	sValues = "values",
-	sKeybind = "keybind",
-	sModules = "modules";
+	private final String sEnabled = "enabled", sValues = "values", sKeybind = "keybind", sModules = "modules";
 
 	public Config() {
 		insane = Insane.getInstance();
@@ -96,7 +91,9 @@ public final class Config {
 	 * Loads the config.
 	 */
 	public final void load() {
-		if (file.exists()) {
+		if (!file.exists()) {
+			save();
+		} else if (file.exists()) {
 			try {
 				final BufferedReader br = new BufferedReader(new FileReader(file));
 				final JsonObject config = new JsonParser().parse(br).getAsJsonObject();
@@ -104,12 +101,14 @@ public final class Config {
 				insane.getModuleManager().getModules().forEach(m -> {
 					if (modules.has(m.getName())) {
 						final JsonObject module = (JsonObject) modules.get(m.getName());
+						// Enable
 						if (module.has(sEnabled)) {
 							final JsonPrimitive enabled = (JsonPrimitive) module.get(sEnabled);
 							if (enabled.getAsBoolean()) {
 								m.enable();
 							}
 						}
+						// Set values
 						if (module.has(sValues)) {
 							final JsonObject values = (JsonObject) module.get(sValues);
 							m.getValues().forEach(v -> {
@@ -133,6 +132,7 @@ public final class Config {
 								}
 							});
 						}
+						// Set keybind
 						if (module.has(sKeybind)) {
 							final JsonPrimitive keybind = (JsonPrimitive) module.get(sKeybind);
 							m.setKeybind(InputUtil.fromKeyCode(keybind.getAsInt(), keybind.getAsInt()));
@@ -141,8 +141,6 @@ public final class Config {
 				});
 			} catch (FileNotFoundException e) {
 			}
-		} else {
-			save();
 		}
 	}
 }
