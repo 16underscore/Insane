@@ -40,9 +40,9 @@ public final class Killaura extends ModuleTickable {
 		mode = new ListValue("mode", true, "legit", "fast", "multi");
 		sort = new ListValue("sort", false, "distance", "health");
 		range = new FloatValue("range", true, 3.7F, 3F, 6F, 0.1F);
-		this.addValues(mode);
-		this.addValues(sort);
-		this.addValues(range);
+		addValues(mode);
+		addValues(sort);
+		addValues(range);
 	}
 
 	@Override
