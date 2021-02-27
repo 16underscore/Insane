@@ -36,24 +36,29 @@ public final class ModuleManager {
 		addModule(new Trigger());
 		addModule(new Strafe());
 		addModule(new Fly());
-		for (final Module m : modules) {
-			if (m instanceof ModuleTickable) {
-				tickableModules.add((ModuleTickable) m);
-			}
-		}
+		modules.stream().filter(ModuleTickable.class::isInstance).forEach(m -> addTickableModule((ModuleTickable) m));
 	}
 
 	/**
-	 * adds a module.
+	 * adds a {@link Module}.
 	 * 
-	 * @param needs a module
+	 * @param needs a {@link Module}
 	 */
 	private final void addModule(final Module module) {
 		modules.add(module);
 	}
 
 	/**
-	 * @return a List of modules
+	 * adds a {@link ModuleTickable}.
+	 * 
+	 * @param needs a {@link ModuleTickable}
+	 */
+	private final void addTickableModule(final ModuleTickable module) {
+		tickableModules.add(module);
+	}
+
+	/**
+	 * @return a List of {@link Module}
 	 */
 	public final List<Module> getModules() {
 		return modules;
@@ -91,7 +96,7 @@ public final class ModuleManager {
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Called when minecraft gets closed.
 	 */

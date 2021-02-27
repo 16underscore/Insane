@@ -21,6 +21,10 @@ public final class ListValue extends Value {
 		this.values = Arrays.asList(values);
 		index = 0;
 	}
+	
+	public final int getIndex() {
+		return index;
+	}
 
 	public final String getValue() {
 		return values.get(index);
