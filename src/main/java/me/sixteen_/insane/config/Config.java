@@ -105,7 +105,9 @@ public final class Config {
 						if (module.has(sEnabled)) {
 							final JsonPrimitive enabled = (JsonPrimitive) module.get(sEnabled);
 							if (enabled.getAsBoolean()) {
-								m.enable();
+								if (!m.isEnabled()) {
+									m.enable();
+								}
 							}
 						}
 						// Set values
