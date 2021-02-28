@@ -21,7 +21,7 @@ public final class ListValue extends Value {
 		this.values = Arrays.asList(values);
 		index = 0;
 	}
-	
+
 	public final int getIndex() {
 		return index;
 	}
@@ -36,6 +36,10 @@ public final class ListValue extends Value {
 
 	public final boolean is(final String value) {
 		return index == values.indexOf(value);
+	}
+
+	public final List<String> getValues() {
+		return values;
 	}
 
 	@Override
