@@ -16,7 +16,10 @@ public final class PanicCommand extends Command {
 
 	@Override
 	public void run(final String... param) {
-		insane.getModuleManager().getModules().forEach(m -> m.disable());
+		insane.getModuleManager().getModules().forEach(m -> {
+			if (m.isEnabled())
+				m.disable();
+		});
 	}
 
 	@Override

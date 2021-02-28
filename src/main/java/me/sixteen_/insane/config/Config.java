@@ -15,6 +15,9 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
 import me.sixteen_.insane.Insane;
+import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.modules.render.ArrayList;
+import me.sixteen_.insane.value.Value;
 import me.sixteen_.insane.value.ranges.IntegerRange;
 import me.sixteen_.insane.value.values.BooleanValue;
 import me.sixteen_.insane.value.values.DoubleValue;
@@ -97,50 +100,60 @@ public final class Config {
 			try {
 				final BufferedReader br = new BufferedReader(new FileReader(file));
 				final JsonObject config = new JsonParser().parse(br).getAsJsonObject();
-				final JsonObject modules = (JsonObject) config.get(sModules);
-				insane.getModuleManager().getModules().forEach(m -> {
-					if (modules.has(m.getName())) {
-						final JsonObject module = (JsonObject) modules.get(m.getName());
-						// Enable
-						if (module.has(sEnabled)) {
-							final JsonPrimitive enabled = (JsonPrimitive) module.get(sEnabled);
-							if (enabled.getAsBoolean()) {
-								if (!m.isEnabled()) {
-									m.enable();
+				if (config.has(sModules)) {
+					final JsonObject modules = (JsonObject) config.get(sModules);
+					boolean enableArrayList = false;
+					for (final Module m : insane.getModuleManager().getModules()) {
+						if (modules.has(m.getName())) {
+							final JsonObject module = (JsonObject) modules.get(m.getName());
+							// Set values
+							if (module.has(sValues)) {
+								final JsonObject values = (JsonObject) module.get(sValues);
+								for (final Value v : m.getValues()) {
+									if (values.has(v.getName())) {
+										final JsonPrimitive value = (JsonPrimitive) values.get(v.getName());
+										if (v instanceof IntegerValue) {
+											((IntegerValue) v).setValue(value.getAsInt());
+										} else if (v instanceof FloatValue) {
+											((FloatValue) v).setValue(value.getAsFloat());
+										} else if (v instanceof DoubleValue) {
+											((DoubleValue) v).setValue(value.getAsDouble());
+										} else if (v instanceof BooleanValue) {
+											((BooleanValue) v).setValue(value.getAsBoolean());
+										} else if (v instanceof ListValue) {
+											((ListValue) v).setValue(value.getAsString());
+										} else if (v instanceof IntegerRange) {
+											final JsonArray range = new JsonArray();
+											((IntegerRange) v).setMinValue(range.get(0).getAsInt());
+											((IntegerRange) v).setMaxValue(range.get(1).getAsInt());
+										}
+									}
+								}
+							}
+							// Set keybind
+							if (module.has(sKeybind)) {
+								final JsonPrimitive keybind = (JsonPrimitive) module.get(sKeybind);
+								m.setKeybind(InputUtil.fromKeyCode(keybind.getAsInt(), keybind.getAsInt()));
+							}
+							// Enable
+							if (module.has(sEnabled)) {
+								final JsonPrimitive enabled = (JsonPrimitive) module.get(sEnabled);
+								if (enabled.getAsBoolean()) {
+									if (!m.isEnabled()) {
+										if (m instanceof ArrayList) {
+											enableArrayList = true;
+										} else {
+											m.enable();
+										}
+									}
 								}
 							}
 						}
-						// Set values
-						if (module.has(sValues)) {
-							final JsonObject values = (JsonObject) module.get(sValues);
-							m.getValues().forEach(v -> {
-								if (values.has(v.getName())) {
-									final JsonPrimitive value = (JsonPrimitive) values.get(v.getName());
-									if (v instanceof IntegerValue) {
-										((IntegerValue) v).setValue(value.getAsInt());
-									} else if (v instanceof FloatValue) {
-										((FloatValue) v).setValue(value.getAsFloat());
-									} else if (v instanceof DoubleValue) {
-										((DoubleValue) v).setValue(value.getAsDouble());
-									} else if (v instanceof BooleanValue) {
-										((BooleanValue) v).setValue(value.getAsBoolean());
-									} else if (v instanceof ListValue) {
-										((ListValue) v).setValue(value.getAsString());
-									} else if (v instanceof IntegerRange) {
-										final JsonArray range = new JsonArray();
-										((IntegerRange) v).setMinValue(range.get(0).getAsInt());
-										((IntegerRange) v).setMaxValue(range.get(1).getAsInt());
-									}
-								}
-							});
-						}
-						// Set keybind
-						if (module.has(sKeybind)) {
-							final JsonPrimitive keybind = (JsonPrimitive) module.get(sKeybind);
-							m.setKeybind(InputUtil.fromKeyCode(keybind.getAsInt(), keybind.getAsInt()));
-						}
 					}
-				});
+					if (enableArrayList) {
+						insane.getModuleManager().getModule(ArrayList.class).enable();
+					}
+				}
 			} catch (FileNotFoundException e) {
 			}
 		}
