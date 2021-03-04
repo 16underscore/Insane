@@ -26,7 +26,7 @@ public final class BooleanValue extends Value {
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return String.valueOf(getValue());
 	}
 }

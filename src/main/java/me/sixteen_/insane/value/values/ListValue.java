@@ -43,7 +43,7 @@ public final class ListValue extends Value {
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return getValue();
 	}
 }

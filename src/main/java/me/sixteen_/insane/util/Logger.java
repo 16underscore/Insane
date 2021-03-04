@@ -21,6 +21,11 @@ public final class Logger {
 		insane = Insane.getInstance();
 	}
 
+	/**
+	 * Sends a chat message.
+	 * 
+	 * @param message
+	 */
 	public final void log(final String message) {
 		mc.inGameHud.addChatMessage(MessageType.SYSTEM, new LiteralText(String.format("[%s] %s", insane.getClientName(), message)), null);
 	}

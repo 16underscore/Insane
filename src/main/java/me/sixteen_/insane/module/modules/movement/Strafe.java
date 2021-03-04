@@ -8,14 +8,14 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Strafe extends Module {
+public final class Strafe extends Module {
 
 	public Strafe() {
 		super("Strafe");
 	}
 
 	@Override
-	public void onUpdate() {
+	public final void onUpdate() {
 		if (mc.player.getSpeed() == 0F) {
 			return;
 		}

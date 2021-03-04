@@ -41,21 +41,21 @@ public abstract class Module {
 	 * 
 	 * @param needs a value
 	 */
-	public void addValues(final Value... values) {
+	public final void addValues(final Value... values) {
 		this.values.addAll(Arrays.asList(values));
 	}
 
 	/**
 	 * @return a list with all values the module has.
 	 */
-	public List<Value> getValues() {
+	public final List<Value> getValues() {
 		return values;
 	}
 
 	/**
 	 * @return a boolean if it has values
 	 */
-	public boolean hasValues() {
+	public final boolean hasValues() {
 		return !values.isEmpty();
 	}
 
@@ -94,7 +94,7 @@ public abstract class Module {
 	/**
 	 * @return module name with some values
 	 */
-	public String getNameWithValue() {
+	public final String getNameWithValue() {
 		final StringBuilder build = new StringBuilder();
 		final Iterator<Value> it = values.stream().filter(value -> value.isVisibleInArrayList()).iterator();
 		while (it.hasNext()) {

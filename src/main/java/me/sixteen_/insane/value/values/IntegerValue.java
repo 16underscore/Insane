@@ -37,7 +37,7 @@ public final class IntegerValue extends Value {
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return String.valueOf(getValue());
 	}
 }

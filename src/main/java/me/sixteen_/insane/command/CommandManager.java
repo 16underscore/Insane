@@ -34,10 +34,18 @@ public final class CommandManager {
 		addCommand(new HelpCommand());
 	}
 
+	/**
+	 * adds a {@link Command}.
+	 * 
+	 * @param needs a {@link Command}
+	 */
 	private final void addCommand(final Command cmd) {
 		commands.add(cmd);
 	}
 
+	/**
+	 * @param needs the command input
+	 */
 	public final void input(final String input) {
 		final String[] cmd = input.substring(prefix.length()).split(" ");
 		for (final Command command : commands) {
@@ -52,6 +60,9 @@ public final class CommandManager {
 		}
 	}
 
+	/**
+	 * @return a List of {@link Command}
+	 */
 	public final List<Command> getCommands() {
 		return commands;
 	}

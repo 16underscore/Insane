@@ -47,7 +47,7 @@ public final class IntegerRange extends Value {
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return String.format("%s-%s", getMinValue(), getMaxValue());
 	}
 }
