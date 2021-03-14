@@ -26,11 +26,14 @@ public final class HelpCommand extends Command {
 
 	@Override
 	public final void run(final String... param) {
+		mc.inGameHud.getChatHud().clear(false);
 		if (param.length == 1) {
+			insane.getLogger().log(String.format("%s <module>", getName()));
 			for (final Module m : insane.getModuleManager().getModules()) {
 				insane.getLogger().log(m.getName());
 			}
 		} else if (param.length == 2) {
+			insane.getLogger().log(String.format("%s <module> <value>", getName()));
 			for (final Value v : insane.getModuleManager().getModuleByName(param[1]).getValues()) {
 				insane.getLogger().log(v.getName());
 			}
