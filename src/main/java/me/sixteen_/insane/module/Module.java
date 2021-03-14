@@ -105,7 +105,7 @@ public abstract class Module {
 				build.append(v.toString());
 			}
 		}
-		if (build.isEmpty()) {
+		if (build.length() == 0) {
 			return getName();
 		}
 		return String.format("%s \u00A77[%s]\u00A7r", getName(), build.toString());
