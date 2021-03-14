@@ -20,6 +20,7 @@ public final class Insane implements ClientModInitializer {
 	private static Insane insane;
 	// Client information
 	private final String clientName, clientVersion;
+	private boolean loadConfig;
 	// Logger
 	private final Logger logger;
 	// Managers
@@ -29,7 +30,7 @@ public final class Insane implements ClientModInitializer {
 	private final Config config;
 	// Minecraft
 	private final IMinecraftClient imc;
-
+	
 	@Override
 	public final void onInitializeClient() {
 	}
@@ -40,6 +41,7 @@ public final class Insane implements ClientModInitializer {
 		}
 		clientName = "Insane";
 		clientVersion = "b2";
+		loadConfig = true;
 		imc = (IMinecraftClient) MinecraftClient.getInstance();
 		logger = new Logger();
 		moduleManager = new ModuleManager();
@@ -82,5 +84,13 @@ public final class Insane implements ClientModInitializer {
 	public final void shutdown() {
 		moduleManager.shutdown();
 		config.save();
+	}
+
+	public final boolean shouldLoadConfig() {
+		return loadConfig;
+	}
+	
+	public final void dontLoadConfigAgain() {
+		this.loadConfig = false;
 	}
 }

@@ -24,12 +24,21 @@ public abstract class MinecraftClientMixin implements IMinecraftClient {
 	private Session session;
 
 	@Override
-	public final void setSession(Session session) {
+	public final void setSession(final Session session) {
 		this.session = session;
 	}
 
 	@Inject(method = "stop", at = @At("HEAD"))
 	private final void stop(final CallbackInfo info) {
 		Insane.getInstance().shutdown();
+	}
+	
+	@Inject(method = "joinWorld", at = @At("RETURN"))
+	private final void joinWorld(final CallbackInfo info) {
+		final Insane insane = Insane.getInstance();
+		if (insane.shouldLoadConfig()) {
+			insane.getConfig().load();
+			insane.dontLoadConfigAgain();
+		}
 	}
 }
