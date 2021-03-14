@@ -101,8 +101,8 @@ public final class Config {
 				final BufferedReader br = new BufferedReader(new FileReader(file));
 				final JsonObject config = new JsonParser().parse(br).getAsJsonObject();
 				if (config.has(sModules)) {
+					Module arrayList = null;
 					final JsonObject modules = (JsonObject) config.get(sModules);
-					boolean enableArrayList = false;
 					for (final Module m : insane.getModuleManager().getModules()) {
 						if (modules.has(m.getName())) {
 							final JsonObject module = (JsonObject) modules.get(m.getName());
@@ -141,7 +141,7 @@ public final class Config {
 								if (enabled.getAsBoolean()) {
 									if (!m.isEnabled()) {
 										if (m instanceof ArrayList) {
-											enableArrayList = true;
+											arrayList = m;
 										} else {
 											m.enable();
 										}
@@ -150,8 +150,8 @@ public final class Config {
 							}
 						}
 					}
-					if (enableArrayList) {
-						insane.getModuleManager().getModule(ArrayList.class).enable();
+					if (arrayList != null) {
+						arrayList.toggle();
 					}
 				}
 			} catch (FileNotFoundException e) {
