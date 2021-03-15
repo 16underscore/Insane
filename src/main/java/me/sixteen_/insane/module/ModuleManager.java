@@ -2,12 +2,12 @@ package me.sixteen_.insane.module;
 
 import java.util.List;
 
-import me.sixteen_.insane.module.modules.ModuleTickable;
 import me.sixteen_.insane.module.modules.combat.Criticals;
 import me.sixteen_.insane.module.modules.combat.Killaura;
 import me.sixteen_.insane.module.modules.combat.Trigger;
 import me.sixteen_.insane.module.modules.movement.Fly;
 import me.sixteen_.insane.module.modules.movement.Strafe;
+import me.sixteen_.insane.module.modules.movement.WTap;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
 import me.sixteen_.insane.module.modules.render.Inspect;
@@ -23,7 +23,6 @@ import net.fabricmc.api.Environment;
 public final class ModuleManager {
 
 	private final List<Module> modules = new java.util.ArrayList<Module>();
-	private final List<ModuleTickable> tickableModules = new java.util.ArrayList<ModuleTickable>();
 
 	public ModuleManager() {
 		addModule(new SprintStatus());
@@ -35,8 +34,8 @@ public final class ModuleManager {
 		addModule(new Inspect());
 		addModule(new Trigger());
 		addModule(new Strafe());
+		addModule(new WTap());
 		addModule(new Fly());
-		modules.stream().filter(ModuleTickable.class::isInstance).forEach(m -> addTickableModule((ModuleTickable) m));
 	}
 
 	/**
@@ -49,26 +48,10 @@ public final class ModuleManager {
 	}
 
 	/**
-	 * adds a {@link ModuleTickable}.
-	 * 
-	 * @param needs a {@link ModuleTickable}
-	 */
-	private final void addTickableModule(final ModuleTickable module) {
-		tickableModules.add(module);
-	}
-
-	/**
 	 * @return a List of {@link Module}
 	 */
 	public final List<Module> getModules() {
 		return modules;
-	}
-
-	/**
-	 * @return a List of modules that extends {@link ModuleTickable}
-	 */
-	public final List<ModuleTickable> getTickableModules() {
-		return tickableModules;
 	}
 
 	/**

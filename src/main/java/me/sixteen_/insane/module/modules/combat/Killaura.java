@@ -8,7 +8,8 @@ import java.util.stream.StreamSupport;
 
 import com.google.common.collect.Multimap;
 
-import me.sixteen_.insane.module.modules.ModuleTickable;
+import me.sixteen_.insane.event.ClientPlayerTickCallback;
+import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.value.values.FloatValue;
 import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
@@ -29,7 +30,7 @@ import net.minecraft.util.math.Vec3d;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public final class Killaura extends ModuleTickable {
+public final class Killaura extends Module {
 
 	private final ListValue mode, sort;
 	private final FloatValue range;
@@ -43,6 +44,11 @@ public final class Killaura extends ModuleTickable {
 		addValues(mode);
 		addValues(sort);
 		addValues(range);
+		ClientPlayerTickCallback.EVENT.register(() -> {
+			if (isEnabled()) {
+				onUpdate();
+			}
+		});
 	}
 
 	@Override
@@ -188,15 +194,8 @@ public final class Killaura extends ModuleTickable {
 		cool = mc.player.getAttackCooldownProgress(0.5F);
 		damage *= 0.2F + cool * cool * 0.8F;
 		ench *= cool;
-		final boolean crit = cool > 0.9F
-				&& mc.player.fallDistance > 0.0F
-				&& !mc.player.isOnGround()
-				&& !mc.player.isClimbing()
-				&& !mc.player.isTouchingWater()
-				&& !mc.player.hasStatusEffect(StatusEffects.BLINDNESS)
-				&& !mc.player.hasVehicle()
-				&& !mc.player.isSprinting()
-				&& target instanceof LivingEntity;
+		final boolean crit = cool > 0.9F && mc.player.fallDistance > 0.0F && !mc.player.isOnGround() && !mc.player.isClimbing() && !mc.player.isTouchingWater() && !mc.player.hasStatusEffect(StatusEffects.BLINDNESS) && !mc.player.hasVehicle()
+				&& !mc.player.isSprinting() && target instanceof LivingEntity;
 		if (crit) {
 			damage *= 1.5F;
 		}

@@ -1,6 +1,7 @@
 package me.sixteen_.insane.module.modules.combat;
 
-import me.sixteen_.insane.module.modules.ModuleTickable;
+import me.sixteen_.insane.event.ClientPlayerTickCallback;
+import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
@@ -13,10 +14,15 @@ import net.minecraft.util.hit.HitResult.Type;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public final class Trigger extends ModuleTickable {
+public final class Trigger extends Module {
 
 	public Trigger() {
 		super("Trigger");
+		ClientPlayerTickCallback.EVENT.register(() -> {
+			if (isEnabled()) {
+				onUpdate();
+			}
+		});
 	}
 
 	@Override
