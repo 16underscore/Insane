@@ -11,7 +11,7 @@ import net.fabricmc.fabric.api.event.EventFactory;
 @Environment(EnvType.CLIENT)
 public interface ClientPlayerTickCallback {
 
-	public final Event<ClientPlayerTickCallback> EVENT = EventFactory.createArrayBacked(ClientPlayerTickCallback.class, (listeners) -> () -> {
+	public Event<ClientPlayerTickCallback> EVENT = EventFactory.createArrayBacked(ClientPlayerTickCallback.class, (listeners) -> () -> {
 		for (ClientPlayerTickCallback event : listeners) {
 			event.tick();
 		}
