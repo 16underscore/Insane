@@ -27,12 +27,12 @@ public final class HelpCommand extends Command {
 	@Override
 	public final void run(final String... param) {
 		if (param.length == 1) {
-			insane.getLogger().log(String.format("§3%s <module>§r", getName()));
+			insane.getLogger().log(String.format("\u00A73%s <module>\u00A7r", getName()));
 			for (final Module m : insane.getModuleManager().getModules()) {
 				insane.getLogger().log(m.getName());
 			}
 		} else if (param.length == 2) {
-			insane.getLogger().log(String.format("§3%s %s <value>§r", getName(), param[1]));
+			insane.getLogger().log(String.format("\u00A73%s %s <value>\u00A7r", getName(), param[1]));
 			for (final Value v : insane.getModuleManager().getModuleByName(param[1]).getValues()) {
 				insane.getLogger().log(v.getName());
 			}
