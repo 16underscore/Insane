@@ -25,8 +25,10 @@ public abstract class KeyboardMixin {
 		if (i == GLFW.GLFW_PRESS) {
 			final ModuleManager mm = Insane.getInstance().getModuleManager();
 			for (Module m : mm.getModules()) {
-				if (m.getKeybind().getCode() == key) {
-					m.toggle();
+				if (m.getKeybind() != null) {
+					if (m.getKeybind().getCode() == key) {
+						m.toggle();
+					}
 				}
 			}
 		}

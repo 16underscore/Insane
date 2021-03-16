@@ -28,7 +28,7 @@ public abstract class Module {
 		name = moduleName;
 		visible = moduleVisible;
 		enabled = false;
-		keybind = InputUtil.UNKNOWN_KEY;
+		keybind = null;
 		mc = MinecraftClient.getInstance();
 	}
 
@@ -131,7 +131,7 @@ public abstract class Module {
 	 * @return a boolean if it has a keybind
 	 */
 	public final boolean hasKeybind() {
-		return keybind != InputUtil.UNKNOWN_KEY && keybind != null;
+		return keybind != null;
 	}
 
 	/**

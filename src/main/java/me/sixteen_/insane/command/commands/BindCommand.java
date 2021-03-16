@@ -19,7 +19,7 @@ public final class BindCommand extends Command {
 	public final void run(final String... param) {
 		InputUtil.Key key;
 		if (param[2].equalsIgnoreCase("none")) {
-			key = InputUtil.UNKNOWN_KEY;
+			key = null;
 		} else {
 			key = InputUtil.fromTranslationKey(String.format("key.keyboard.%s", param[2].toLowerCase()));
 		}
