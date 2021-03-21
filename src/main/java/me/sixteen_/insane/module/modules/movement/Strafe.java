@@ -1,6 +1,6 @@
 package me.sixteen_.insane.module.modules.movement;
 
-import me.sixteen_.insane.event.ClientPlayerTickCallback;
+import me.sixteen_.insane.event.ClientPlayerMoveCallback;
 import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,7 +13,7 @@ public final class Strafe extends Module {
 
 	public Strafe() {
 		super("Strafe");
-		ClientPlayerTickCallback.EVENT.register(() -> {
+		ClientPlayerMoveCallback.EVENT.register((type, movement) -> {
 			if (isEnabled()) {
 				onUpdate();
 			}
