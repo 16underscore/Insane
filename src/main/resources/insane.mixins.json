@@ -8,7 +8,6 @@
   	"ClientPlayerEntityMixin",
   	"GameRendererMixin",
   	"HeldItemRendererMixin",
-  	"InGameHudMixin",
   	"ItemRendererMixin",
   	"KeyboardMixin",
   	"MinecraftClientMixin",
