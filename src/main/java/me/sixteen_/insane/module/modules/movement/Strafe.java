@@ -1,5 +1,6 @@
 package me.sixteen_.insane.module.modules.movement;
 
+import me.sixteen_.insane.event.ClientPlayerTickCallback;
 import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,13 +13,14 @@ public final class Strafe extends Module {
 
 	public Strafe() {
 		super("Strafe");
+		ClientPlayerTickCallback.EVENT.register(() -> {
+			if (isEnabled()) {
+				onUpdate();
+			}
+		});
 	}
 
 	@Override
 	public final void onUpdate() {
-		if (mc.player.getSpeed() == 0F) {
-			return;
-		}
-		mc.player.abilities.setWalkSpeed(2F);
 	}
 }

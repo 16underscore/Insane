@@ -12,7 +12,7 @@ import net.fabricmc.fabric.api.event.EventFactory;
 public interface ClientPlayerTickCallback {
 
 	public Event<ClientPlayerTickCallback> EVENT = EventFactory.createArrayBacked(ClientPlayerTickCallback.class, (listeners) -> () -> {
-		for (ClientPlayerTickCallback event : listeners) {
+		for (final ClientPlayerTickCallback event : listeners) {
 			event.tick();
 		}
 	});
