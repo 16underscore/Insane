@@ -10,6 +10,7 @@ import me.sixteen_.insane.value.values.BooleanValue;
 import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -28,6 +29,11 @@ public final class ArrayList extends Module {
 		sort = new ListValue("sort", false, "none", "size", "alphabet");
 		addValues(descending);
 		addValues(sort);
+		HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
+			if (isEnabled()) {
+				onUpdate(matrixStack);
+			}
+		});
 	}
 
 	@Override

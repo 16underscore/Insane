@@ -3,6 +3,7 @@ package me.sixteen_.insane.module.modules.render;
 import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -13,6 +14,11 @@ public final class SprintStatus extends Module {
 
 	public SprintStatus() {
 		super("SprintStatus", false);
+		HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
+			if (isEnabled()) {
+				onUpdate(matrixStack);
+			}
+		});
 	}
 
 	public final void onUpdate(final MatrixStack matrices) {
