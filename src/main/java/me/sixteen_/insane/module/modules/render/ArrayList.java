@@ -39,6 +39,11 @@ public final class ArrayList extends Module {
 	@Override
 	protected final void onEnable() {
 		modules = Insane.getInstance().getModuleManager().getModules();
+		onUpdateValue();
+	}
+
+	@Override
+	public void onUpdateValue() {
 		sortModules();
 	}
 

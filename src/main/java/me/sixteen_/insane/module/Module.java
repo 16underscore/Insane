@@ -173,6 +173,12 @@ public abstract class Module {
 	}
 
 	/**
+	 * Called on update value.
+	 */
+	public void onUpdateValue() {
+	}
+
+	/**
 	 * Called when the module is turned on.
 	 */
 	protected void onEnable() {

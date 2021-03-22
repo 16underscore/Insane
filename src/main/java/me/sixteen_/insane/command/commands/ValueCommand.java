@@ -43,6 +43,9 @@ public final class ValueCommand extends Command {
 				((IntegerRange) v).setMaxValue(Integer.parseInt(param[4]));
 			}
 		}
+		if (m.isEnabled()) {
+			m.onUpdateValue();
+		}
 	}
 
 	@Override
