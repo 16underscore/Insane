@@ -12,6 +12,8 @@ import net.fabricmc.api.Environment;
 public final class Fly extends Module {
 
 	private final FloatValue speed;
+	private float previousSpeed;
+	private boolean flyingbefore;
 
 	public Fly() {
 		super("Fly");
@@ -21,14 +23,19 @@ public final class Fly extends Module {
 
 	@Override
 	protected final void onEnable() {
-		mc.player.addVelocity(0D, 0.1D, 0D);
-		mc.player.abilities.flying = true;
+		flyingbefore = mc.player.abilities.flying;
+		if (!flyingbefore) {
+			mc.player.addVelocity(0D, 0.1D, 0D);
+			mc.player.abilities.flying = true;
+		}
+		previousSpeed = mc.player.abilities.getFlySpeed();
 		onUpdateValue();
 	}
 
 	@Override
 	protected final void onDisable() {
-		mc.player.abilities.flying = false;
+		mc.player.abilities.setFlySpeed(previousSpeed);
+		mc.player.abilities.flying = flyingbefore;
 	}
 
 	@Override
