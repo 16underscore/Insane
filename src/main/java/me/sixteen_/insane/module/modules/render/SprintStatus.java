@@ -13,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public final class SprintStatus extends Module {
 
 	public SprintStatus() {
-		super("SprintStatus", false);
+		super(SprintStatus.class.getSimpleName(), false);
 		HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
 			if (isEnabled()) {
 				onUpdate(matrixStack);

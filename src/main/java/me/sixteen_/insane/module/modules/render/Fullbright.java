@@ -15,7 +15,7 @@ public final class Fullbright extends Module {
 	private double previousGamma;
 
 	public Fullbright() {
-		super("Fullbright");
+		super(Fullbright.class.getSimpleName());
 		gamma = new DoubleValue("gamma", true, 69.0D, 0.0D, 1023.0D, 0.1D);
 		addValues(gamma);
 	}

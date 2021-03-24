@@ -24,7 +24,7 @@ public final class ArrayList extends Module {
 	private List<Module> modules;
 
 	public ArrayList() {
-		super("ArrayList", false);
+		super(ArrayList.class.getSimpleName(), false);
 		descending = new BooleanValue("descending", false, false);
 		sort = new ListValue("sort", false, "none", "size", "alphabet");
 		addValues(descending);

@@ -17,7 +17,7 @@ import net.minecraft.util.hit.HitResult.Type;
 public final class Trigger extends Module {
 
 	public Trigger() {
-		super("Trigger");
+		super(Trigger.class.getSimpleName());
 		ClientPlayerTickCallback.EVENT.register(() -> {
 			if (isEnabled()) {
 				onUpdate();

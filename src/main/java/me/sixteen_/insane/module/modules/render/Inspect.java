@@ -17,7 +17,7 @@ public final class Inspect extends Module {
 	private float distance, move;
 
 	public Inspect() {
-		super("Inspect", false);
+		super(Inspect.class.getSimpleName(), false);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package me.sixteen_.insane.module.modules.movement;
 
-import me.sixteen_.insane.event.ClientPlayerMoveCallback;
+import me.sixteen_.insane.event.ClientPlayerApplyDamageCallback;
 import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -9,11 +9,11 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public final class Strafe extends Module {
+public class Velocity extends Module {
 
-	public Strafe() {
-		super(Strafe.class.getSimpleName());
-		ClientPlayerMoveCallback.EVENT.register((type, movement) -> {
+	public Velocity() {
+		super(Velocity.class.getSimpleName());
+		ClientPlayerApplyDamageCallback.EVENT.register((source, amount) -> {
 			if (isEnabled()) {
 				onUpdate();
 			}
@@ -21,6 +21,6 @@ public final class Strafe extends Module {
 	}
 
 	@Override
-	public final void onUpdate() {
+	public void onUpdate() {
 	}
 }

@@ -15,7 +15,7 @@ import net.minecraft.util.ActionResult;
 public final class WTap extends Module {
 
 	public WTap() {
-		super("WTap");
+		super(WTap.class.getSimpleName());
 		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if (isEnabled()) {
 				onUpdate();

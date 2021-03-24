@@ -5,12 +5,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import me.sixteen_.insane.Insane;
-import me.sixteen_.insane.module.modules.render.NoHurtCam;
+import me.sixteen_.insane.event.GameRendererHurtCallback;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.ActionResult;
 
 /**
  * @author 16_
@@ -21,7 +21,8 @@ public abstract class GameRendererMixin {
 
 	@Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
 	private final void bobViewWhenHurt(MatrixStack matrixStack, float f, final CallbackInfo info) {
-		if (Insane.getInstance().getModuleManager().getModule(NoHurtCam.class).isEnabled()) {
+		final ActionResult result = GameRendererHurtCallback.EVENT.invoker().bobViewWhenHurt(matrixStack, f);
+		if (result != ActionResult.PASS) {
 			info.cancel();
 		}
 	}

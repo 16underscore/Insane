@@ -5,8 +5,10 @@ import java.util.List;
 import me.sixteen_.insane.module.modules.combat.Criticals;
 import me.sixteen_.insane.module.modules.combat.Killaura;
 import me.sixteen_.insane.module.modules.combat.Trigger;
+import me.sixteen_.insane.module.modules.movement.DamageJump;
 import me.sixteen_.insane.module.modules.movement.Fly;
 import me.sixteen_.insane.module.modules.movement.Strafe;
+import me.sixteen_.insane.module.modules.movement.Velocity;
 import me.sixteen_.insane.module.modules.movement.WTap;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
@@ -27,10 +29,12 @@ public final class ModuleManager {
 	public ModuleManager() {
 		addModule(new SprintStatus());
 		addModule(new Fullbright());
+		addModule(new DamageJump());
 		addModule(new ArrayList());
 		addModule(new Criticals());
 		addModule(new NoHurtCam());
 		addModule(new Killaura());
+		addModule(new Velocity());
 		addModule(new Inspect());
 		addModule(new Trigger());
 		addModule(new Strafe());
@@ -79,7 +83,7 @@ public final class ModuleManager {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Called when minecraft gets closed.
 	 */

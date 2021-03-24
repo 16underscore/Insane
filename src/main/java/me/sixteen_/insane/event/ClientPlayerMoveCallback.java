@@ -20,7 +20,7 @@ public interface ClientPlayerMoveCallback {
 	});
 
 	/**
-	 * Called before the player move.
+	 * Called before the player moves.
 	 * 
 	 * @param type
 	 * @param movement

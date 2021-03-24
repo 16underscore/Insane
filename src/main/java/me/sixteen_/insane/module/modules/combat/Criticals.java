@@ -14,7 +14,7 @@ import net.minecraft.util.ActionResult;
 public final class Criticals extends Module {
 
 	public Criticals() {
-		super("Criticals");
+		super(Criticals.class.getSimpleName());
 		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if (isEnabled()) {
 				onUpdate();
@@ -32,6 +32,7 @@ public final class Criticals extends Module {
 
 	/**
 	 * Sends a player position packet
+	 * 
 	 * @param coordinates and onGround
 	 */
 	private final void sendPos(final double x, final double y, final double z, final boolean onGround) {

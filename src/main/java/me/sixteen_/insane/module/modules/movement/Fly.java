@@ -16,7 +16,7 @@ public final class Fly extends Module {
 	private boolean flyingbefore;
 
 	public Fly() {
-		super("Fly");
+		super(Fly.class.getSimpleName());
 		speed = new FloatValue("speed", true, 1, 0, 2, 0.1F);
 		addValues(speed);
 	}
