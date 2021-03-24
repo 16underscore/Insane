@@ -2,6 +2,8 @@ package me.sixteen_.insane.command;
 
 import java.util.List;
 
+import org.lwjgl.glfw.GLFW;
+
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.commands.BindCommand;
 import me.sixteen_.insane.command.commands.ConfigCommand;
@@ -10,7 +12,9 @@ import me.sixteen_.insane.command.commands.LoginCommand;
 import me.sixteen_.insane.command.commands.PanicCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
 import me.sixteen_.insane.command.commands.ValueCommand;
+import me.sixteen_.insane.event.OnKeyCallback;
 import me.sixteen_.insane.event.ScreenSendMessageCallback;
+import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -35,9 +39,21 @@ public final class CommandManager {
 		addCommand(new HelpCommand());
 		ScreenSendMessageCallback.EVENT.register((message, toHud) -> {
 			if (message.startsWith(prefix)) {
+				input(message);
 				return true;
 			}
 			return false;
+		});
+		OnKeyCallback.EVENT.register((window, key, scancode, i, j) -> {
+			if (i == GLFW.GLFW_PRESS) {
+				for (final Module m : Insane.getInstance().getModuleManager().getModules()) {
+					if (m.getKeybind() != null) {
+						if (m.getKeybind().getCode() == key) {
+							m.toggle();
+						}
+					}
+				}
+			}
 		});
 	}
 

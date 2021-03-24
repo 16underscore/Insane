@@ -2,6 +2,7 @@ package me.sixteen_.insane;
 
 import me.sixteen_.insane.command.CommandManager;
 import me.sixteen_.insane.config.Config;
+import me.sixteen_.insane.event.JoinWorldCallback;
 import me.sixteen_.insane.module.ModuleManager;
 import me.sixteen_.insane.ntrfc.IMinecraftClient;
 import me.sixteen_.insane.util.Logger;
@@ -48,6 +49,12 @@ public final class Insane implements ClientModInitializer {
 		moduleManager = new ModuleManager();
 		commandManager = new CommandManager();
 		config = new Config();
+		JoinWorldCallback.EVENT.register(() -> {
+			if (loadConfig) {
+				getConfig().load();
+				loadConfig = false;
+			}
+		});
 		ClientLifecycleEvents.CLIENT_STOPPING.register((client) -> {
 			shutdown();
 		});
@@ -115,19 +122,5 @@ public final class Insane implements ClientModInitializer {
 	public final void shutdown() {
 		moduleManager.shutdown();
 		config.save();
-	}
-
-	/**
-	 * @return true if the config should be loaded.
-	 */
-	public final boolean shouldLoadConfig() {
-		return loadConfig;
-	}
-
-	/**
-	 * Sets loadConfig false
-	 */
-	public final void dontLoadConfigAgain() {
-		this.loadConfig = false;
 	}
 }
