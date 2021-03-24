@@ -21,6 +21,6 @@ public final class Strafe extends Module {
 	}
 
 	@Override
-	public final void onUpdate() {
+	protected final void onUpdate() {
 	}
 }

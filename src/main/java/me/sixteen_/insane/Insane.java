@@ -8,6 +8,7 @@ import me.sixteen_.insane.util.Logger;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
 
 /**
@@ -47,6 +48,9 @@ public final class Insane implements ClientModInitializer {
 		moduleManager = new ModuleManager();
 		commandManager = new CommandManager();
 		config = new Config();
+		ClientLifecycleEvents.CLIENT_STOPPING.register((client) -> {
+			shutdown();
+		});
 	}
 
 	/**

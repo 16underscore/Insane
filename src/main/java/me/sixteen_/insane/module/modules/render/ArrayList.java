@@ -47,7 +47,7 @@ public final class ArrayList extends Module {
 		sortModules();
 	}
 
-	public final void sortModules() {
+	private final void sortModules() {
 		final int i = descending.getValue() ? -1 : 1;
 		switch (sort.getIndex()) {
 		case 1:
@@ -87,7 +87,7 @@ public final class ArrayList extends Module {
 		}
 	}
 
-	public final void onUpdate(final MatrixStack matrices) {
+	private final void onUpdate(final MatrixStack matrices) {
 		int h = 0;
 		for (final Module m : modules) {
 			if (m.isEnabled() && m.isVisible()) {

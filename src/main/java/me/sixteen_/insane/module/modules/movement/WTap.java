@@ -25,7 +25,7 @@ public final class WTap extends Module {
 	}
 
 	@Override
-	public final void onUpdate() {
+	protected final void onUpdate() {
 		if (mc.player.isSprinting()) {
 			sendPacket(Mode.STOP_SPRINTING);
 			sendPacket(Mode.START_SPRINTING);

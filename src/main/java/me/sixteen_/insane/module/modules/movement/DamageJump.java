@@ -15,6 +15,6 @@ public class DamageJump extends Module {
 	}
 
 	@Override
-	public void onUpdate() {
+	protected void onUpdate() {
 	}
 }

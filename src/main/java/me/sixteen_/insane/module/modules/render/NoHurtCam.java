@@ -4,7 +4,6 @@ import me.sixteen_.insane.event.GameRendererHurtCallback;
 import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.ActionResult;
 
 /**
  * @author 16_
@@ -16,9 +15,9 @@ public final class NoHurtCam extends Module {
 		super(NoHurtCam.class.getSimpleName());
 		GameRendererHurtCallback.EVENT.register((matrixStack, f) -> {
 			if (isEnabled()) {
-				return ActionResult.FAIL;
+				return true;
 			}
-			return ActionResult.PASS;
+			return false;
 		});
 	}
 }

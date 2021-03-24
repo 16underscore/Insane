@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.event.EventFactory;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
+@FunctionalInterface
 public interface ClientPlayerTickCallback {
 
 	public Event<ClientPlayerTickCallback> EVENT = EventFactory.createArrayBacked(ClientPlayerTickCallback.class, (listeners) -> () -> {

@@ -10,6 +10,7 @@ import me.sixteen_.insane.command.commands.LoginCommand;
 import me.sixteen_.insane.command.commands.PanicCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
 import me.sixteen_.insane.command.commands.ValueCommand;
+import me.sixteen_.insane.event.ScreenSendMessageCallback;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -32,6 +33,12 @@ public final class CommandManager {
 		addCommand(new ValueCommand());
 		addCommand(new BindCommand());
 		addCommand(new HelpCommand());
+		ScreenSendMessageCallback.EVENT.register((message, toHud) -> {
+			if (message.startsWith(prefix)) {
+				return true;
+			}
+			return false;
+		});
 	}
 
 	/**

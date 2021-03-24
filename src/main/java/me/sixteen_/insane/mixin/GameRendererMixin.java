@@ -10,7 +10,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.ActionResult;
 
 /**
  * @author 16_
@@ -21,8 +20,8 @@ public abstract class GameRendererMixin {
 
 	@Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
 	private final void bobViewWhenHurt(MatrixStack matrixStack, float f, final CallbackInfo info) {
-		final ActionResult result = GameRendererHurtCallback.EVENT.invoker().bobViewWhenHurt(matrixStack, f);
-		if (result != ActionResult.PASS) {
+		final boolean cancel = GameRendererHurtCallback.EVENT.invoker().bobViewWhenHurt(matrixStack, f);
+		if (cancel) {
 			info.cancel();
 		}
 	}

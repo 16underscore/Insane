@@ -21,6 +21,6 @@ public class Velocity extends Module {
 	}
 
 	@Override
-	public void onUpdate() {
+	protected void onUpdate() {
 	}
 }

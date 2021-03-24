@@ -26,7 +26,7 @@ public final class Trigger extends Module {
 	}
 
 	@Override
-	public final void onUpdate() {
+	protected final void onUpdate() {
 		if (mc.player.getAttackCooldownProgress(0F) < 1F) {
 			return;
 		}

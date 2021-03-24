@@ -10,6 +10,7 @@ import net.minecraft.entity.damage.DamageSource;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
+@FunctionalInterface
 public interface ClientPlayerApplyDamageCallback {
 
 	public Event<ClientPlayerApplyDamageCallback> EVENT = EventFactory.createArrayBacked(ClientPlayerApplyDamageCallback.class, (listeners) -> (source, amount) -> {

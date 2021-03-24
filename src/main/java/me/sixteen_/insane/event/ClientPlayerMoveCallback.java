@@ -11,6 +11,7 @@ import net.minecraft.util.math.Vec3d;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
+@FunctionalInterface
 public interface ClientPlayerMoveCallback {
 
 	public Event<ClientPlayerMoveCallback> EVENT = EventFactory.createArrayBacked(ClientPlayerMoveCallback.class, (listeners) -> (type, movement) -> {

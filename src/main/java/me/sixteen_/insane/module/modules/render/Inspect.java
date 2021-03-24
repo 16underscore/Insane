@@ -1,5 +1,7 @@
 package me.sixteen_.insane.module.modules.render;
 
+import me.sixteen_.insane.event.HeldItemRendererFirstPersonItemCallback;
+import me.sixteen_.insane.event.ItemRendererItemCallback;
 import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,6 +20,16 @@ public final class Inspect extends Module {
 
 	public Inspect() {
 		super(Inspect.class.getSimpleName(), false);
+		ItemRendererItemCallback.EVENT.register((stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model) -> {
+			if (isEnabled() && renderMode.isFirstPerson()) {
+				onUpdate(matrices);
+			}
+		});
+		HeldItemRendererFirstPersonItemCallback.EVENT.register((player, tickDelta, pitch, hand, swingProgress, item, equipProgress, matrices, vertexConsumers, light) -> {
+			if (isEnabled()) {
+				disable(swingProgress, equipProgress);
+			}
+		});
 	}
 
 	@Override
@@ -31,7 +43,7 @@ public final class Inspect extends Module {
 		enable();
 	}
 
-	public final void onUpdate(final MatrixStack matrices) {
+	private final void onUpdate(final MatrixStack matrices) {
 		if (distance < 30.0F) {
 			distance += 0.005F;
 			final float f = MathHelper.sin((3.1415F / 2) * distance);
@@ -59,7 +71,7 @@ public final class Inspect extends Module {
 	 * @param swingProgress
 	 * @param equipProgress
 	 */
-	public final void disable(final float swingProgress, final float equipProgress) {
+	private final void disable(final float swingProgress, final float equipProgress) {
 		if (swingProgress != 0F || equipProgress != 0F) {
 			disable();
 		}

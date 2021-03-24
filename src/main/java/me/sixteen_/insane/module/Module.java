@@ -169,7 +169,7 @@ public abstract class Module {
 	/**
 	 * Called on update.
 	 */
-	public void onUpdate() {
+	protected void onUpdate() {
 	}
 
 	/**

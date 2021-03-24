@@ -52,7 +52,7 @@ public final class Killaura extends Module {
 	}
 
 	@Override
-	public final void onUpdate() {
+	protected final void onUpdate() {
 		if (mode.is("fast")) {
 			fastAura();
 		} else if (mode.is("multi")) {

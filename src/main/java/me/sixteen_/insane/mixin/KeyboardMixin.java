@@ -22,7 +22,7 @@ public abstract class KeyboardMixin {
 	@Inject(method = "onKey", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/InputUtil;fromKeyCode(II)Lnet/minecraft/client/util/InputUtil$Key;", shift = At.Shift.AFTER))
 	private final void onKey(long window, int key, int scancode, int i, int j, final CallbackInfo callback) {
 		if (i == GLFW.GLFW_PRESS) {
-			for (Module m : Insane.getInstance().getModuleManager().getModules()) {
+			for (final Module m : Insane.getInstance().getModuleManager().getModules()) {
 				if (m.getKeybind() != null) {
 					if (m.getKeybind().getCode() == key) {
 						m.toggle();
