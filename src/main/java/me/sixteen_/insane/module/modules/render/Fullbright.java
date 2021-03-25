@@ -21,6 +21,11 @@ public final class Fullbright extends Module {
 	}
 
 	@Override
+	public void onUpdateValue() {
+		mc.options.gamma = gamma.getValue();
+	}
+
+	@Override
 	protected final void onEnable() {
 		previousGamma = mc.options.gamma;
 		onUpdateValue();
@@ -29,11 +34,6 @@ public final class Fullbright extends Module {
 	@Override
 	protected final void onDisable() {
 		mc.options.gamma = previousGamma;
-	}
-
-	@Override
-	public void onUpdateValue() {
-		mc.options.gamma = gamma.getValue();
 	}
 
 	@Override

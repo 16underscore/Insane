@@ -22,6 +22,11 @@ public final class DoubleValue extends Value {
 		this.increment = increment;
 	}
 
+	@Override
+	public final String toString() {
+		return String.valueOf(getValue());
+	}
+
 	public final double getValue() {
 		return value;
 	}
@@ -40,10 +45,5 @@ public final class DoubleValue extends Value {
 
 	public final double getIncrement() {
 		return increment;
-	}
-
-	@Override
-	public final String toString() {
-		return String.valueOf(getValue());
 	}
 }

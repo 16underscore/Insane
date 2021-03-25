@@ -25,6 +25,11 @@ public final class HelpCommand extends Command {
 	}
 
 	@Override
+	public final String syntax() {
+		return String.format("%s", getName());
+	}
+
+	@Override
 	public final void run(final String... param) {
 		if (param.length == 1) {
 			insane.getLogger().log(String.format("\u00A73%s <module>\u00A7r", getName()));
@@ -75,10 +80,5 @@ public final class HelpCommand extends Command {
 				}
 			}
 		}
-	}
-
-	@Override
-	public final String syntax() {
-		return String.format("%s", getName());
 	}
 }

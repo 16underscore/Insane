@@ -25,6 +25,11 @@ public final class LoginCommand extends Command {
 	}
 
 	@Override
+	public final String syntax() {
+		return String.format(".%s <mail> <password>", getName());
+	}
+
+	@Override
 	public final void run(final String... param) {
 		final String mail = param[1], password = param[2];
 		if (isInvalidInput(mail, password)) {
@@ -56,10 +61,5 @@ public final class LoginCommand extends Command {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public final String syntax() {
-		return String.format(".%s <mail> <password>", getName());
 	}
 }

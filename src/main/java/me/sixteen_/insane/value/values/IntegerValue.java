@@ -20,6 +20,11 @@ public final class IntegerValue extends Value {
 		this.max = max;
 	}
 
+	@Override
+	public final String toString() {
+		return String.valueOf(getValue());
+	}
+	
 	public final int getValue() {
 		return value;
 	}
@@ -34,10 +39,5 @@ public final class IntegerValue extends Value {
 
 	public final int getMax() {
 		return max;
-	}
-
-	@Override
-	public final String toString() {
-		return String.valueOf(getValue());
 	}
 }

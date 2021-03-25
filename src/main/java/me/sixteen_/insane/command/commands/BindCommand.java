@@ -16,6 +16,11 @@ public final class BindCommand extends Command {
 	}
 
 	@Override
+	public final String syntax() {
+		return String.format(".%s <Module> <Key>", getName());
+	}
+
+	@Override
 	public final void run(final String... param) {
 		InputUtil.Key key;
 		if (param[2].equalsIgnoreCase("none")) {
@@ -24,10 +29,5 @@ public final class BindCommand extends Command {
 			key = InputUtil.fromTranslationKey(String.format("key.keyboard.%s", param[2].toLowerCase()));
 		}
 		insane.getModuleManager().getModuleByName(param[1]).setKeybind(key);
-	}
-
-	@Override
-	public final String syntax() {
-		return String.format(".%s <Module> <Key>", getName());
 	}
 }

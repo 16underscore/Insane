@@ -33,14 +33,14 @@ public final class Inspect extends Module {
 	}
 
 	@Override
-	protected final void onEnable() {
-		distance = 0.0F;
-		move = 0.0F;
+	public final void toggle() {
+		enable();
 	}
 
 	@Override
-	public final void toggle() {
-		enable();
+	protected final void onEnable() {
+		distance = 0.0F;
+		move = 0.0F;
 	}
 
 	private final void onUpdate(final MatrixStack matrices) {

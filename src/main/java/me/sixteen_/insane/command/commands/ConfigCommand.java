@@ -15,16 +15,16 @@ public final class ConfigCommand extends Command {
 	}
 
 	@Override
+	public final String syntax() {
+		return String.format(".%s <load|save>", getName());
+	}
+
+	@Override
 	public final void run(final String... param) {
 		if (param[1].equals("load")) {
 			insane.getConfig().load();
 		} else if (param[1].equals("save")) {
 			insane.getConfig().save();
 		}
-	}
-
-	@Override
-	public final String syntax() {
-		return String.format(".%s <load|save>", getName());
 	}
 }

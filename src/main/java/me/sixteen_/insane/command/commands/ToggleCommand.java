@@ -15,12 +15,12 @@ public final class ToggleCommand extends Command {
 	}
 
 	@Override
-	public final void run(final String... param) {
-		insane.getModuleManager().getModuleByName(param[1]).toggle();
+	public final String syntax() {
+		return String.format(".%s <Module>", getName());
 	}
 
 	@Override
-	public final String syntax() {
-		return String.format(".%s <Module>", getName());
+	public final void run(final String... param) {
+		insane.getModuleManager().getModuleByName(param[1]).toggle();
 	}
 }

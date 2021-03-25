@@ -61,6 +61,14 @@ public final class Insane implements ClientModInitializer {
 	}
 
 	/**
+	 * Called when mc gets closed.
+	 */
+	private final void shutdown() {
+		moduleManager.shutdown();
+		config.save();
+	}
+
+	/**
 	 * @return Insane instance
 	 */
 	public static final Insane getInstance() {
@@ -114,13 +122,5 @@ public final class Insane implements ClientModInitializer {
 	 */
 	public final CommandManager getCommandManager() {
 		return commandManager;
-	}
-
-	/**
-	 * Called when mc gets closed.
-	 */
-	public final void shutdown() {
-		moduleManager.shutdown();
-		config.save();
 	}
 }

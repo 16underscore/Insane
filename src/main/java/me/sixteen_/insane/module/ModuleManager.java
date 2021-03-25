@@ -43,15 +43,6 @@ public final class ModuleManager {
 	}
 
 	/**
-	 * adds a {@link Module}.
-	 * 
-	 * @param needs a {@link Module}
-	 */
-	private final void addModule(final Module module) {
-		modules.add(module);
-	}
-
-	/**
 	 * @return a List of {@link Module}
 	 */
 	public final List<Module> getModules() {
@@ -91,5 +82,14 @@ public final class ModuleManager {
 		for (final Module m : modules) {
 			m.onShutdown();
 		}
+	}
+
+	/**
+	 * adds a {@link Module}.
+	 * 
+	 * @param needs a {@link Module}
+	 */
+	private final void addModule(final Module module) {
+		modules.add(module);
 	}
 }

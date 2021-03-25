@@ -29,7 +29,7 @@ public final class CommandManager {
 	private final Insane insane;
 
 	public CommandManager() {
-		this.insane = Insane.getInstance();
+		insane = Insane.getInstance();
 		addCommand(new ConfigCommand());
 		addCommand(new ToggleCommand());
 		addCommand(new LoginCommand());
@@ -58,15 +58,6 @@ public final class CommandManager {
 	}
 
 	/**
-	 * adds a {@link Command}.
-	 * 
-	 * @param needs a {@link Command}
-	 */
-	private final void addCommand(final Command cmd) {
-		commands.add(cmd);
-	}
-
-	/**
 	 * @param needs the command input
 	 */
 	public final void input(final String input) {
@@ -88,5 +79,14 @@ public final class CommandManager {
 	 */
 	public final List<Command> getCommands() {
 		return commands;
+	}
+
+	/**
+	 * adds a {@link Command}.
+	 * 
+	 * @param needs a {@link Command}
+	 */
+	private final void addCommand(final Command cmd) {
+		commands.add(cmd);
 	}
 }

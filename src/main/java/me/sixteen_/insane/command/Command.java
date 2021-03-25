@@ -11,9 +11,10 @@ import net.minecraft.client.MinecraftClient;
 @Environment(EnvType.CLIENT)
 public abstract class Command {
 
-	private final String name;
 	protected final MinecraftClient mc;
 	protected final Insane insane;
+	
+	private final String name;
 
 	public Command(final String name) {
 		this.name = name;

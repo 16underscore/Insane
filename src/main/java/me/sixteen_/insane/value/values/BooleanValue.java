@@ -17,16 +17,16 @@ public final class BooleanValue extends Value {
 		this.value = value;
 	}
 
+	@Override
+	public final String toString() {
+		return String.valueOf(getValue());
+	}
+
 	public final boolean getValue() {
 		return value;
 	}
 
 	public final void setValue(final boolean value) {
 		this.value = value;
-	}
-
-	@Override
-	public final String toString() {
-		return String.valueOf(getValue());
 	}
 }

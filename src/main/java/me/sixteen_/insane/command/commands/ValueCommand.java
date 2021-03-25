@@ -23,6 +23,11 @@ public final class ValueCommand extends Command {
 	}
 
 	@Override
+	public final String syntax() {
+		return String.format(".%s <Module> <Type> <Value>", getName());
+	}
+
+	@Override
 	public final void run(final String... param) {
 		final Module m = insane.getModuleManager().getModuleByName(param[1]);
 		final Value v = m.getValueByName(param[2]);
@@ -46,10 +51,5 @@ public final class ValueCommand extends Command {
 		if (m.isEnabled()) {
 			m.onUpdateValue();
 		}
-	}
-
-	@Override
-	public final String syntax() {
-		return String.format(".%s <Module> <Type> <Value>", getName());
 	}
 }

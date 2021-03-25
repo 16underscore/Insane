@@ -17,12 +17,13 @@ import net.minecraft.client.util.InputUtil;
 @Environment(EnvType.CLIENT)
 public abstract class Module {
 
+	protected final MinecraftClient mc;
+	
 	private final String name;
 	private final boolean visible;
 	private List<Value> values = new ArrayList<Value>();
 	private boolean enabled;
 	private InputUtil.Key keybind;
-	protected final MinecraftClient mc;
 
 	public Module(final String moduleName, final boolean moduleVisible) {
 		name = moduleName;

@@ -22,6 +22,11 @@ public final class FloatValue extends Value {
 		this.increment = increment;
 	}
 
+	@Override
+	public final String toString() {
+		return String.valueOf(getValue());
+	}
+
 	public final float getValue() {
 		return value;
 	}
@@ -40,10 +45,5 @@ public final class FloatValue extends Value {
 
 	public final float getIncrement() {
 		return increment;
-	}
-
-	@Override
-	public final String toString() {
-		return String.valueOf(getValue());
 	}
 }

@@ -22,6 +22,11 @@ public final class ListValue extends Value {
 		index = 0;
 	}
 
+	@Override
+	public final String toString() {
+		return getValue();
+	}
+
 	public final int getIndex() {
 		return index;
 	}
@@ -40,10 +45,5 @@ public final class ListValue extends Value {
 
 	public final List<String> getValues() {
 		return values;
-	}
-
-	@Override
-	public final String toString() {
-		return getValue();
 	}
 }

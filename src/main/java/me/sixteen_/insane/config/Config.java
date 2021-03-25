@@ -36,8 +36,8 @@ import net.minecraft.client.util.InputUtil;
 public final class Config {
 
 	private final Insane insane;
-	private final File file;
 	private final Gson gson;
+	private final File file;
 	private final String sEnabled = "enabled", sValues = "values", sKeybind = "keybind", sModules = "modules";
 
 	public Config() {
