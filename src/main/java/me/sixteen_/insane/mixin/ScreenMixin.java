@@ -17,7 +17,7 @@ import net.minecraft.client.gui.screen.Screen;
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
 
-	@Inject(method = "sendMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "sendMessage(Ljava/lang/String;Z)V", at = @At(target = "sendChatMessage", value = "INVOKE"), cancellable = true)
 	private final void sendMessage(String message, boolean toHud, final CallbackInfo info) {
 		final boolean cancel = ScreenSendMessageCallback.EVENT.invoker().sendMessage(message, toHud);
 		if (cancel) {
