@@ -52,12 +52,12 @@ public final class Config {
 	public final void save() {
 		final JsonObject config = new JsonObject();
 		final JsonObject modules = new JsonObject();
-		insane.getModuleManager().getModules().forEach(m -> {
+		for (final Module m : insane.getModuleManager().getModules()) {
 			final JsonObject module = new JsonObject();
 			module.addProperty(sEnabled, m.isEnabled());
 			if (m.hasValues()) {
 				final JsonObject values = new JsonObject();
-				m.getValues().forEach(v -> {
+				for (final Value v : m.getValues()) {
 					if (v instanceof IntegerValue) {
 						values.addProperty(v.getName(), ((IntegerValue) v).getValue());
 					} else if (v instanceof FloatValue) {
@@ -74,14 +74,17 @@ public final class Config {
 						range.add(((IntegerRange) v).getMaxValue());
 						values.add(v.getName(), range);
 					}
-				});
+				}
 				module.add(sValues, values);
 			}
 			if (m.hasKeybind()) {
 				module.addProperty(sKeybind, m.getKeybind().getCode());
 			}
 			modules.add(m.getName(), module);
-		});
+			if (!file.exists()) {
+				m.updateNameWithValue();
+			}
+		}
 		config.add(sModules, modules);
 		final String json = gson.toJson(config);
 		try (final FileWriter fw = new FileWriter(file)) {
@@ -129,6 +132,7 @@ public final class Config {
 										}
 									}
 								}
+								m.updateNameWithValue();
 							}
 							// Set keybind
 							if (module.has(sKeybind)) {

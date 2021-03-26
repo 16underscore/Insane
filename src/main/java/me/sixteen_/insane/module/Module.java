@@ -18,15 +18,16 @@ import net.minecraft.client.util.InputUtil;
 public abstract class Module {
 
 	protected final MinecraftClient mc;
-	
 	private final String name;
 	private final boolean visible;
 	private List<Value> values = new ArrayList<Value>();
+	private String nameWithValue;
 	private boolean enabled;
 	private InputUtil.Key keybind;
 
 	public Module(final String moduleName, final boolean moduleVisible) {
 		name = moduleName;
+		nameWithValue = name;
 		visible = moduleVisible;
 		enabled = false;
 		keybind = null;
@@ -93,23 +94,29 @@ public abstract class Module {
 	}
 
 	/**
+	 * 
+	 */
+	public final void updateNameWithValue() {
+		if (hasValues()) {
+			final StringBuilder build = new StringBuilder();
+			final Iterator<Value> it = values.stream().filter(value -> value.isVisibleInArrayList()).iterator();
+			while (it.hasNext()) {
+				final Value v = it.next();
+				if (it.hasNext()) {
+					build.append(String.format("%s, ", v.toString()));
+				} else {
+					build.append(v.toString());
+				}
+			}
+			nameWithValue = build.length() == 0 ? getName() : String.format("%s \u00A77[%s]\u00A7r", getName(), build.toString());
+		}
+	}
+
+	/**
 	 * @return module name with some values
 	 */
 	public final String getNameWithValue() {
-		final StringBuilder build = new StringBuilder();
-		final Iterator<Value> it = values.stream().filter(value -> value.isVisibleInArrayList()).iterator();
-		while (it.hasNext()) {
-			final Value v = it.next();
-			if (it.hasNext()) {
-				build.append(String.format("%s, ", v.toString()));
-			} else {
-				build.append(v.toString());
-			}
-		}
-		if (build.length() == 0) {
-			return getName();
-		}
-		return String.format("%s \u00A77[%s]\u00A7r", getName(), build.toString());
+		return nameWithValue;
 	}
 
 	/**
