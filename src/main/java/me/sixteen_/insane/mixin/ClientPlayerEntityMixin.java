@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import me.sixteen_.insane.event.ClientPlayerApplyDamageCallback;
+import me.sixteen_.insane.event.ClientPlayerApplyDamageEvents;
 import me.sixteen_.insane.event.ClientPlayerMoveCallback;
 import me.sixteen_.insane.event.ClientPlayerTickCallback;
 import net.fabricmc.api.EnvType;
@@ -33,7 +33,12 @@ public abstract class ClientPlayerEntityMixin {
 	}
 
 	@Inject(method = "applyDamage", at = @At("HEAD"))
-	private final void applyDamage(DamageSource source, float amount, final CallbackInfo info) {
-		ClientPlayerApplyDamageCallback.EVENT.invoker().applyDamage(source, amount);
+	private final void beforeApplyDamage(DamageSource source, float amount, final CallbackInfo info) {
+		ClientPlayerApplyDamageEvents.BEFORE.invoker().beforeApplyDamage(source, amount);
+	}
+	
+	@Inject(method = "applyDamage", at = @At("RETURN"))
+	private final void afterApplyDamage(DamageSource source, float amount, final CallbackInfo info) {
+		ClientPlayerApplyDamageEvents.AFTER.invoker().afterApplyDamage(source, amount);
 	}
 }
