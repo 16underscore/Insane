@@ -36,7 +36,6 @@ public class AutoSoup extends Module {
 
 	@Override
 	protected void onUpdate() {
-		Insane.getInstance().getLogger().log("Aua");
 		if (mc.player.getHealth() <= health.getValue()) {
 			final int slot = mc.player.inventory.selectedSlot;
 			for (int i = 0; i < PlayerInventory.getHotbarSize(); i++) {
