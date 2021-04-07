@@ -1,6 +1,5 @@
 package me.sixteen_.insane.module.modules.player;
 
-import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.event.ClientPlayerUpdateHealthCallback;
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
