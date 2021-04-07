@@ -3,6 +3,7 @@ package me.sixteen_.insane.module.modules.render;
 import me.sixteen_.insane.event.HeldItemRendererFirstPersonItemCallback;
 import me.sixteen_.insane.event.ItemRendererItemCallback;
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
@@ -19,7 +20,7 @@ public final class Inspect extends Module {
 	private float distance, move;
 
 	public Inspect() {
-		super(Inspect.class.getSimpleName(), false);
+		super(Inspect.class.getSimpleName(), ModuleCategory.RENDER, false);
 		ItemRendererItemCallback.EVENT.register((stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model) -> {
 			if (isEnabled() && renderMode.isFirstPerson()) {
 				onUpdate(matrices);

@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import me.sixteen_.insane.command.Command;
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import me.sixteen_.insane.value.Value;
 import me.sixteen_.insane.value.ranges.IntegerRange;
 import me.sixteen_.insane.value.values.BooleanValue;
@@ -33,8 +34,13 @@ public final class HelpCommand extends Command {
 	public final void run(final String... param) {
 		if (param.length == 1) {
 			insane.getLogger().log(String.format("\u00A73%s <module>\u00A7r", getName()));
-			for (final Module m : insane.getModuleManager().getModules()) {
-				insane.getLogger().log(m.getName());
+			for (final ModuleCategory c : ModuleCategory.values()) {
+				insane.getLogger().log(String.format("\u00A73%s\u00A7r", c.toString()));
+				for (final Module m : insane.getModuleManager().getModules()) {
+					if (m.getCategory().equals(c)) {
+						insane.getLogger().log(m.getName());
+					}
+				}
 			}
 		} else if (param.length == 2) {
 			insane.getLogger().log(String.format("\u00A73%s %s <value>\u00A7r", getName(), param[1]));

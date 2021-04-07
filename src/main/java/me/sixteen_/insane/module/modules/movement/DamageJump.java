@@ -1,6 +1,7 @@
 package me.sixteen_.insane.module.modules.movement;
 
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -10,8 +11,9 @@ import net.fabricmc.api.Environment;
 @Environment(EnvType.CLIENT)
 public class DamageJump extends Module {
 
+	// TODO Jump as high as possible, when player gets Hurt.
 	public DamageJump() {
-		super(DamageJump.class.getSimpleName());
+		super(DamageJump.class.getSimpleName(), ModuleCategory.MOVEMENT);
 	}
 
 	@Override

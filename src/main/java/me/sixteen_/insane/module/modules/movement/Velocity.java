@@ -1,6 +1,7 @@
 package me.sixteen_.insane.module.modules.movement;
 
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -10,8 +11,9 @@ import net.fabricmc.api.Environment;
 @Environment(EnvType.CLIENT)
 public class Velocity extends Module {
 
+	//TODO velocity.
 	public Velocity() {
-		super(Velocity.class.getSimpleName());
+		super(Velocity.class.getSimpleName(), ModuleCategory.MOVEMENT);
 	}
 
 	@Override

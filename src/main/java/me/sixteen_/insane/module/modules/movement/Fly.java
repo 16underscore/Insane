@@ -1,6 +1,7 @@
 package me.sixteen_.insane.module.modules.movement;
 
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import me.sixteen_.insane.value.values.FloatValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,7 +17,7 @@ public final class Fly extends Module {
 	private boolean flyingbefore;
 
 	public Fly() {
-		super(Fly.class.getSimpleName());
+		super(Fly.class.getSimpleName(), ModuleCategory.MOVEMENT);
 		speed = new FloatValue("speed", true, 1, 0, 2, 0.1F);
 		addValues(speed);
 	}

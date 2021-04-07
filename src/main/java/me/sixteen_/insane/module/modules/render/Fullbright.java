@@ -1,6 +1,7 @@
 package me.sixteen_.insane.module.modules.render;
 
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import me.sixteen_.insane.value.values.DoubleValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,7 +16,7 @@ public final class Fullbright extends Module {
 	private double previousGamma;
 
 	public Fullbright() {
-		super(Fullbright.class.getSimpleName());
+		super(Fullbright.class.getSimpleName(), ModuleCategory.RENDER);
 		gamma = new DoubleValue("gamma", true, 69.0D, 0.0D, 1023.0D, 0.1D);
 		addValues(gamma);
 	}

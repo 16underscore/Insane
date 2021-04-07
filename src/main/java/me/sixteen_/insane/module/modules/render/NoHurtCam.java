@@ -2,6 +2,7 @@ package me.sixteen_.insane.module.modules.render;
 
 import me.sixteen_.insane.event.GameRendererHurtCallback;
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -12,7 +13,7 @@ import net.fabricmc.api.Environment;
 public final class NoHurtCam extends Module {
 
 	public NoHurtCam() {
-		super(NoHurtCam.class.getSimpleName());
+		super(NoHurtCam.class.getSimpleName(), ModuleCategory.RENDER);
 		GameRendererHurtCallback.EVENT.register((matrixStack, f) -> {
 			if (isEnabled()) {
 				return true;

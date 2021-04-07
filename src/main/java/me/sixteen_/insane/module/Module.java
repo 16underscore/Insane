@@ -19,23 +19,25 @@ public abstract class Module {
 
 	protected final MinecraftClient mc;
 	private final String name;
+	private final ModuleCategory category;
 	private final boolean visible;
 	private List<Value> values = new ArrayList<Value>();
 	private String nameWithValue;
 	private boolean enabled;
 	private InputUtil.Key keybind;
 
-	public Module(final String moduleName, final boolean moduleVisible) {
+	public Module(final String moduleName, final ModuleCategory moduleCategory, final boolean moduleVisible) {
 		name = moduleName;
 		nameWithValue = name;
+		category = moduleCategory;
 		visible = moduleVisible;
 		enabled = false;
 		keybind = null;
 		mc = MinecraftClient.getInstance();
 	}
 
-	public Module(final String moduleName) {
-		this(moduleName, true);
+	public Module(final String name, final ModuleCategory category) {
+		this(name, category, true);
 	}
 
 	/**
@@ -117,6 +119,13 @@ public abstract class Module {
 	 */
 	public final String getNameWithValue() {
 		return nameWithValue;
+	}
+	
+	/**
+	 * @return module Category
+	 */
+	public final ModuleCategory getCategory() {
+		return category;
 	}
 
 	/**

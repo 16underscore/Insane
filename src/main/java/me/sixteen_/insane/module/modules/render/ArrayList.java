@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import me.sixteen_.insane.value.values.BooleanValue;
 import me.sixteen_.insane.value.values.ListValue;
 import net.fabricmc.api.EnvType;
@@ -24,7 +25,7 @@ public final class ArrayList extends Module {
 	private List<Module> modules;
 
 	public ArrayList() {
-		super(ArrayList.class.getSimpleName(), false);
+		super(ArrayList.class.getSimpleName(), ModuleCategory.RENDER, false);
 		descending = new BooleanValue("descending", false, false);
 		sort = new ListValue("sort", false, "none", "size", "alphabet");
 		addValues(descending);

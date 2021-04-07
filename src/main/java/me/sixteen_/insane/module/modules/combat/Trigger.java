@@ -2,6 +2,7 @@ package me.sixteen_.insane.module.modules.combat;
 
 import me.sixteen_.insane.event.ClientPlayerTickCallback;
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
@@ -17,7 +18,7 @@ import net.minecraft.util.hit.HitResult.Type;
 public final class Trigger extends Module {
 
 	public Trigger() {
-		super(Trigger.class.getSimpleName());
+		super(Trigger.class.getSimpleName(), ModuleCategory.COMBAT);
 		ClientPlayerTickCallback.EVENT.register(() -> {
 			if (isEnabled()) {
 				onUpdate();

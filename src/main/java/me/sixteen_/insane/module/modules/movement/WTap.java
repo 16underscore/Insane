@@ -1,6 +1,7 @@
 package me.sixteen_.insane.module.modules.movement;
 
 import me.sixteen_.insane.module.Module;
+import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -15,7 +16,7 @@ import net.minecraft.util.ActionResult;
 public final class WTap extends Module {
 
 	public WTap() {
-		super(WTap.class.getSimpleName());
+		super(WTap.class.getSimpleName(), ModuleCategory.MOVEMENT);
 		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if (isEnabled()) {
 				onUpdate();
