@@ -10,6 +10,7 @@ import me.sixteen_.insane.module.modules.movement.Fly;
 import me.sixteen_.insane.module.modules.movement.Strafe;
 import me.sixteen_.insane.module.modules.movement.Velocity;
 import me.sixteen_.insane.module.modules.movement.WTap;
+import me.sixteen_.insane.module.modules.player.AutoSoup;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
 import me.sixteen_.insane.module.modules.render.Inspect;
@@ -33,6 +34,7 @@ public final class ModuleManager {
 		addModule(new ArrayList());
 		addModule(new Criticals());
 		addModule(new NoHurtCam());
+		addModule(new AutoSoup());
 		addModule(new Killaura());
 		addModule(new Velocity());
 		addModule(new Inspect());

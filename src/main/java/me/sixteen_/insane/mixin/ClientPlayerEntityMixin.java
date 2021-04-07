@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import me.sixteen_.insane.event.ClientPlayerApplyDamageEvents;
 import me.sixteen_.insane.event.ClientPlayerMoveCallback;
 import me.sixteen_.insane.event.ClientPlayerTickCallback;
+import me.sixteen_.insane.event.ClientPlayerUpdateHealthCallback;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -30,6 +31,11 @@ public abstract class ClientPlayerEntityMixin {
 	@Inject(method = "move", at = @At("HEAD"))
 	private final void move(MovementType type, Vec3d movement, final CallbackInfo info) {
 		ClientPlayerMoveCallback.EVENT.invoker().move(type, movement);
+	}
+	
+	@Inject(method = "updateHealth", at = @At("RETURN"))
+	private final void updateHealth(float health, final CallbackInfo info) {
+		ClientPlayerUpdateHealthCallback.EVENT.invoker().udpateHealth(health);
 	}
 
 	@Inject(method = "applyDamage", at = @At("HEAD"))
