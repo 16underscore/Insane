@@ -14,6 +14,7 @@ import me.sixteen_.insane.module.modules.player.AutoSoup;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
 import me.sixteen_.insane.module.modules.render.Inspect;
+import me.sixteen_.insane.module.modules.render.Nametags;
 import me.sixteen_.insane.module.modules.render.NoHurtCam;
 import me.sixteen_.insane.module.modules.render.SprintStatus;
 import net.fabricmc.api.EnvType;
@@ -36,6 +37,7 @@ public final class ModuleManager {
 		addModule(new NoHurtCam());
 		addModule(new AutoSoup());
 		addModule(new Killaura());
+		addModule(new Nametags());
 		addModule(new Velocity());
 		addModule(new Inspect());
 		addModule(new Trigger());
