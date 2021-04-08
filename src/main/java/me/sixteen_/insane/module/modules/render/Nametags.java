@@ -29,20 +29,19 @@ public final class Nametags extends Module {
 		});
 	}
 
-	private final boolean onUpdate(Entity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, EntityRenderDispatcher dispatcher) {
+	private final boolean onUpdate(final Entity entity, final MatrixStack matrices, final VertexConsumerProvider vertexConsumers, final int light, final EntityRenderDispatcher dispatcher) {
 		if (entity instanceof PlayerEntity) {
 			final PlayerEntity pe = (PlayerEntity) entity;
 			final String name = String.format("%s %s", pe.getName().asString(), (int) pe.getHealth());
-			double d = dispatcher.getSquaredDistanceToCamera(pe);
-			if (d <= 4096.0D) {
-				final float f = entity.getHeight() + 0.5F;
+			final double d = dispatcher.getSquaredDistanceToCamera(pe);
+			if (d <= 4096D) {
+				final TextRenderer textRenderer = mc.textRenderer;
+				final float f = entity.getHeight() + 0.5F, h = (float) (-textRenderer.getWidth(name) / 2);
 				matrices.push();
 				matrices.translate(0.0D, (double) f, 0.0D);
 				matrices.multiply(dispatcher.getRotation());
 				matrices.scale(-0.025F, -0.025F, 0.025F);
 				final Matrix4f matrix4f = matrices.peek().getModel();
-				final TextRenderer textRenderer = mc.textRenderer;
-				float h = (float) (-textRenderer.getWidth(name) / 2);
 				textRenderer.draw(name, h, 0, -1, false, matrix4f, vertexConsumers, true, 0, light);
 				matrices.pop();
 			}
