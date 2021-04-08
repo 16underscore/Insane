@@ -9,6 +9,7 @@
   	"EntityRendererMixin",
   	"GameRendererMixin",
   	"HeldItemRendererMixin",
+  	"InventoryScreenMixin",
   	"ItemRendererMixin",
   	"KeyboardMixin",
   	"MinecraftClientMixin",

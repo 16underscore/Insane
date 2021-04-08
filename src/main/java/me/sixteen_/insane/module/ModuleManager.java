@@ -11,6 +11,7 @@ import me.sixteen_.insane.module.modules.movement.Strafe;
 import me.sixteen_.insane.module.modules.movement.Velocity;
 import me.sixteen_.insane.module.modules.movement.WTap;
 import me.sixteen_.insane.module.modules.player.AutoSoup;
+import me.sixteen_.insane.module.modules.player.Refill;
 import me.sixteen_.insane.module.modules.render.ArrayList;
 import me.sixteen_.insane.module.modules.render.Fullbright;
 import me.sixteen_.insane.module.modules.render.Inspect;
@@ -41,6 +42,7 @@ public final class ModuleManager {
 		addModule(new Velocity());
 		addModule(new Inspect());
 		addModule(new Trigger());
+		addModule(new Refill());
 		addModule(new Strafe());
 		addModule(new WTap());
 		addModule(new Fly());
