@@ -19,13 +19,16 @@ public final class AutoSoup extends Module {
 
 	private final IntegerValue health;
 	private final BooleanValue quickdrop;
+	private final BooleanValue soupInInv;
 
 	public AutoSoup() {
 		super(AutoSoup.class.getSimpleName(), ModuleCategory.PLAYER);
 		health = new IntegerValue("health", true, 10, 1, 19);
 		quickdrop = new BooleanValue("quickdrop", false, true);
+		soupInInv = new BooleanValue("soupininv", false, true);
 		addValues(health);
 		addValues(quickdrop);
+		addValues(soupInInv);
 		ClientPlayerUpdateHealthCallback.EVENT.register((health) -> {
 			if (isEnabled()) {
 				onUpdate();
@@ -35,17 +38,20 @@ public final class AutoSoup extends Module {
 
 	@Override
 	protected final void onUpdate() {
+		if (!soupInInv.getValue() && mc.currentScreen != null) {
+			return;
+		}
 		if (mc.player.getHealth() <= health.getValue()) {
 			final int slot = mc.player.inventory.selectedSlot;
 			for (int i = 0; i < PlayerInventory.getHotbarSize(); i++) {
 				mc.player.inventory.selectedSlot = i;
 				if (mc.player.getMainHandStack().getItem().equals(Items.MUSHROOM_STEW)) {
 					mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
+					if (quickdrop.getValue()) {
+						mc.player.dropSelectedItem(true);
+					}
 					break;
 				}
-			}
-			if (quickdrop.getValue()) {
-				mc.player.dropSelectedItem(true);
 			}
 			mc.player.inventory.selectedSlot = slot;
 		}
