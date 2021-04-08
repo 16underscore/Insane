@@ -14,7 +14,7 @@ public final class IntegerRange extends Value {
 	private final int min, max;
 	private int minValue, maxValue;
 
-	public IntegerRange(String name, boolean visibleInArrayList, final int minValue, final int maxValue, final int min, final int max) {
+	public IntegerRange(final String name, final boolean visibleInArrayList, final int minValue, final int maxValue, final int min, final int max) {
 		super(name, visibleInArrayList);
 		this.minValue = minValue < maxValue ? minValue : maxValue;
 		this.maxValue = minValue < maxValue ? maxValue : minValue;

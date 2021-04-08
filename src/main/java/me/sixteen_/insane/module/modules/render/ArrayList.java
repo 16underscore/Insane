@@ -38,7 +38,7 @@ public final class ArrayList extends Module {
 	}
 
 	@Override
-	public void onUpdateValue() {
+	public final void onUpdateValue() {
 		sortModules();
 	}
 

@@ -15,12 +15,12 @@ public final class PanicCommand extends Command {
 	}
 
 	@Override
-	public String syntax() {
+	public final String syntax() {
 		return String.format("%s", getName());
 	}
 
 	@Override
-	public void run(final String... param) {
+	public final void run(final String... param) {
 		insane.getModuleManager().getModules().forEach(m -> {
 			if (m.isEnabled())
 				m.disable();

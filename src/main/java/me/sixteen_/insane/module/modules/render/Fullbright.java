@@ -22,7 +22,7 @@ public final class Fullbright extends Module {
 	}
 
 	@Override
-	public void onUpdateValue() {
+	public final void onUpdateValue() {
 		mc.options.gamma = gamma.getValue();
 	}
 

@@ -23,7 +23,7 @@ public final class Fly extends Module {
 	}
 
 	@Override
-	public void onUpdateValue() {
+	public final void onUpdateValue() {
 		mc.player.abilities.setFlySpeed(speed.getValue() / 10);
 	}
 

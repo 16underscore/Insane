@@ -15,7 +15,7 @@ import net.minecraft.util.Hand;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class AutoSoup extends Module {
+public final class AutoSoup extends Module {
 
 	private final IntegerValue health;
 	private final BooleanValue quickdrop;
@@ -34,7 +34,7 @@ public class AutoSoup extends Module {
 	}
 
 	@Override
-	protected void onUpdate() {
+	protected final void onUpdate() {
 		if (mc.player.getHealth() <= health.getValue()) {
 			final int slot = mc.player.inventory.selectedSlot;
 			for (int i = 0; i < PlayerInventory.getHotbarSize(); i++) {

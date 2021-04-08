@@ -9,7 +9,7 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class DamageJump extends Module {
+public final class DamageJump extends Module {
 
 	// TODO Jump as high as possible, when player gets Hurt.
 	public DamageJump() {
@@ -17,6 +17,6 @@ public class DamageJump extends Module {
 	}
 
 	@Override
-	protected void onUpdate() {
+	protected final void onUpdate() {
 	}
 }

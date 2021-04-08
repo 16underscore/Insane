@@ -9,7 +9,7 @@ import net.fabricmc.api.Environment;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Velocity extends Module {
+public final class Velocity extends Module {
 
 	//TODO velocity.
 	public Velocity() {
@@ -17,6 +17,6 @@ public class Velocity extends Module {
 	}
 
 	@Override
-	protected void onUpdate() {
+	protected final void onUpdate() {
 	}
 }

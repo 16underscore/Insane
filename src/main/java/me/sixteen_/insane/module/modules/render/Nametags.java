@@ -17,7 +17,7 @@ import net.minecraft.util.math.Matrix4f;
  * @author 16_
  */
 @Environment(EnvType.CLIENT)
-public class Nametags extends Module {
+public final class Nametags extends Module {
 
 	public Nametags() {
 		super(Nametags.class.getSimpleName(), ModuleCategory.RENDER);

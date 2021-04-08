@@ -26,5 +26,5 @@ public interface EntityRendererRenderCallback {
 		return false;
 	});
 
-	public boolean render(Entity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, EntityRenderDispatcher dispatcher);
+	public boolean render(final Entity entity, final float yaw, final float tickDelta, final MatrixStack matrices, final VertexConsumerProvider vertexConsumers, final int light, final EntityRenderDispatcher dispatcher);
 }
