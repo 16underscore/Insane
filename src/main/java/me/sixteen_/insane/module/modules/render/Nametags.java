@@ -1,5 +1,6 @@
 package me.sixteen_.insane.module.modules.render;
 
+import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.event.EntityRendererRenderCallback;
 import me.sixteen_.insane.module.Module;
 import me.sixteen_.insane.module.ModuleCategory;
@@ -32,7 +33,7 @@ public final class Nametags extends Module {
 	private final boolean onUpdate(final Entity entity, final MatrixStack matrices, final VertexConsumerProvider vertexConsumers, final int light, final EntityRenderDispatcher dispatcher) {
 		if (entity instanceof PlayerEntity) {
 			final PlayerEntity pe = (PlayerEntity) entity;
-			final String name = String.format("%s %s", pe.getName().asString(), (int) pe.getHealth());
+			final String name = String.format("%s %s%s\u00A7r", pe.getName().asString(), Insane.getInstance().getClientColor(), (int) pe.getHealth());
 			final double d = dispatcher.getSquaredDistanceToCamera(pe);
 			if (d <= 4096D) {
 				final TextRenderer textRenderer = mc.textRenderer;

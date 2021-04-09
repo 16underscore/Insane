@@ -33,9 +33,9 @@ public final class HelpCommand extends Command {
 	@Override
 	public final void run(final String... param) {
 		if (param.length == 1) {
-			insane.getLogger().log(String.format("\u00A73%s <module>\u00A7r", getName()));
+			insane.getLogger().log(String.format("%s%s <module>\u00A7r", insane.getClientColor(), getName()));
 			for (final ModuleCategory c : ModuleCategory.values()) {
-				insane.getLogger().log(String.format("\u00A73%s\u00A7r", c.toString()));
+				insane.getLogger().log(String.format("%s%s\u00A7r", insane.getClientColor(), c.toString()));
 				for (final Module m : insane.getModuleManager().getModules()) {
 					if (m.getCategory().equals(c)) {
 						insane.getLogger().log(m.getName());
@@ -43,7 +43,7 @@ public final class HelpCommand extends Command {
 				}
 			}
 		} else if (param.length == 2) {
-			insane.getLogger().log(String.format("\u00A73%s %s <value>\u00A7r", getName(), param[1]));
+			insane.getLogger().log(String.format("%s%s %s <value>\u00A7r", insane.getClientColor(), getName(), param[1]));
 			for (final Value v : insane.getModuleManager().getModuleByName(param[1]).getValues()) {
 				insane.getLogger().log(v.getName());
 			}

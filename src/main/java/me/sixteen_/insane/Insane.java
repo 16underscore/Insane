@@ -23,6 +23,8 @@ public final class Insane implements ClientModInitializer {
 	// Client information
 	private final String clientName, clientVersion;
 	private boolean loadConfig;
+	// Color
+	private String color;
 	// Logger
 	private final Logger logger;
 	// Managers
@@ -43,6 +45,7 @@ public final class Insane implements ClientModInitializer {
 		}
 		clientName = "Insane";
 		clientVersion = "b2";
+		color = "f";
 		loadConfig = true;
 		imc = (IMinecraftClient) MinecraftClient.getInstance();
 		logger = new Logger();
@@ -87,6 +90,16 @@ public final class Insane implements ClientModInitializer {
 	 */
 	public final String getClientVersion() {
 		return clientVersion;
+	}
+	
+	public final String getClientColor() {
+		return String.format("\u00A7%s", color);
+	}
+
+	public final void setClientColor(final String clientColor) {
+		if ("0123456789abcdef".contains(clientColor)) {
+			color = clientColor;
+		}
 	}
 
 	/**

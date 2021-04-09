@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFW;
 
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.commands.BindCommand;
+import me.sixteen_.insane.command.commands.ColorCommand;
 import me.sixteen_.insane.command.commands.ConfigCommand;
 import me.sixteen_.insane.command.commands.HelpCommand;
 import me.sixteen_.insane.command.commands.LoginCommand;
@@ -32,6 +33,7 @@ public final class CommandManager {
 		insane = Insane.getInstance();
 		addCommand(new ConfigCommand());
 		addCommand(new ToggleCommand());
+		addCommand(new ColorCommand());
 		addCommand(new LoginCommand());
 		addCommand(new PanicCommand());
 		addCommand(new ValueCommand());
