@@ -1,6 +1,7 @@
 package me.sixteen_.insane.command.commands;
 
 import me.sixteen_.insane.command.Command;
+import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -21,9 +22,10 @@ public final class PanicCommand extends Command {
 
 	@Override
 	public final void run(final String... param) {
-		insane.getModuleManager().getModules().forEach(m -> {
-			if (m.isEnabled())
+		for (final Module m : insane.getModuleManager().getModules()) {
+			if (m.isEnabled()) {
 				m.disable();
-		});
+			}
+		}
 	}
 }

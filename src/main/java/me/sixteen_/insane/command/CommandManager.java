@@ -48,7 +48,7 @@ public final class CommandManager {
 		});
 		OnKeyCallback.EVENT.register((window, key, scancode, i, j) -> {
 			if (i == GLFW.GLFW_PRESS) {
-				for (final Module m : Insane.getInstance().getModuleManager().getModules()) {
+				for (final Module m : insane.getModuleManager().getModules()) {
 					if (m.getKeybind() != null) {
 						if (m.getKeybind().getCode() == key) {
 							m.toggle();
