@@ -42,9 +42,9 @@ public final class AutoSoup extends Module {
 			return;
 		}
 		if (mc.player.getHealth() <= health.getValue()) {
-			final int slot = mc.player.inventory.selectedSlot;
+			final int slot = mc.player.getInventory().selectedSlot;
 			for (int i = 0; i < PlayerInventory.getHotbarSize(); i++) {
-				mc.player.inventory.selectedSlot = i;
+				mc.player.getInventory().selectedSlot = i;
 				if (mc.player.getMainHandStack().getItem().equals(Items.MUSHROOM_STEW)) {
 					mc.interactionManager.interactItem(mc.player, mc.world, Hand.MAIN_HAND);
 					if (quickdrop.getValue()) {
@@ -53,7 +53,7 @@ public final class AutoSoup extends Module {
 					break;
 				}
 			}
-			mc.player.inventory.selectedSlot = slot;
+			mc.player.getInventory().selectedSlot = slot;
 		}
 	}
 }

@@ -7,9 +7,9 @@ import me.sixteen_.insane.module.ModuleCategory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 
 /**
  * @author 16_
@@ -58,7 +58,7 @@ public final class Inspect extends Module {
 			// Pivot
 			matrices.translate(pivotX, pivotY, pivotZ);
 			// Rotate
-			matrices.multiply(new Quaternion(new Vector3f(1F, 1F, 0F), 30F * f, true));
+			matrices.multiply(new Quaternion(new Vec3f(1F, 1F, 0F), 30F * f, true));
 			// -Pivot
 			matrices.translate(-pivotX, -pivotY, -pivotZ);
 		} else {

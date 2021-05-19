@@ -24,23 +24,23 @@ public final class Fly extends Module {
 
 	@Override
 	public final void onUpdateValue() {
-		mc.player.abilities.setFlySpeed(speed.getValue() / 10);
+		mc.player.getAbilities().setFlySpeed(speed.getValue() / 10);
 	}
 
 	@Override
 	protected final void onEnable() {
-		flyingbefore = mc.player.abilities.flying;
+		flyingbefore = mc.player.getAbilities().flying;
 		if (!flyingbefore) {
 			mc.player.addVelocity(0D, 0.1D, 0D);
-			mc.player.abilities.flying = true;
+			mc.player.getAbilities().flying = true;
 		}
-		previousSpeed = mc.player.abilities.getFlySpeed();
+		previousSpeed = mc.player.getAbilities().getFlySpeed();
 		onUpdateValue();
 	}
 
 	@Override
 	protected final void onDisable() {
-		mc.player.abilities.setFlySpeed(previousSpeed);
-		mc.player.abilities.flying = flyingbefore;
+		mc.player.getAbilities().setFlySpeed(previousSpeed);
+		mc.player.getAbilities().flying = flyingbefore;
 	}
 }

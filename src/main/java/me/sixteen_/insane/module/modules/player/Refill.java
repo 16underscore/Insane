@@ -28,7 +28,7 @@ public final class Refill extends Module {
 
 	@Override
 	protected final void onUpdate() {
-		final DefaultedList<ItemStack> main = mc.player.inventory.main;
+		final DefaultedList<ItemStack> main = mc.player.getInventory().main;
 		for (int i = PlayerInventory.getHotbarSize(); i < main.size(); i++) {
 			if (main.get(i).getItem().equals(Items.MUSHROOM_STEW)) {
 				mc.interactionManager.clickSlot(0, i, 0, SlotActionType.QUICK_MOVE, mc.player);
