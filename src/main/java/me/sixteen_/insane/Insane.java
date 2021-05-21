@@ -43,8 +43,8 @@ public final class Insane implements ClientModInitializer {
 		if (insane == null) {
 			insane = this;
 		}
-		clientName = "Insane";
-		clientVersion = "b2";
+		clientName = Insane.class.getSimpleName();
+		clientVersion = "b3";
 		color = "f";
 		loadConfig = true;
 		imc = (IMinecraftClient) MinecraftClient.getInstance();
