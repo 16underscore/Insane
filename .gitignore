@@ -1,10 +1,15 @@
-/.vscode/
-/.gradle/
-/.settings/
-/bin/
-/build/
-/run/
-/.classpath
-/.project
-/Insane_client.launch
-/Insane_server.launch
+# gradle
+.gradle/
+build/
+out/
+classes/
+#ide
+*.launch
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+eclipse-formatter.xml
+#fabric
+run/
