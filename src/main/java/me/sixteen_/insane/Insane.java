@@ -97,7 +97,7 @@ public final class Insane implements ClientModInitializer {
 	}
 
 	public final void setClientColor(final String clientColor) {
-		if ("0123456789abcdef".contains(clientColor)) {
+		if ("0123456789abcdef".contains(clientColor) && clientColor.length() == 1) {
 			color = clientColor;
 		}
 	}

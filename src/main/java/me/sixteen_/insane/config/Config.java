@@ -16,7 +16,7 @@ import com.google.gson.JsonPrimitive;
 
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.module.Module;
-import me.sixteen_.insane.module.modules.render.ArrayList;
+import me.sixteen_.insane.module.modules.ArrayList;
 import me.sixteen_.insane.value.Value;
 import me.sixteen_.insane.value.ranges.IntegerRange;
 import me.sixteen_.insane.value.values.BooleanValue;

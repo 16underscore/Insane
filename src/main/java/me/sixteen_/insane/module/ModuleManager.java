@@ -2,22 +2,22 @@ package me.sixteen_.insane.module;
 
 import java.util.List;
 
-import me.sixteen_.insane.module.modules.combat.Criticals;
-import me.sixteen_.insane.module.modules.combat.Killaura;
-import me.sixteen_.insane.module.modules.combat.Trigger;
-import me.sixteen_.insane.module.modules.movement.DamageJump;
-import me.sixteen_.insane.module.modules.movement.Fly;
-import me.sixteen_.insane.module.modules.movement.Strafe;
-import me.sixteen_.insane.module.modules.movement.Velocity;
-import me.sixteen_.insane.module.modules.movement.WTap;
-import me.sixteen_.insane.module.modules.player.AutoSoup;
-import me.sixteen_.insane.module.modules.player.Refill;
-import me.sixteen_.insane.module.modules.render.ArrayList;
-import me.sixteen_.insane.module.modules.render.Fullbright;
-import me.sixteen_.insane.module.modules.render.Inspect;
-import me.sixteen_.insane.module.modules.render.Nametags;
-import me.sixteen_.insane.module.modules.render.NoHurtCam;
-import me.sixteen_.insane.module.modules.render.SprintStatus;
+import org.lwjgl.glfw.GLFW;
+
+import me.sixteen_.insane.event.OnKeyCallback;
+import me.sixteen_.insane.module.modules.ArrayList;
+import me.sixteen_.insane.module.modules.AutoSoup;
+import me.sixteen_.insane.module.modules.Criticals;
+import me.sixteen_.insane.module.modules.Fly;
+import me.sixteen_.insane.module.modules.Inspect;
+import me.sixteen_.insane.module.modules.Killaura;
+import me.sixteen_.insane.module.modules.Nametags;
+import me.sixteen_.insane.module.modules.NoHurtCam;
+import me.sixteen_.insane.module.modules.Refill;
+import me.sixteen_.insane.module.modules.SprintStatus;
+import me.sixteen_.insane.module.modules.Trigger;
+import me.sixteen_.insane.module.modules.WTap;
+import me.sixteen_.insane.module.modules.Fullbright;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -32,20 +32,28 @@ public final class ModuleManager {
 	public ModuleManager() {
 		addModule(new SprintStatus());
 		addModule(new Fullbright());
-		addModule(new DamageJump());
 		addModule(new ArrayList());
 		addModule(new Criticals());
 		addModule(new NoHurtCam());
 		addModule(new AutoSoup());
 		addModule(new Killaura());
 		addModule(new Nametags());
-		addModule(new Velocity());
 		addModule(new Inspect());
 		addModule(new Trigger());
 		addModule(new Refill());
-		addModule(new Strafe());
 		addModule(new WTap());
 		addModule(new Fly());
+		OnKeyCallback.EVENT.register((window, key, scancode, i, j) -> {
+			if (i == GLFW.GLFW_PRESS) {
+				for (final Module m : getModules()) {
+					if (m.getKeybind() != null) {
+						if (m.getKeybind().getCode() == key) {
+							m.toggle();
+						}
+					}
+				}
+			}
+		});
 	}
 
 	/**
@@ -60,7 +68,7 @@ public final class ModuleManager {
 	 * @return the module that has the name
 	 */
 	public final Module getModuleByName(final String moduleName) {
-		for (final Module m : modules) {
+		for (final Module m : getModules()) {
 			if (m.getName().equalsIgnoreCase(moduleName)) {
 				return m;
 			}
@@ -73,7 +81,7 @@ public final class ModuleManager {
 	 * @return the module
 	 */
 	public final Module getModule(final Class<? extends Module> moduleClass) {
-		for (final Module m : modules) {
+		for (final Module m : getModules()) {
 			if (m.getClass() == moduleClass) {
 				return m;
 			}
@@ -85,7 +93,7 @@ public final class ModuleManager {
 	 * Called when minecraft gets closed.
 	 */
 	public final void shutdown() {
-		for (final Module m : modules) {
+		for (final Module m : getModules()) {
 			m.onShutdown();
 		}
 	}
@@ -96,6 +104,6 @@ public final class ModuleManager {
 	 * @param needs a {@link Module}
 	 */
 	private final void addModule(final Module module) {
-		modules.add(module);
+		getModules().add(module);
 	}
 }

@@ -2,8 +2,6 @@ package me.sixteen_.insane.command;
 
 import java.util.List;
 
-import org.lwjgl.glfw.GLFW;
-
 import me.sixteen_.insane.Insane;
 import me.sixteen_.insane.command.commands.BindCommand;
 import me.sixteen_.insane.command.commands.ColorCommand;
@@ -13,9 +11,7 @@ import me.sixteen_.insane.command.commands.LoginCommand;
 import me.sixteen_.insane.command.commands.PanicCommand;
 import me.sixteen_.insane.command.commands.ToggleCommand;
 import me.sixteen_.insane.command.commands.ValueCommand;
-import me.sixteen_.insane.event.OnKeyCallback;
 import me.sixteen_.insane.event.ScreenSendMessageCallback;
-import me.sixteen_.insane.module.Module;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -46,17 +42,6 @@ public final class CommandManager {
 			}
 			return false;
 		});
-		OnKeyCallback.EVENT.register((window, key, scancode, i, j) -> {
-			if (i == GLFW.GLFW_PRESS) {
-				for (final Module m : insane.getModuleManager().getModules()) {
-					if (m.getKeybind() != null) {
-						if (m.getKeybind().getCode() == key) {
-							m.toggle();
-						}
-					}
-				}
-			}
-		});
 	}
 
 	/**
@@ -64,7 +49,7 @@ public final class CommandManager {
 	 */
 	public final void input(final String input) {
 		final String[] cmd = input.substring(prefix.length()).split(" ");
-		for (final Command command : commands) {
+		for (final Command command : getCommands()) {
 			if (command.getName().equalsIgnoreCase(cmd[0])) {
 				try {
 					command.run(cmd);
@@ -89,6 +74,6 @@ public final class CommandManager {
 	 * @param needs a {@link Command}
 	 */
 	private final void addCommand(final Command cmd) {
-		commands.add(cmd);
+		getCommands().add(cmd);
 	}
 }
